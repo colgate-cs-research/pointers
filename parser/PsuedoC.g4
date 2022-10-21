@@ -8,23 +8,24 @@ statement : (
     ) ';' ;
 
 expression :
-    literalExpr
-    | variableExpr
-    | expression ( '+' | '-') expression
-//    | mathExpr
+    baseExpr
+    | mathExpr
     ;
 
 literalExpr : INT ;
-variableExpr : ('*' | '&')? VARNAME ;
-//mathExpr : expression (( '+' | '-' ) expression)+ ;
+variableExpr : (modifier = ('*' | '&'))? VARNAME ;
 
-type :
-    'robot'
-    | 'dronebay'
+baseExpr :
+    literalExpr
+    | variableExpr
     ;
 
+mathExpr : baseExpr (operator = ('+' | '-') mathExpr)* ;
+
+type : typename = ('robot' | 'dronebay') ;
+
 declarationStmt : type '*'? VARNAME ('=' expression)? ;
-assignmentStmt : '*'? VARNAME '=' expression ;
+assignmentStmt : (deref = '*')? VARNAME '=' expression ;
 
 fragment ALPHA : [a-zA-Z] ;
 fragment DIGIT : [0-9] ;
