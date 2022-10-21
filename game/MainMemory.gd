@@ -1,4 +1,6 @@
-extends Node
+extends Node2D
+
+onready var robotBase = preload("res://Robot.tscn")
 
 var mem_id = int(rand_range(0,10))
 
@@ -26,7 +28,16 @@ func _add_variable(var_name, var_type):
 func _set_variable(var_name, value, var_type):
 	if variable_dict.has(var_name):
 		if (variable_dict[var_name] as VariableData)._get_type() == var_type:
-			(variable_dict[var_name] as VariableData)._set_value(value)
+			if (variable_dict[var_name] as VariableData)._get_type() == "robot":
+				var object = _create_robot(value)
+				if object is String && (object as String).get_slice(">>", 0) == "ERR":
+					return object
+				else:
+					if variable_dict[var_name]._get_value() != null:
+						variable_dict[var_name]._get_value().queue_free()
+					(variable_dict[var_name] as VariableData)._set_value(object)
+			else:
+				(variable_dict[var_name] as VariableData)._set_value(value)				
 			return var_name + ":" + str(value)
 		else:
 			return "ERR>>mismatchType>>" + var_type + " expecting " + (variable_dict[var_name] as VariableData)._get_type()
@@ -63,6 +74,22 @@ func _get_type_from_address(address):
 	else:
 		return "ERR>>noSuchAddr>>"+address
 
+func _run_command_on_variable(variable, command):
+	if variable_dict.has(variable):
+		if variable_dict[variable]._get_type() == "robot":
+			if variable_dict[variable]._get_value()._is_valid_command(command):
+				print("NOT IMPLEMENTED")
+			else:
+				return "ERR>>invalidCommand>>" + command
+		else:
+			return "ERR>>"
+
+func _run_command_on_pointer(address, command):
+	if address_dict.has(address):
+		return _run_command_on_variable(address_dict[address], command)
+	else:
+		return "ERR>>noSuchAddr>>"+address
+
 func _contains_variable(var_name):
 	return variable_dict.has(var_name)
 
@@ -70,6 +97,21 @@ func _memory_summarize():
 	print("summarize")
 	for variable in variable_dict:
 		print(variable + " type: " + str((variable_dict[variable] as VariableData)._get_type()) + " addr: " + str(reverse_dict[variable]) + " value: " + str((variable_dict[variable] as VariableData)._get_value()))
+
+func _create_robot(encode):
+	var strParse = RegEx.new()
+	var numParse = RegEx.new()
+	strParse.compile("^[A-Za-z]+$")
+	numParse.compile("^[\\d]+$")
+	var encoding = (encode as String).split(",", true)
+	if (encoding.size() != 3 || !strParse.search(encoding[0]) || !numParse.search(encoding[1]) || !numParse.search(encoding[2])):
+		return "ERR>>badConstructRobot>>" + encode
+	var newObj = robotBase.instance()
+	add_child(newObj)
+	newObj.name = encoding[0]
+	newObj._setup(int(encoding[1]), int(encoding[2]))
+	newObj.position = Vector2(rand_range(0,1024),rand_range(0,600))
+	return newObj
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -76,4 +76,10 @@ func regex_parse(text):
 	if result:
 		logger._log_to_label(MainMemory._set_variable(result.get_string("variable"), result.get_string("value"), MainMemory._get_type_from_variable(result.get_string("variable"))))
 		return result.get_string("variable") + " set to " + result.get_string("value")
-	
+	#Check for specific action on variables
+	parse.compile("^(?<variable>[a-zA-Z\\d]+) ?> ?(?<command>[a-zA-Z]+);$")
+	result = parse.search(text)
+	if result:
+		logger._log_to_label(MainMemory._run_command_on_variable(result.get_string("variable"), result.get_string("command")))
+		return result.get_string("variable") + " run operation " + result.get_string("command")
+	logger._log_to_label("ERR>>noSuchCommand>>" + text)

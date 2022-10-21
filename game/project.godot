@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Pointers Game"
-run/main_scene="res://MainUI.tscn"
+run/main_scene="res://MainGame.tscn"
 config/icon="res://icon.png"
 
 [autoload]
