@@ -14,6 +14,8 @@ func _run_command(function, params):
 		return _get_content()
 	if function == "<-":
 		return _set_content(params)
+	if function == "-+":
+		return _add_content(params)
 	return "ERR>>noSuchCommand>>" + function
 
 func _get_content():
@@ -21,6 +23,10 @@ func _get_content():
 
 func _set_content(params):
 	content = params
+	return content
+
+func _add_content(params):
+	content = content + params
 	return content
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
