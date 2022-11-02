@@ -27,18 +27,11 @@ func regex_parse(text):
 	var parse = RegEx.new()
 	var result
 	
-	#Check for TextObject specific commands on variable
-	parse.compile("^(?<variable>[a-zA-Z\\d]+) ?(?<function>[\\-\\+\\<\\>]+) ?(?<param>[a-zA-Z\\d]*);$")
+	#Check for composition
+	parse.compile("^(?<type>[a-z\\d]+)\\* ?(?<name>[A-Za-z\\d]+);$")
 	result = parse.search(text)
 	if result:
-		logger._log_to_label(MainMemory._run_command(result.get_string("variable"), result.get_string("function"), result.get_string("param")))
-		print(result.get_string("param"))
-		return;
-	#Check for TextObject specific commands on deref pointer	
-	parse.compile("^\\*(?<pointer>[a-zA-Z\\d]+) ?(?<function>[\\-\\+\\<\\>]+) ?(?<param>[a-zA-Z\\d]*);$")
-	result = parse.search(text)
-	if result:
-		logger._log_to_label(MainMemory._run_command(MainMemory._get_var(MainMemory._get_value_from_variable(result.get_string("pointer"))), result.get_string("function"), result.get_string("param")))
+		logger._log_to_label(MainMemory._add_variable(result.get_string("name"), result.get_string("type") + "_pointer"))
 		return;
 	
 	#Check for pointer

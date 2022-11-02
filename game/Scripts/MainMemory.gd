@@ -1,7 +1,6 @@
 extends Node2D
 
 var mem_id = int(rand_range(0,10))
-const text_object = preload("res://TextObjectBase.gd")
 
 #Key = variable name, value = variable value
 var variable_dict = {}
@@ -11,17 +10,14 @@ var address_dict = {}
 var reverse_dict = {}
 
 #Probably better to use enum here, but haven't quite figured out the conversions
-var valid_types = ["text"]
+var valid_types = ["shape"]
 
 func _add_variable(var_name, var_type):
 	if !valid_types.has((var_type as String).get_slice("_", 0)):
 		return "ERR>>noSuchType>>" + var_type
 	if variable_dict.has(var_name):
 		return "ERR>>varExists>>" + var_name
-	if var_type == "text":
-		variable_dict[var_name] = VariableData.new(var_type, text_object.new());
-	else:
-		variable_dict[var_name] = VariableData.new(var_type, null);
+	variable_dict[var_name] = VariableData.new(var_type, null);
 	address_dict[mem_id] = var_name;
 	reverse_dict[var_name] = mem_id;
 	mem_id += int(rand_range(1,10))
@@ -96,15 +92,12 @@ func _get_type_from_address(address):
 func _contains_variable(var_name):
 	return variable_dict.has(var_name)
 
-func _run_command(var_name, function, params):
-	if variable_dict.has(var_name):
-		return "~>" + (variable_dict[var_name] as VariableData)._get_value()._run_command(function, params)
-	else:
-		return "ERR>>noSuchVar>>"+var_name
+func _shape_action():
+	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	randomize()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

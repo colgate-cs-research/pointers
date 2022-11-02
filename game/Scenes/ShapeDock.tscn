@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/ShapeDock.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/FactorySprites/shape_dock_storage.png" type="Texture" id=2]
+
+[node name="ShapeDock" type="Node2D"]
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 1 )
+
+[node name="DockSprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
