@@ -9,9 +9,11 @@ var shape = preload("res://Scenes/Shape.tscn")
 # var b = "text"
 
 var shape_string = "0 0 0 0 0 0 0 0"
+var passes_required = 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
 
 func _generate_shape_string():
@@ -35,6 +37,21 @@ func _validate_shape_string(output, operation):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if _validate_shape_string(factory.get_node("output_0")._get_shape(), "cut_left"):
-		logger._log_to_label("Shape passed! Generating new shape...")
-		factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+	pass
+
+func _on_MainUI_run_full_script(origin):
+	logger.clear()
+	var passes = 0
+	while passes < passes_required:
+		if _validate_shape_string(factory.get_node("output_0")._get_shape(), "cut_left"):
+			logger._log_to_label("Shape passed! Generating new shape...")
+			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+			passes += 1
+			origin._evaluate_all()
+		else:
+			logger._log_to_label("ERR>>Shape failed to pass!")	
+			break
+		
+	if passes >= passes_required:
+		logger._log_to_label("All tests passed! Great job!")
+

@@ -22,6 +22,8 @@ signal set_pointer_to_shape(destination, shape)
 signal set_pointer_to_variable(destination, variable)
 signal set_pointer_to_pointer(destination, pointer)
 
+signal run_full_script(origin)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -79,3 +81,7 @@ func _on_ScriptBox_set_variable_to_shape(destination, shape):
 
 func _on_ScriptBox_set_variable_to_variable(destination, variable):
 	emit_signal("set_variable_to_variable", destination, variable)
+
+
+func _on_ScriptBox_run_full_script(origin):
+	emit_signal("run_full_script", origin)

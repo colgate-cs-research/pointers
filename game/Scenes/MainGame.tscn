@@ -27,6 +27,7 @@ script = ExtResource( 3 )
 [connection signal="has_at_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_variable"]
 [connection signal="pointer_at_address" from="MainUI" to="FactoryBase" method="_on_MainUI_pointer_at_address"]
 [connection signal="pointer_at_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_pointer_at_pointer"]
+[connection signal="run_full_script" from="MainUI" to="MissionTracker" method="_on_MainUI_run_full_script"]
 [connection signal="set_pointer_to_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_pointer"]
 [connection signal="set_pointer_to_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_shape"]
 [connection signal="set_pointer_to_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_variable"]

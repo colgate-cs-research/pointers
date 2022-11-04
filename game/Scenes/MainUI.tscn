@@ -16,6 +16,15 @@ anchor_bottom = 1.0
 margin_bottom = 4.0
 color = Color( 0.556863, 0.556863, 0.556863, 1 )
 
+[node name="TestButton" type="Button" parent="BaseBar"]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.65
+anchor_bottom = 0.8
+margin_left = 126.72
+margin_right = 126.72
+text = "Test Script"
+
 [node name="RunButton" type="Button" parent="BaseBar"]
 anchor_left = 0.825
 anchor_top = 0.2
@@ -42,6 +51,7 @@ anchor_right = 1.0
 anchor_bottom = 0.7
 script = ExtResource( 3 )
 
+[connection signal="pressed" from="BaseBar/TestButton" to="ScriptBox" method="_on_TestButton_pressed"]
 [connection signal="pressed" from="BaseBar/RunButton" to="ScriptBox" method="_on_RunButton_pressed"]
 [connection signal="composition_from_pointer" from="ScriptBox" to="." method="_on_ScriptBox_composition_from_pointer"]
 [connection signal="composition_from_shape" from="ScriptBox" to="." method="_on_ScriptBox_composition_from_shape"]
@@ -53,6 +63,7 @@ script = ExtResource( 3 )
 [connection signal="has_at_variable" from="ScriptBox" to="." method="_on_ScriptBox_has_at_variable"]
 [connection signal="pointer_at_address" from="ScriptBox" to="." method="_on_ScriptBox_pointer_at_address"]
 [connection signal="pointer_at_pointer" from="ScriptBox" to="." method="_on_ScriptBox_pointer_at_pointer"]
+[connection signal="run_full_script" from="ScriptBox" to="." method="_on_ScriptBox_run_full_script"]
 [connection signal="set_pointer_to_pointer" from="ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_pointer"]
 [connection signal="set_pointer_to_shape" from="ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_shape"]
 [connection signal="set_pointer_to_variable" from="ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_variable"]

@@ -21,6 +21,7 @@ signal set_pointer_to_shape(destination, shape)
 signal set_pointer_to_variable(destination, variable)
 signal set_pointer_to_pointer(destination, pointer)
 
+signal run_full_script(origin)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,7 +31,13 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func _on_TestButton_pressed():
+	_evaluate_all()
+
 func _on_RunButton_pressed():
+	emit_signal("run_full_script", self)
+
+func _evaluate_all():
 	for i in get_line_count():
 		var line = get_line(i)
 		_evaluate_line(line)
