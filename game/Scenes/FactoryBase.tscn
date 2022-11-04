@@ -4,9 +4,9 @@
 
 [node name="FactoryBase" type="Control"]
 anchor_right = 0.6
-anchor_bottom = 0.9
+anchor_bottom = 1.0
 margin_bottom = -60.0
-rect_min_size = Vector2( 614.4, 480 )
+rect_min_size = Vector2( 614.4, 540 )
 script = ExtResource( 1 )
 
 [node name="Background" type="ColorRect" parent="."]

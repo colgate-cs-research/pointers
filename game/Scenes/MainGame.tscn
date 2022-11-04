@@ -10,13 +10,26 @@
 margin_right = 1024.0
 margin_bottom = 600.0
 
+[node name="FactoryBase" parent="." instance=ExtResource( 1 )]
+margin_right = 614.4
+margin_bottom = 540.0
+
 [node name="MissionTracker" type="Node" parent="."]
 script = ExtResource( 3 )
-
-[node name="FactoryBase" parent="." instance=ExtResource( 1 )]
 
 [connection signal="composition_from_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_composition_from_pointer"]
 [connection signal="composition_from_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_composition_from_shape"]
 [connection signal="composition_from_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_composition_from_variable"]
+[connection signal="cut_from_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_pointer"]
+[connection signal="cut_from_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_shape"]
+[connection signal="cut_from_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_variable"]
+[connection signal="has_at_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_pointer"]
+[connection signal="has_at_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_variable"]
 [connection signal="pointer_at_address" from="MainUI" to="FactoryBase" method="_on_MainUI_pointer_at_address"]
 [connection signal="pointer_at_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_pointer_at_pointer"]
+[connection signal="set_pointer_to_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_pointer"]
+[connection signal="set_pointer_to_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_shape"]
+[connection signal="set_pointer_to_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_variable"]
+[connection signal="set_variable_to_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_pointer"]
+[connection signal="set_variable_to_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_shape"]
+[connection signal="set_variable_to_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_variable"]

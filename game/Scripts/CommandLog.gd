@@ -7,7 +7,6 @@ extends RichTextLabel
 
 
 func _log_to_label(message):
-	clear()
 	if (message as String).get_slice(">>", 0) == "ERR":
 		append_bbcode("[color=red]" + message + "[/color]\n")
 	else:

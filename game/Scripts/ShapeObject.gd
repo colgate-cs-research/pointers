@@ -27,6 +27,7 @@ func _compose_shape(composition):
 	for i in 8:
 		shape_components[i] = shape_components[i] || composition._has_component(i)
 	_update_shape_image()
+	return self
 
 # Remove any sections in this shape that are also present in the cut shape
 func _cut_shape(cut):
@@ -34,6 +35,7 @@ func _cut_shape(cut):
 		if shape_components[i] == true && cut._has_component(i):
 			shape_components[i] = false
 	_update_shape_image()
+	return self
 
 func _has_component(index):
 	if index > shape_components.size():
@@ -46,11 +48,20 @@ func _compare_shape(comparison):
 			return false
 	return true
 
+func _get_shape_data_encoding():
+	var ret_val = ""
+	for i in shape_components:
+		if i:
+			ret_val += "1 "
+		else:
+			ret_val += "0 "
+	return ret_val.strip_edges()
+
 func _get_shape_data_str():
 	var ret_val = ""
 	for i in shape_components:
 		ret_val += str(i) + " "
-	return ret_val
+	return ret_val.strip_edges()
 
 func _update_shape_image():
 	get_node("TRSquare").visible = shape_components[0]

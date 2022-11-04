@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/CommandLine.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/CommandLog.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/ScriptBox.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/ControlSync.gd" type="Script" id=4]
@@ -15,6 +14,7 @@ anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 4.0
+color = Color( 0.556863, 0.556863, 0.556863, 1 )
 
 [node name="RunButton" type="Button" parent="BaseBar"]
 anchor_left = 0.825
@@ -28,12 +28,6 @@ anchor_left = 0.6
 anchor_right = 1.0
 anchor_bottom = 0.9
 color = Color( 0, 0, 0, 1 )
-
-[node name="CommandLine" type="LineEdit" parent="."]
-anchor_top = 0.8
-anchor_right = 1.0
-anchor_bottom = 0.9
-script = ExtResource( 1 )
 
 [node name="CommandLog" type="RichTextLabel" parent="."]
 anchor_left = 0.6
@@ -49,9 +43,19 @@ anchor_bottom = 0.7
 script = ExtResource( 3 )
 
 [connection signal="pressed" from="BaseBar/RunButton" to="ScriptBox" method="_on_RunButton_pressed"]
-[connection signal="text_entered" from="CommandLine" to="CommandLine" method="_on_CommandLine_text_entered"]
 [connection signal="composition_from_pointer" from="ScriptBox" to="." method="_on_ScriptBox_composition_from_pointer"]
 [connection signal="composition_from_shape" from="ScriptBox" to="." method="_on_ScriptBox_composition_from_shape"]
 [connection signal="composition_from_variable" from="ScriptBox" to="." method="_on_ScriptBox_composition_from_variable"]
+[connection signal="cut_from_pointer" from="ScriptBox" to="." method="_on_ScriptBox_cut_from_pointer"]
+[connection signal="cut_from_shape" from="ScriptBox" to="." method="_on_ScriptBox_cut_from_shape"]
+[connection signal="cut_from_variable" from="ScriptBox" to="." method="_on_ScriptBox_cut_from_variable"]
+[connection signal="has_at_pointer" from="ScriptBox" to="." method="_on_ScriptBox_has_at_pointer"]
+[connection signal="has_at_variable" from="ScriptBox" to="." method="_on_ScriptBox_has_at_variable"]
 [connection signal="pointer_at_address" from="ScriptBox" to="." method="_on_ScriptBox_pointer_at_address"]
 [connection signal="pointer_at_pointer" from="ScriptBox" to="." method="_on_ScriptBox_pointer_at_pointer"]
+[connection signal="set_pointer_to_pointer" from="ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_pointer"]
+[connection signal="set_pointer_to_shape" from="ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_shape"]
+[connection signal="set_pointer_to_variable" from="ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_variable"]
+[connection signal="set_variable_to_pointer" from="ScriptBox" to="." method="_on_ScriptBox_set_variable_to_pointer"]
+[connection signal="set_variable_to_shape" from="ScriptBox" to="." method="_on_ScriptBox_set_variable_to_shape"]
+[connection signal="set_variable_to_variable" from="ScriptBox" to="." method="_on_ScriptBox_set_variable_to_variable"]
