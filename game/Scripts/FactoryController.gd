@@ -47,14 +47,14 @@ func _setup_factory(inputs, outputs, variables, pointers):
 func _reset():
 	var index = 0;
 	for i in get_child_count():
-		if get_node("pointer_" + str(index)) != null:
-			get_node("pointer_" + str(index))._reset()
-		if get_node("variable_" + str(index)) != null:
-			get_node("variable_" + str(index))._reset()
-		if get_node("input_" + str(index)) != null:
-			get_node("input_" + str(index))._reset()
-		if get_node("output_" + str(index)) != null:
-			get_node("output_" + str(index))._reset()
+		if get_node_or_null("pointer_" + str(index)) != null:
+			get_node_or_null("pointer_" + str(index))._reset()
+		if get_node_or_null("variable_" + str(index)) != null:
+			get_node_or_null("variable_" + str(index))._reset()
+		if get_node_or_null("input_" + str(index)) != null:
+			get_node_or_null("input_" + str(index))._reset()
+		if get_node_or_null("output_" + str(index)) != null:
+			get_node_or_null("output_" + str(index))._reset()
 		index += 1
 
 # Called when the node enters the scene tree for the first time.
@@ -72,72 +72,72 @@ func _process(delta):
 	pass
 
 func _on_MainUI_pointer_at_address(pointer, target):
-	if get_node(pointer) == null || (pointer as String).split("_")[0] != "pointer":
+	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
 		return
-	if get_node(target) == null || !["input", "output", "variable"].has((target as String).split("_")[0]):
+	if get_node_or_null(target) == null || !["input", "output", "variable"].has((target as String).split("_")[0]):
 		return
-	_point_pointer_to(get_node(pointer), get_node(target))
+	_point_pointer_to(get_node_or_null(pointer), get_node_or_null(target))
 
 func _on_MainUI_pointer_at_pointer(pointer, target):
-	if get_node(pointer) == null || (pointer as String).split("_")[0] != "pointer":
+	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
 		return
-	if get_node(target) == null || (pointer as String).split("_")[0] != "pointer":
+	if get_node_or_null(target) == null || (pointer as String).split("_")[0] != "pointer":
 		return
-	_point_pointer_to(get_node(pointer), get_node(target)._get_target())
+	_point_pointer_to(get_node_or_null(pointer), get_node_or_null(target)._get_target())
 
 func _on_MainUI_composition_from_shape(variable, shape_data):
-	if get_node(variable) == null || (variable as String).split("_")[0] != "variable":
+	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
 		return
-	if get_node(variable)._get_shape() == null:
+	if get_node_or_null(variable)._get_shape() == null:
 		return
 	var generated = shape.instance()
 	generated._setup_shape(shape_data, null)
-	get_node(variable)._get_shape()._compose_shape(generated)
+	get_node_or_null(variable)._get_shape()._compose_shape(generated)
 	
 func _on_MainUI_composition_from_pointer(variable, pointer):
-	if get_node(variable) == null || (variable as String).split("_")[0] != "variable":
+	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
 		return
-	if get_node(variable)._get_shape() == null:
+	if get_node_or_null(variable)._get_shape() == null:
 		return
-	if get_node(pointer) == null || get_node(pointer)._get_target() == null || get_node(pointer)._get_target()._get_shape() == null:
+	if get_node_or_null(pointer) == null || get_node_or_null(pointer)._get_target() == null || get_node_or_null(pointer)._get_target()._get_shape() == null:
 		return
-	get_node(variable)._get_shape()._compose_shape(get_node(pointer)._get_target()._get_shape())
+	get_node_or_null(variable)._get_shape()._compose_shape(get_node_or_null(pointer)._get_target()._get_shape())
 
 func _on_MainUI_composition_from_variable(variable, target):
-	if get_node(variable) == null || (target as String).split("_")[0] != "variable":
+	if get_node_or_null(variable) == null || (target as String).split("_")[0] != "variable":
 		return
-	if get_node(variable)._get_shape() == null:
+	if get_node_or_null(variable)._get_shape() == null:
 		return
-	if get_node(target) == null || get_node(target)._get_shape() == null:
+	if get_node_or_null(target) == null || get_node_or_null(target)._get_shape() == null:
 		return
-	get_node(variable)._get_shape()._compose_shape(get_node(target)._get_shape())
+	get_node_or_null(variable)._get_shape()._compose_shape(get_node_or_null(target)._get_shape())
 
 func _on_MainUI_cut_from_shape(variable, shape_data):
-	if get_node(variable) == null || (variable as String).split("_")[0] != "variable":
+	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
 		return
-	if get_node(variable)._get_shape() == null:
+	if get_node_or_null(variable)._get_shape() == null:
 		return
 	var generated = shape.instance()
 	generated._setup_shape(shape_data, null)
-	get_node(variable)._get_shape()._cut_shape(generated)
+	get_node_or_null(variable)._get_shape()._cut_shape(generated)
 
 func _on_MainUI_cut_from_pointer(variable, pointer):
-	if get_node(variable) == null || (variable as String).split("_")[0] != "variable":
+	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
 		return
-	if get_node(variable)._get_shape() == null:
+	if get_node_or_null(variable)._get_shape() == null:
 		return
-	if get_node(pointer) == null || get_node(pointer)._get_target() == null || get_node(pointer)._get_target()._get_shape() == null:
+	if get_node_or_null(pointer) == null || get_node_or_null(pointer)._get_target() == null || get_node_or_null(pointer)._get_target()._get_shape() == null:
 		return
-	get_node(variable)._get_shape()._cut_shape(get_node(pointer)._get_target()._get_shape())
+	get_node_or_null(variable)._get_shape()._cut_shape(get_node_or_null(pointer)._get_target()._get_shape())
 
 func _on_MainUI_cut_from_variable(variable, target):
-	if get_node(variable) == null || (target as String).split("_")[0] != "variable":
+	if get_node_or_null(variable) == null || (target as String).split("_")[0] != "variable":
 		return
-	if get_node(variable)._get_shape() == null:
+	if get_node_or_null(variable)._get_shape() == null:
 		return
-	if get_node(target) == null || get_node(target)._get_shape() == null:
+	if get_node_or_null(target) == null || get_node_or_null(target)._get_shape() == null:
 		return
-	get_node(variable)._get_shape()._cut_shape(get_node(target)._get_shape())
+	get_node_or_null(variable)._get_shape()._cut_shape(get_node_or_null(target)._get_shape())
 
 func _on_MainUI_has_at_pointer(pointer, index):
 	pass # Replace with function body.
@@ -146,51 +146,51 @@ func _on_MainUI_has_at_variable(variable, index):
 	pass # Replace with function body.
 
 func _on_MainUI_set_pointer_to_pointer(destination, pointer):
-	if get_node(pointer) == null || (pointer as String).split("_")[0] != "pointer":
+	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
 		return
-	if get_node(destination) == null || (destination as String).split("_")[0] != "pointer":
+	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
 		return
-	if get_node(destination)._get_target()._get_shape() != null:
-		get_node(destination)._get_target()._get_shape().queue_free()
-	_instance_shape_to_game(get_node(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node(destination)._get_target())
+	if get_node_or_null(destination)._get_target()._get_shape() != null:
+		get_node_or_null(destination)._get_target()._get_shape().queue_free()
+	_instance_shape_to_game(get_node_or_null(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node_or_null(destination)._get_target())
 	
 func _on_MainUI_set_pointer_to_shape(destination, shape_data):
-	if get_node(destination) == null || (destination as String).split("_")[0] != "pointer":
+	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
 		return
-	if get_node(destination)._get_target()._get_shape() != null:
-		get_node(destination)._get_target()._get_shape().queue_free()
-	_instance_shape_to_game(shape_data, get_node(destination)._get_target())
+	if get_node_or_null(destination)._get_target()._get_shape() != null:
+		get_node_or_null(destination)._get_target()._get_shape().queue_free()
+	_instance_shape_to_game(shape_data, get_node_or_null(destination)._get_target())
 
 func _on_MainUI_set_pointer_to_variable(destination, variable):
-	if get_node(variable) == null || !["input", "output", "variable"].has((variable as String).split("_")[0]):
+	if get_node_or_null(variable) == null || !["input", "output", "variable"].has((variable as String).split("_")[0]):
 		return
-	if get_node(destination) == null || (destination as String).split("_")[0] != "pointer":
+	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
 		return
-	if get_node(destination)._get_target()._get_shape() != null:
-		get_node(destination)._get_target()._get_shape().queue_free()
-	_instance_shape_to_game(get_node(variable)._get_shape()._get_shape_data_encoding(), get_node(destination)._get_target())
+	if get_node_or_null(destination)._get_target()._get_shape() != null:
+		get_node_or_null(destination)._get_target()._get_shape().queue_free()
+	_instance_shape_to_game(get_node_or_null(variable)._get_shape()._get_shape_data_encoding(), get_node_or_null(destination)._get_target())
 
 func _on_MainUI_set_variable_to_pointer(destination, pointer):
-	if get_node(pointer) == null || (pointer as String).split("_")[0] != "pointer":
+	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
 		return
-	if get_node(destination) == null || (destination as String).split("_")[0] != "variable":
+	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "variable":
 		return
-	if get_node(destination)._get_shape() != null:
-		get_node(destination)._get_shape().queue_free()
-	_instance_shape_to_game(get_node(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node(destination))
+	if get_node_or_null(destination)._get_shape() != null:
+		get_node_or_null(destination)._get_shape().queue_free()
+	_instance_shape_to_game(get_node_or_null(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node_or_null(destination))
 
 func _on_MainUI_set_variable_to_shape(destination, shape_data):
-	if get_node(destination) == null || (destination as String).split("_")[0] != "variable":
+	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "variable":
 		return
-	if get_node(destination)._get_shape() != null:
-		get_node(destination)._get_shape().queue_free()
-	_instance_shape_to_game(shape_data, get_node(destination))
+	if get_node_or_null(destination)._get_shape() != null:
+		get_node_or_null(destination)._get_shape().queue_free()
+	_instance_shape_to_game(shape_data, get_node_or_null(destination))
 
 func _on_MainUI_set_variable_to_variable(destination, variable):
-	if get_node(variable) == null || !["input", "output", "variable"].has((variable as String).split("_")[0]):
+	if get_node_or_null(variable) == null || !["input", "output", "variable"].has((variable as String).split("_")[0]):
 		return
-	if get_node(destination) == null || (destination as String).split("_")[0] != "variable":
+	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "variable":
 		return
-	if get_node(destination)._get_shape() != null:
-		get_node(destination)._get_shape().queue_free()
-	_instance_shape_to_game(get_node(variable)._get_shape()._get_shape_data_encoding(), get_node(destination))
+	if get_node_or_null(destination)._get_shape() != null:
+		get_node_or_null(destination)._get_shape().queue_free()
+	_instance_shape_to_game(get_node_or_null(variable)._get_shape()._get_shape_data_encoding(), get_node_or_null(destination))

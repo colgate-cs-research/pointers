@@ -1,7 +1,7 @@
 extends Node2D
 
-onready var logger = get_node("../MainUI/CommandLog")
-onready var factory = get_node("../FactoryBase")
+onready var logger = get_node_or_null("../MainUI/CommandLog")
+onready var factory = get_node_or_null("../FactoryBase")
 var shape = preload("res://Scenes/Shape.tscn")
 
 # Declare member variables here. Examples:
@@ -14,7 +14,7 @@ var passes_required = 20
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
 
 func _generate_shape_string():
 	var string = ""
@@ -42,38 +42,41 @@ func _process(delta):
 func _on_MainUI_run_full_script(origin):
 	factory._reset()
 	logger.clear()
-	get_node("GameTimer").stop()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
-	get_node("GameTimer").start()
-	origin._evaluate_all(get_node("GameTimer"))
+	get_node_or_null("GameTimer").stop()
+	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
+	get_node_or_null("GameTimer").start()
+	yield(get_node_or_null("GameTimer"),"timeout")
+	origin._evaluate_all(get_node_or_null("GameTimer"))
 	var passes = 0
 	while passes < passes_required:
 		yield(origin, "run_complete")
-		if _validate_shape_string(factory.get_node("output_0")._get_shape(), "cut_left"):
+		if _validate_shape_string(factory.get_node_or_null("output_0")._get_shape(), "cut_left"):
 			logger._log_to_label("Shape passed! Generating new shape...")
 			factory._reset()
-			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
 			passes += 1
-			get_node("GameTimer").wait_time = 0.5/((passes/4)+1)
-			get_node("GameTimer").start()
-			yield(get_node("GameTimer"),"timeout")
-			origin._evaluate_all(get_node("GameTimer"))
+			get_node_or_null("GameTimer").wait_time = 0.5/((passes/4)+1)
+			get_node_or_null("GameTimer").start()
+			yield(get_node_or_null("GameTimer"),"timeout")
+			origin._evaluate_all(get_node_or_null("GameTimer"))
 		else:
 			logger._log_to_label("ERR>>Shape failed to pass!")	
 			break
 		
 	if passes >= passes_required:
 		logger._log_to_label("All tests passed! Great job!")
+		factory._reset()
 
 func _on_MainUI_run_test_script(origin):
 	factory._reset()
 	logger.clear()
-	get_node("GameTimer").stop()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
-	get_node("GameTimer").start()
-	origin._evaluate_all(get_node("GameTimer"))
+	get_node_or_null("GameTimer").stop()
+	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
+	get_node_or_null("GameTimer").start()
+	yield(get_node_or_null("GameTimer"),"timeout")
+	origin._evaluate_all(get_node_or_null("GameTimer"))
 	yield(origin, "run_complete")
-	if _validate_shape_string(factory.get_node("output_0")._get_shape(), "cut_left"):
+	if _validate_shape_string(factory.get_node_or_null("output_0")._get_shape(), "cut_left"):
 		logger._log_to_label("Shape passed!")
 	else:
 		logger._log_to_label("ERR>>Shape failed to pass!")	

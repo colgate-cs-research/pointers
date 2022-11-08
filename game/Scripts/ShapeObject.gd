@@ -64,14 +64,14 @@ func _get_shape_data_str():
 	return ret_val.strip_edges()
 
 func _update_shape_image():
-	get_node("TRSquare").visible = shape_components[0]
-	get_node("BRSquare").visible = shape_components[1]
-	get_node("BLSquare").visible = shape_components[2]
-	get_node("TLSquare").visible = shape_components[3]
-	get_node("TRCircle").visible = shape_components[4]
-	get_node("BRCircle").visible = shape_components[5]
-	get_node("BLCircle").visible = shape_components[6]
-	get_node("TLCircle").visible = shape_components[7]
+	get_node_or_null("TRSquare").visible = shape_components[0]
+	get_node_or_null("BRSquare").visible = shape_components[1]
+	get_node_or_null("BLSquare").visible = shape_components[2]
+	get_node_or_null("TLSquare").visible = shape_components[3]
+	get_node_or_null("TRCircle").visible = shape_components[4]
+	get_node_or_null("BRCircle").visible = shape_components[5]
+	get_node_or_null("BLCircle").visible = shape_components[6]
+	get_node_or_null("TLCircle").visible = shape_components[7]
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
