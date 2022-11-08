@@ -55,6 +55,8 @@ func _on_MainUI_run_full_script(origin):
 			factory._reset()
 			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
 			passes += 1
+			if passes >= passes_required:
+				break
 			get_node_or_null("GameTimer").wait_time = 0.5/((passes/4)+1)
 			get_node_or_null("GameTimer").start()
 			yield(get_node_or_null("GameTimer"),"timeout")
@@ -62,7 +64,7 @@ func _on_MainUI_run_full_script(origin):
 		else:
 			logger._log_to_label("ERR>>Shape failed to pass!")	
 			break
-		
+	
 	if passes >= passes_required:
 		logger._log_to_label("All tests passed! Great job!")
 		factory._reset()
