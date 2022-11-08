@@ -18,22 +18,22 @@ func _setup_factory(inputs, outputs, variables, pointers):
 	for i in inputs:
 		var instance = dock.instance()
 		add_child(instance)
-		instance.position.x = i * 60 + 60
-		instance.position.y = 60
+		instance.position.x = i * 72 + 72
+		instance.position.y = 72
 		instance.name = "input_" + str(i)
 		instance._setup_dock("input")
 	for i in outputs:
 		var instance = dock.instance()
 		add_child(instance)
-		instance.position.x = rect_size.x - 60 - i * 60
-		instance.position.y = 60
+		instance.position.x = rect_size.x - 72 - i * 72
+		instance.position.y = 72
 		instance.name = "output_" + str(i)
 		instance._setup_dock("output")
 	for i in variables:
 		var instance = dock.instance()
 		add_child(instance)
-		instance.position.x = rect_size.x / 2 - float((variables - 1)/ float(2)) * 60 + 60 * i
-		instance.position.y = rect_size.y - 60
+		instance.position.x = rect_size.x / 2 - float((variables - 1)/ float(2)) * 72 + 72 * i
+		instance.position.y = rect_size.y - 72
 		instance.name = "variable_" + str(i)
 		instance._setup_dock("storage")
 	for i in pointers:
@@ -42,7 +42,20 @@ func _setup_factory(inputs, outputs, variables, pointers):
 		instance.position.x = rect_size.x / 2 - float((pointers - 1)/ float(2)) * 80 + 80 * i
 		instance.position.y = rect_size.y / 2
 		instance.name = "pointer_" + str(i)
-	
+		instance._setup_pointer()
+
+func _reset():
+	var index = 0;
+	for i in get_child_count():
+		if get_node("pointer_" + str(index)) != null:
+			get_node("pointer_" + str(index))._reset()
+		if get_node("variable_" + str(index)) != null:
+			get_node("variable_" + str(index))._reset()
+		if get_node("input_" + str(index)) != null:
+			get_node("input_" + str(index))._reset()
+		if get_node("output_" + str(index)) != null:
+			get_node("output_" + str(index))._reset()
+		index += 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

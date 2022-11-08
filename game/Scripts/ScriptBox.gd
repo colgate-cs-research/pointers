@@ -22,6 +22,9 @@ signal set_pointer_to_variable(destination, variable)
 signal set_pointer_to_pointer(destination, pointer)
 
 signal run_full_script(origin)
+signal run_test_script(origin)
+
+signal run_complete()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,15 +35,17 @@ func _ready():
 #	pass
 
 func _on_TestButton_pressed():
-	_evaluate_all()
+	emit_signal("run_test_script", self)
 
 func _on_RunButton_pressed():
 	emit_signal("run_full_script", self)
 
-func _evaluate_all():
+func _evaluate_all(timer):
 	for i in get_line_count():
 		var line = get_line(i)
 		_evaluate_line(line)
+		yield(timer, "timeout")
+	emit_signal("run_complete")
 
 func _evaluate_line(text):
 	var parse = RegEx.new()

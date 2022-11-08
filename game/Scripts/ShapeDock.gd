@@ -15,6 +15,7 @@ func _ready():
 	pass
 
 func _setup_dock(type):
+	get_node("DockLabel").text = name
 	if type == "input":
 		get_node("DockSprite").set_texture(input_sprite)
 	elif type == "output":
@@ -30,6 +31,11 @@ func _set_shape(new_shape):
 
 func _get_shape():
 	return shape
+
+func _reset():
+	if shape != null:
+		shape.queue_free()
+	shape = null
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
