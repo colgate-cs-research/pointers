@@ -59,13 +59,18 @@ func _reset():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_setup_factory(1, 1, 3, 2)
+	var level_data : LevelData = get_node("/root/MainGame").level_data
+	_setup_factory(level_data.inputs, level_data.outputs, level_data.variables, level_data.pointers)
+	#_setup_factory(1, 1, 3, 2)
 
 func _next():
 	pass
 
 func _point_pointer_to(pointer, target):
 	pointer._point_at(target)
+
+func _dereference_pointer(pointer, target):
+	pointer._dereference(target)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -146,12 +151,13 @@ func _on_MainUI_has_at_variable(variable, index):
 	pass # Replace with function body.
 
 func _on_MainUI_set_pointer_to_pointer(destination, pointer):
-	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
+	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer" || get_node_or_null(pointer)._get_target() == null || get_node_or_null(pointer)._get_target()._get_shape() == null:
 		return
 	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
 		return
 	if get_node_or_null(destination)._get_target()._get_shape() != null:
 		get_node_or_null(destination)._get_target()._get_shape().queue_free()
+	_dereference_pointer(get_node_or_null(pointer), get_node_or_null(destination)._get_target())
 	_instance_shape_to_game(get_node_or_null(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node_or_null(destination)._get_target())
 	
 func _on_MainUI_set_pointer_to_shape(destination, shape_data):
@@ -159,6 +165,7 @@ func _on_MainUI_set_pointer_to_shape(destination, shape_data):
 		return
 	if get_node_or_null(destination)._get_target()._get_shape() != null:
 		get_node_or_null(destination)._get_target()._get_shape().queue_free()
+	_dereference_pointer(get_node_or_null(pointer), get_node_or_null(destination)._get_target())
 	_instance_shape_to_game(shape_data, get_node_or_null(destination)._get_target())
 
 func _on_MainUI_set_pointer_to_variable(destination, variable):
@@ -177,6 +184,7 @@ func _on_MainUI_set_variable_to_pointer(destination, pointer):
 		return
 	if get_node_or_null(destination)._get_shape() != null:
 		get_node_or_null(destination)._get_shape().queue_free()
+	_dereference_pointer(get_node_or_null(pointer), get_node_or_null(destination))
 	_instance_shape_to_game(get_node_or_null(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node_or_null(destination))
 
 func _on_MainUI_set_variable_to_shape(destination, shape_data):

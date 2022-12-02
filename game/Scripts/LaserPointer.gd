@@ -26,6 +26,14 @@ func _point_at(target_dock):
 	var radians = atan2(adjust_position.y, adjust_position.x) + PI/2
 	get_node_or_null("PointerSprite").rotation = radians
 
+func _dereference(target_dock):
+	if target_dock == null:
+		return;
+	var adjust_position = target_dock.position - position
+	get_node_or_null("DereferenceBeam").clear_points()
+	get_node_or_null("DereferenceBeam").add_point(Vector2(0,0))
+	get_node_or_null("DereferenceBeam").add_point(adjust_position)
+
 func _get_target():
 	return target
 
@@ -33,6 +41,7 @@ func _reset():
 	target = null
 	get_node_or_null("PointerSprite").rotation = 0
 	get_node_or_null("PointerBeam").clear_points()
+	get_node_or_null("DereferenceBeam").clear_points()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

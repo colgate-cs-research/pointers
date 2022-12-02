@@ -1,7 +1,7 @@
 extends Node2D
 
 # Declare member variables here.
-# Components order goes clockwise from top left, shapes then circles
+# Components order goes clockwise from top left, squares then circles
 var shape_components = [false, false, false, false, false, false, false, false]
 var dock
 
@@ -39,7 +39,7 @@ func _cut_shape(cut):
 
 func _has_component(index):
 	if index > shape_components.size():
-		return false
+		return null
 	return shape_components[index]
 
 func _compare_shape(comparison):

@@ -22,3 +22,8 @@ theme = ExtResource( 3 )
 z_index = -1
 width = 3.0
 default_color = Color( 1, 0, 0, 1 )
+
+[node name="DereferenceBeam" type="Line2D" parent="."]
+z_index = -1
+width = 3.0
+default_color = Color( 0, 0, 1, 1 )

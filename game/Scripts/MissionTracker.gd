@@ -9,7 +9,8 @@ var shape = preload("res://Scenes/Shape.tscn")
 # var b = "text"
 
 var shape_string = "0 0 0 0 0 0 0 0"
-var passes_required = 20
+var shape_inputs : Dictionary
+var passes_required = 50
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,16 +25,55 @@ func _generate_shape_string():
 	shape_string = string
 	return string
 
-func _validate_shape_string(output, operation):
-	match operation:
-		"cut_left":
-			if output == null:
-				return
-			var instance = shape.instance()
-			var half = shape.instance()
-			half._setup_shape("0 0 1 1 0 0 1 1", null)
-			instance._setup_shape(shape_string, null)
-			return output._compare_shape(instance._cut_shape(half))
+func _validate_shape_string(validator):
+	var parse_file = XMLParser.new()
+	parse_file.open(validator)
+	#Skip the XML header line
+	parse_file.read()
+	while parse_file.read() != ERR_FILE_EOF:
+		if parse_file.get_node_name() == "condition":
+			var output = parse_file.get_named_attribute_value("target")
+			var output_id = parse_file.get_named_attribute_value_safe("id")
+			var output_shape = get_node("../FactoryBase/" + output)._get_shape()
+			if output_shape == null:
+				return false
+			parse_file.read()
+			if parse_file.get_node_name() == "shape":
+				var target = parse_file.get_named_attribute_value("target")
+				var target_shape = get_node("../FactoryBase/" + target)._get_shape()
+				if output_shape._compare_shape(target_shape):
+					#Read once to skip closing tag
+					parse_file.read()
+					continue
+				else:
+					return false
+			if parse_file.get_node_name() == "component":
+				var target = parse_file.get_named_attribute_value_safe("target")
+				var target_shape = null
+				if target != "":
+					target_shape = get_node("../FactoryBase/" + target)._get_shape()
+				parse_file.read()
+				var target_value = parse_file.get_node_data()
+				match (target_value):
+					"true":
+						if output_shape._has_component(int(output_id)) != true:
+							return false
+					"false":
+						if output_shape._has_component(int(output_id)) != false:
+							return false
+					"0", "1", "2", "3", "4", "5", "6", "7":
+						if output_shape._has_component(int(output_id)) != target_shape._has_component(int(target_value)):
+							return false
+					var alternate:
+						print("No condition: " + alternate)
+						return false
+				#Read twice to skip closing tags
+				parse_file.read()
+				parse_file.read()
+				continue
+		else:
+			continue
+	return true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -50,7 +90,7 @@ func _on_MainUI_run_full_script(origin):
 	var passes = 0
 	while passes < passes_required:
 		yield(origin, "run_complete")
-		if _validate_shape_string(factory.get_node_or_null("output_0")._get_shape(), "cut_left"):
+		if _validate_shape_string(get_node("/root/MainGame").level_data._get_validator()):
 			logger._log_to_label("Shape passed! Generating new shape...")
 			factory._reset()
 			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
@@ -78,7 +118,7 @@ func _on_MainUI_run_test_script(origin):
 	yield(get_node_or_null("GameTimer"),"timeout")
 	origin._evaluate_all(get_node_or_null("GameTimer"))
 	yield(origin, "run_complete")
-	if _validate_shape_string(factory.get_node_or_null("output_0")._get_shape(), "cut_left"):
+	if _validate_shape_string(get_node("/root/MainGame").level_data._get_validator()):
 		logger._log_to_label("Shape passed!")
 	else:
 		logger._log_to_label("ERR>>Shape failed to pass!")	

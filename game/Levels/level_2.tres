@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/LevelData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+level_title = "Stay Composed"
+level_description = ""
+level_objective = ""
+inputs = 1
+outputs = 1
+variables = 1
+pointers = 1
+validator_name = "level2"
