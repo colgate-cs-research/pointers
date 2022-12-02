@@ -59,12 +59,11 @@ func _reset():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var level_data : LevelData = get_node("/root/MainGame").level_data
-	_setup_factory(level_data.inputs, level_data.outputs, level_data.variables, level_data.pointers)
-	#_setup_factory(1, 1, 3, 2)
-
-func _next():
 	pass
+
+func _setup():
+	var level_data : LevelData = get_node("/root/GameLevel").level_data
+	_setup_factory(level_data.inputs, level_data.outputs, level_data.variables, level_data.pointers)	
 
 func _point_pointer_to(pointer, target):
 	pointer._point_at(target)

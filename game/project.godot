@@ -21,8 +21,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Pointers Game"
-run/main_scene="res://Scenes/MainGame.tscn"
+run/main_scene="res://Scenes/LevelSelect.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+SceneHandler="*res://Scripts/SceneHandler.gd"
 
 [gui]
 

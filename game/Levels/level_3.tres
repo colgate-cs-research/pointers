@@ -4,11 +4,11 @@
 
 [resource]
 script = ExtResource( 1 )
-level_title = "Hello, Operator"
+level_title = "Cutting Clutter"
 level_description = ""
-level_objective = "Copy the input over to the output."
+level_objective = "Cut all squares from the input."
 inputs = 1
 outputs = 1
 variables = 1
 pointers = 1
-validator_name = "level1"
+validator_name = "level3"

@@ -3,8 +3,8 @@ class_name LevelData
 
 #To be displayed to user
 export(String) var level_title
-export(String) var level_description
-export(String) var level_objective
+export(String, MULTILINE) var level_description
+export(String, MULTILINE) var level_objective
 #To be used to construct the factory
 export(int) var inputs
 export(int) var outputs

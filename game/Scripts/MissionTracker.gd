@@ -15,6 +15,8 @@ var passes_required = 50
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+
+func _setup():
 	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
 
 func _generate_shape_string():
@@ -90,7 +92,7 @@ func _on_MainUI_run_full_script(origin):
 	var passes = 0
 	while passes < passes_required:
 		yield(origin, "run_complete")
-		if _validate_shape_string(get_node("/root/MainGame").level_data._get_validator()):
+		if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 			logger._log_to_label("Shape passed! Generating new shape...")
 			factory._reset()
 			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
@@ -108,6 +110,7 @@ func _on_MainUI_run_full_script(origin):
 	if passes >= passes_required:
 		logger._log_to_label("All tests passed! Great job!")
 		factory._reset()
+		SceneHandler._load_scene("res://Scenes/LevelSelect.tscn",["menu"])
 
 func _on_MainUI_run_test_script(origin):
 	factory._reset()
@@ -118,7 +121,7 @@ func _on_MainUI_run_test_script(origin):
 	yield(get_node_or_null("GameTimer"),"timeout")
 	origin._evaluate_all(get_node_or_null("GameTimer"))
 	yield(origin, "run_complete")
-	if _validate_shape_string(get_node("/root/MainGame").level_data._get_validator()):
+	if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 		logger._log_to_label("Shape passed!")
 	else:
 		logger._log_to_label("ERR>>Shape failed to pass!")	

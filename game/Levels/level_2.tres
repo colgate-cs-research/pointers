@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 level_title = "Stay Composed"
 level_description = ""
-level_objective = ""
+level_objective = "Compose a full square on to the input."
 inputs = 1
 outputs = 1
 variables = 1
