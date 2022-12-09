@@ -1,7 +1,7 @@
 extends Node2D
 
 # Declare member variables here.
-# Components order goes clockwise from top left, squares then circles
+# Components order goes clockwise from top right, squares then circles
 var shape_components = [false, false, false, false, false, false, false, false]
 var dock
 
