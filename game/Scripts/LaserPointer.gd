@@ -21,6 +21,7 @@ func _point_at(target_dock):
 	target = target_dock
 	var adjust_position = target_dock.position - position
 	get_node_or_null("PointerBeam").clear_points()
+	get_node_or_null("DereferenceBeam").clear_points()
 	get_node_or_null("PointerBeam").add_point(Vector2(0,0))
 	get_node_or_null("PointerBeam").add_point(adjust_position)
 	var radians = atan2(adjust_position.y, adjust_position.x) + PI/2

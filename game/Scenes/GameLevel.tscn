@@ -12,12 +12,12 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 level_data = ExtResource( 3 )
 
+[node name="MainUI" parent="." instance=ExtResource( 5 )]
+
 [node name="FactoryBase" parent="." instance=ExtResource( 4 )]
 anchor_right = 0.6
 anchor_bottom = 0.9
 mouse_filter = 1
-
-[node name="MainUI" parent="." instance=ExtResource( 5 )]
 
 [node name="MissionTracker" type="Node2D" parent="."]
 script = ExtResource( 2 )
@@ -32,8 +32,10 @@ script = ExtResource( 2 )
 [connection signal="cut_from_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_variable"]
 [connection signal="has_at_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_pointer"]
 [connection signal="has_at_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_variable"]
+[connection signal="level_ended" from="MainUI" to="MissionTracker" method="_on_MainUI_level_ended"]
 [connection signal="pointer_at_address" from="MainUI" to="FactoryBase" method="_on_MainUI_pointer_at_address"]
 [connection signal="pointer_at_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_pointer_at_pointer"]
+[connection signal="return_to_menu" from="MainUI" to="MissionTracker" method="_on_MainUI_return_to_menu"]
 [connection signal="run_full_script" from="MainUI" to="MissionTracker" method="_on_MainUI_run_full_script"]
 [connection signal="run_test_script" from="MainUI" to="MissionTracker" method="_on_MainUI_run_test_script"]
 [connection signal="set_pointer_to_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_set_pointer_to_pointer"]
@@ -42,3 +44,4 @@ script = ExtResource( 2 )
 [connection signal="set_variable_to_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_pointer"]
 [connection signal="set_variable_to_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_shape"]
 [connection signal="set_variable_to_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_variable"]
+[connection signal="level_complete" from="MissionTracker" to="MainUI" method="_on_MissionTracker_level_complete"]

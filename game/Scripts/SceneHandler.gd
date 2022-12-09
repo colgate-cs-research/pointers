@@ -3,6 +3,9 @@ extends Node
 # Declare member variables here. Examples:
 var current_scene = null
 
+#TO REPLACE WITH SCENE PACKING
+var current_level_id = -1;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var root = get_tree().get_root()
@@ -24,8 +27,11 @@ func _load_scene_deferred(path, params):
 		current_scene.level_data = params[1]
 		current_scene.get_node("FactoryBase")._setup()
 		current_scene.get_node("MissionTracker")._setup()
+		current_scene.get_node("MainUI").level_data = current_scene.level_data
+		current_level_id = params[2]
 	elif params[0] == "menu":
-		pass
+		if params[1]:
+			current_scene.get_node("LevelList").cleared_level = max(current_level_id, current_scene.get_node("LevelList").cleared_level)
 	else:
 		pass
 

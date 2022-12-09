@@ -16,20 +16,53 @@ anchor_bottom = 1.0
 margin_bottom = 4.0
 color = Color( 0.556863, 0.556863, 0.556863, 1 )
 
+[node name="MenuButton" type="Button" parent="BaseBar"]
+anchor_right = 0.2
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+text = "Menu"
+
+[node name="HelpButton" type="Button" parent="BaseBar"]
+anchor_left = 0.2
+anchor_right = 0.4
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+text = "Help Codex"
+
+[node name="ConditionsButton" type="Button" parent="BaseBar"]
+anchor_left = 0.4
+anchor_right = 0.6
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+text = "Mission Conditions"
+
 [node name="TestButton" type="Button" parent="BaseBar"]
-anchor_left = 0.5
-anchor_top = 0.2
-anchor_right = 0.65
-anchor_bottom = 0.8
-margin_left = 126.72
-margin_right = 126.72
+anchor_left = 0.6
+anchor_right = 0.8
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
 text = "Test Script"
 
 [node name="RunButton" type="Button" parent="BaseBar"]
-anchor_left = 0.825
-anchor_top = 0.2
-anchor_right = 0.975
-anchor_bottom = 0.8
+anchor_left = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
 text = "Run Script"
 
 [node name="Background" type="ColorRect" parent="."]
@@ -51,6 +84,53 @@ anchor_right = 1.0
 anchor_bottom = 0.7
 script = ExtResource( 3 )
 
+[node name="DialogLayer" type="CanvasLayer" parent="."]
+
+[node name="CompletionDialog" type="WindowDialog" parent="DialogLayer"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 0.9
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+
+[node name="CompletionDialogText" type="RichTextLabel" parent="DialogLayer/CompletionDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 6.10352e-05
+
+[node name="ConditionsDialog" type="WindowDialog" parent="DialogLayer"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 0.9
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+
+[node name="ConditionsDialogText" type="RichTextLabel" parent="DialogLayer/ConditionsDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 6.10352e-05
+
+[node name="HelpDialog" type="WindowDialog" parent="DialogLayer"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 0.9
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+
+[node name="HelpDialogText" type="RichTextLabel" parent="DialogLayer/HelpDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 6.10352e-05
+
+[connection signal="pressed" from="BaseBar/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="BaseBar/HelpButton" to="." method="_on_HelpButton_pressed"]
+[connection signal="pressed" from="BaseBar/ConditionsButton" to="." method="_on_ConditionsButton_pressed"]
 [connection signal="pressed" from="BaseBar/TestButton" to="ScriptBox" method="_on_TestButton_pressed"]
 [connection signal="pressed" from="BaseBar/RunButton" to="ScriptBox" method="_on_RunButton_pressed"]
 [connection signal="composition_from_pointer" from="ScriptBox" to="." method="_on_ScriptBox_composition_from_pointer"]
@@ -71,3 +151,4 @@ script = ExtResource( 3 )
 [connection signal="set_variable_to_pointer" from="ScriptBox" to="." method="_on_ScriptBox_set_variable_to_pointer"]
 [connection signal="set_variable_to_shape" from="ScriptBox" to="." method="_on_ScriptBox_set_variable_to_shape"]
 [connection signal="set_variable_to_variable" from="ScriptBox" to="." method="_on_ScriptBox_set_variable_to_variable"]
+[connection signal="popup_hide" from="DialogLayer/CompletionDialog" to="." method="_on_CompletionDialog_popup_hide"]

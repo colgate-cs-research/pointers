@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 level_title = "Hello, Operator"
-level_description = ""
+level_description = "Hello, Operator. Welcome to the shape factory. Before we start, let's make sure you understand the basics of how our factory works."
 level_objective = "Copy the input over to the output."
 inputs = 1
 outputs = 1

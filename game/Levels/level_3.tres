@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 level_title = "Cutting Clutter"
-level_description = ""
+level_description = "Well done. Now that you know about composition, it's time to introduce its inverse - cutting."
 level_objective = "Cut all squares from the input."
 inputs = 1
 outputs = 1

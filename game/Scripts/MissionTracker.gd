@@ -8,6 +8,8 @@ var shape = preload("res://Scenes/Shape.tscn")
 # var a = 2
 # var b = "text"
 
+signal level_complete
+
 var shape_string = "0 0 0 0 0 0 0 0"
 var shape_inputs : Dictionary
 var passes_required = 50
@@ -84,11 +86,11 @@ func _process(delta):
 func _on_MainUI_run_full_script(origin):
 	factory._reset()
 	logger.clear()
-	get_node_or_null("GameTimer").stop()
+	get_node("GameTimer").stop()
 	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
-	get_node_or_null("GameTimer").start()
-	yield(get_node_or_null("GameTimer"),"timeout")
-	origin._evaluate_all(get_node_or_null("GameTimer"))
+	get_node("GameTimer").start()
+	yield(get_node("GameTimer"),"timeout")
+	origin._evaluate_all(get_node("GameTimer"))
 	var passes = 0
 	while passes < passes_required:
 		yield(origin, "run_complete")
@@ -99,29 +101,34 @@ func _on_MainUI_run_full_script(origin):
 			passes += 1
 			if passes >= passes_required:
 				break
-			get_node_or_null("GameTimer").wait_time = 0.5/((passes/4)+1)
-			get_node_or_null("GameTimer").start()
-			yield(get_node_or_null("GameTimer"),"timeout")
-			origin._evaluate_all(get_node_or_null("GameTimer"))
+			get_node("GameTimer").wait_time = 0.5/((passes/4)+1)
+			get_node("GameTimer").start()
+			yield(get_node("GameTimer"),"timeout")
+			origin._evaluate_all(get_node("GameTimer"))
 		else:
 			logger._log_to_label("ERR>>Shape failed to pass!")	
 			break
 	
 	if passes >= passes_required:
+		emit_signal("level_complete")
 		logger._log_to_label("All tests passed! Great job!")
-		factory._reset()
-		SceneHandler._load_scene("res://Scenes/LevelSelect.tscn",["menu"])
 
 func _on_MainUI_run_test_script(origin):
 	factory._reset()
 	logger.clear()
-	get_node_or_null("GameTimer").stop()
+	get_node("GameTimer").stop()
 	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
-	get_node_or_null("GameTimer").start()
-	yield(get_node_or_null("GameTimer"),"timeout")
-	origin._evaluate_all(get_node_or_null("GameTimer"))
+	get_node("GameTimer").start()
+	yield(get_node("GameTimer"),"timeout")
+	origin._evaluate_all(get_node("GameTimer"))
 	yield(origin, "run_complete")
 	if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 		logger._log_to_label("Shape passed!")
 	else:
 		logger._log_to_label("ERR>>Shape failed to pass!")	
+
+func _on_MainUI_return_to_menu():
+	SceneHandler._load_scene("res://Scenes/LevelSelect.tscn",["menu", false])
+
+func _on_MainUI_level_ended():
+	SceneHandler._load_scene("res://Scenes/LevelSelect.tscn",["menu", true])

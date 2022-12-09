@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 level_title = "Stay Composed"
-level_description = ""
+level_description = "Good. You now know the basics of operating this factory. Let's move on to one of our first major tools - composition."
 level_objective = "Compose a full square on to the input."
 inputs = 1
 outputs = 1

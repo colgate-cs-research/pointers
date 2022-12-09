@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/LevelData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+level_title = "Putting Things Together"
+level_description = "Good. Now that you know the basics of this factory, let's try something more complex."
+level_objective = "Cut off the right half of the input and output the left half to output_0.
+Cut off the left half of the input and output the right half to output_1."
+inputs = 1
+outputs = 2
+variables = 2
+pointers = 2
+validator_name = "level4"
