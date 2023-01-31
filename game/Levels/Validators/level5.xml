@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+<condition target="output_0">
+<shape target="input_0" />
+</condition>
+<condition target="output_1" id="0">
+<component target="input_0">-0</component>
+</condition>
+<condition target="output_1" id="1">
+<component target="input_0">-1</component>
+</condition>
+<condition target="output_1" id="2">
+<component target="input_0">-2</component>
+</condition>
+<condition target="output_1" id="3">
+<component target="input_0">-3</component>
+</condition>
+<condition target="output_1" id="4">
+<component target="input_0">-4</component>
+</condition>
+<condition target="output_1" id="5">
+<component target="input_0">-5</component>
+</condition>
+<condition target="output_1" id="6">
+<component target="input_0">-6</component>
+</condition>
+<condition target="output_1" id="7">
+<component target="input_0">-7</component>
+</condition>
+</level>

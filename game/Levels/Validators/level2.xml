@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<condition target="output_0" id="0"><component>true</component></condition>
-<condition target="output_0" id="1"><component>true</component></condition>
-<condition target="output_0" id="2"><component>true</component></condition>
-<condition target="output_0" id="3"><component>true</component></condition>
-<condition target="output_0" id="4"><component target="input_0">4</component></condition>
-<condition target="output_0" id="5"><component target="input_0">5</component></condition>
-<condition target="output_0" id="6"><component target="input_0">6</component></condition>
-<condition target="output_0" id="7"><component target="input_0">7</component></condition>
+<level>
+<condition target="output_0" id="0">
+<component>true</component>
+</condition>
+<condition target="output_0" id="1">
+<component>true</component>
+</condition>
+<condition target="output_0" id="2">
+<component>true</component>
+</condition>
+<condition target="output_0" id="3">
+<component>true</component>
+</condition>
+<condition target="output_0" id="4">
+<component target="input_0">4</component>
+</condition>
+<condition target="output_0" id="5">
+<component target="input_0">5</component>
+</condition>
+<condition target="output_0" id="6">
+<component target="input_0">6</component>
+</condition>
+<condition target="output_0" id="7">
+<component target="input_0">7</component>
+</condition>
+</level>

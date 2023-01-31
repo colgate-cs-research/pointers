@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource( 1 )
+level_number = 3
+level_tag = ""
 level_title = "Putting Things Together"
 level_description = "Good. Now that you know the basics of this factory, let's try something more complex."
 level_objective = "Cut off the right half of the input and output the left half to output_0.

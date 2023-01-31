@@ -139,3 +139,6 @@ func _evaluate_line(text):
 	if result:
 		emit_signal("set_variable_to_pointer", result.get_string("variable"),  result.get_string("pointer"))
 		return;
+
+func _on_ShapeButton_pressed():
+	insert_text_at_cursor("! TRS BRS BLS TLS TRC BRC BLC TLC")

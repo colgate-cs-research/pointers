@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/GameLevel.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/MissionTracker.gd" type="Script" id=2]
 [ext_resource path="res://Levels/level_1.tres" type="Resource" id=3]
 [ext_resource path="res://Scenes/FactoryBase.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/MainUI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=6]
 
 [node name="GameLevel" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 6 )
 script = ExtResource( 1 )
 level_data = ExtResource( 3 )
 

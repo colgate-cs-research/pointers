@@ -32,8 +32,6 @@ func _generate_shape_string():
 func _validate_shape_string(validator):
 	var parse_file = XMLParser.new()
 	parse_file.open(validator)
-	#Skip the XML header line
-	parse_file.read()
 	while parse_file.read() != ERR_FILE_EOF:
 		if parse_file.get_node_name() == "condition":
 			var output = parse_file.get_named_attribute_value("target")
@@ -67,6 +65,9 @@ func _validate_shape_string(validator):
 							return false
 					"0", "1", "2", "3", "4", "5", "6", "7":
 						if output_shape._has_component(int(output_id)) != target_shape._has_component(int(target_value)):
+							return false
+					"-0", "-1", "-2", "-3", "-4", "-5", "-6", "-7":
+						if output_shape._has_component(abs(int(output_id))) == target_shape._has_component(abs(int(target_value))):
 							return false
 					var alternate:
 						print("No condition: " + alternate)

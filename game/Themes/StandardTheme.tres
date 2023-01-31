@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=6 format=2]
+
+[ext_resource path="res://Fonts/StandardFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/StandardFontBold.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/StandardFontItalic.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Fonts/CodeFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Fonts/StandardFontBoldItalic.tres" type="DynamicFont" id=5]
+
+[resource]
+default_font = ExtResource( 1 )
+RichTextLabel/fonts/bold_font = ExtResource( 2 )
+RichTextLabel/fonts/bold_italics_font = ExtResource( 5 )
+RichTextLabel/fonts/italics_font = ExtResource( 3 )
+RichTextLabel/fonts/mono_font = ExtResource( 4 )

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documentation>
+<section level="0">
+<header>Basic Syntax</header>
+<text>Most of the instructions for the factory are written in standard C code.</text>
+<code>var_0 = var_1;</code>
+<code>ptr_0 = &amp;var_0</code>
+<text>However, pointers require an == in order to dereference.</text>
+<code>var_2 == *ptr_0;</code>
+</section>
+<section level="1">
+<header>New Syntax</header>
+<text>You can write code to generate custom shapes.</text>
+<code>! ~ ~ ~ ~ ~ ~ ~ ~</code>
+<text>Each tilde in the previous code snippet should be replaced by a 1 or a 0 depending on whether that shape segment should be enabled.</text>
+<text>You can press the "Create Shape" button on the bottom bar to generate a template for a shape.</text>
+<break />
+<header>Composition</header>
+<text>The composition operation overlays the shape on the right over the shape on the left.</text>
+<code>! 0 1 0 1 0 0 0 0 &lt; ! 1 0 1 0 0 0 0 0</code>
+<code>! 1 1 1 1 0 0 0 0 </code>
+<text>Important note: This modifies the left shape in place.</text>
+</section>
+</documentation>

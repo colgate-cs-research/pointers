@@ -2,6 +2,8 @@ extends Resource
 class_name LevelData
 
 #To be displayed to user
+export(int) var level_number
+export(String) var level_tag
 export(String) var level_title
 export(String, MULTILINE) var level_description
 export(String, MULTILINE) var level_objective

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/LevelData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+level_number = 4
+level_tag = ""
+level_title = "Shapes in Inversion"
+level_description = "Good job. Let's move on to our first official order - inverting shapes for our client."
+level_objective = "Output the inversion of the input.
+An inversion flips the state of every component in a shape."
+inputs = 1
+outputs = 1
+variables = 3
+pointers = 1
+validator_name = "level5"

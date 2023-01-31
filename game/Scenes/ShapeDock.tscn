@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/ShapeDock.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/FactorySprites/shape_dock_storage.png" type="Texture" id=2]
-[ext_resource path="res://Themes/FactoryColor.tres" type="Theme" id=3]
+[ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=3]
 
 [node name="ShapeDock" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,5 +17,6 @@ margin_top = 24.0
 margin_right = 32.0
 margin_bottom = 40.0
 theme = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
