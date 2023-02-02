@@ -1,21 +1,27 @@
 import sys
 from antlr4 import *
-from PsuedoCLexer import PsuedoCLexer
-from PsuedoCParser import PsuedoCParser
+from FactoryCLexer import FactoryCLexer
+from FactoryCParser import FactoryCParser
 from XmlConverter import XmlConverter
 from xml.etree import ElementTree
+import xml.dom.minidom
  
 def main(argv):
     input_stream = FileStream(argv[1])
-    lexer = PsuedoCLexer(input_stream)
+    lexer = FactoryCLexer(input_stream)
     stream = CommonTokenStream(lexer)
-    parser = PsuedoCParser(stream)
+    parser = FactoryCParser(stream)
     tree = parser.statements()
     converter = XmlConverter()
     walker = ParseTreeWalker()
     walker.walk(converter, tree)
-    xml = ElementTree.tostring(converter.statements)
-    print(xml.decode())
+
+    # Display XML
+    xmlStr = ElementTree.tostring(converter.statements)
+    xmlStr = xmlStr.decode()
+    temp = xml.dom.minidom.parseString(xmlStr)
+    xmlStr = temp.toprettyxml();
+    print(xmlStr)
 
  
 if __name__ == '__main__':
