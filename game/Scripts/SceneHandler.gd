@@ -25,7 +25,6 @@ func _load_scene_deferred(path, params):
 	
 	if params[0] == "level":
 		current_scene.level_data = params[1]
-		current_scene.get_node("FactoryBase")._setup()
 		current_scene.get_node("MissionTracker")._setup()
 		current_scene.get_node("MainUI").level_data = current_scene.level_data
 		current_level_id = params[2]

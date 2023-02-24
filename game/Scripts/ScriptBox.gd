@@ -47,6 +47,12 @@ func _evaluate_all(timer):
 		yield(timer, "timeout")
 	emit_signal("run_complete")
 
+func _evaluate_all_fast():
+	for i in get_line_count():
+		var line = get_line(i)
+		_evaluate_line(line)
+	emit_signal("run_complete")
+
 func _evaluate_line(text):
 	var parse = RegEx.new()
 	var result
@@ -139,6 +145,3 @@ func _evaluate_line(text):
 	if result:
 		emit_signal("set_variable_to_pointer", result.get_string("variable"),  result.get_string("pointer"))
 		return;
-
-func _on_ShapeButton_pressed():
-	insert_text_at_cursor("! TRS BRS BLS TLS TRC BRC BLC TLC")

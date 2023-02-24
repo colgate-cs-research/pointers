@@ -19,7 +19,8 @@ func _ready():
 	randomize()
 
 func _setup():
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
+	factory._setup()
+	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
 
 func _generate_shape_string():
 	var string = ""
@@ -87,41 +88,34 @@ func _process(delta):
 func _on_MainUI_run_full_script(origin):
 	factory._reset()
 	logger.clear()
-	get_node("GameTimer").stop()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
-	get_node("GameTimer").start()
-	yield(get_node("GameTimer"),"timeout")
-	origin._evaluate_all(get_node("GameTimer"))
-	var passes = 0
-	while passes < passes_required:
+	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+	for i in 256:
+		var shape_string = str(floor(i/128)) + " "
+		shape_string = shape_string + str(floor(i%128/64)) + " "
+		shape_string = shape_string + str(floor(i%64/32)) + " "
+		shape_string = shape_string + str(floor(i%32/16)) + " "
+		shape_string = shape_string + str(floor(i%16/8)) + " "
+		shape_string = shape_string + str(floor(i%8/4)) + " "
+		shape_string = shape_string + str(floor(i%4/2)) + " "
+		shape_string = shape_string + str(floor(i%2)) + " "
+		origin.call_deferred("_evaluate_all_fast")
 		yield(origin, "run_complete")
 		if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 			logger._log_to_label("Shape passed! Generating new shape...")
 			factory._reset()
-			factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
-			passes += 1
-			if passes >= passes_required:
-				break
-			get_node("GameTimer").wait_time = 0.5/((passes/4)+1)
-			get_node("GameTimer").start()
-			yield(get_node("GameTimer"),"timeout")
-			origin._evaluate_all(get_node("GameTimer"))
+			factory._instance_shape_to_game(shape_string, factory.get_node("input_0"))
+			origin._evaluate_all_fast()
 		else:
-			logger._log_to_label("ERR>>Shape failed to pass!")	
+			logger._log_to_label("ERR>>Shape " + shape_string + " failed to pass!")	
 			break
-	
-	if passes >= passes_required:
-		emit_signal("level_complete")
-		logger._log_to_label("All tests passed! Great job!")
+	emit_signal("level_complete")
+	logger._log_to_label("All tests passed! Level complete!")
 
 func _on_MainUI_run_test_script(origin):
 	factory._reset()
 	logger.clear()
-	get_node("GameTimer").stop()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node_or_null("input_0"))
-	get_node("GameTimer").start()
-	yield(get_node("GameTimer"),"timeout")
-	origin._evaluate_all(get_node("GameTimer"))
+	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+	origin.call_deferred("_evaluate_all_fast")
 	yield(origin, "run_complete")
 	if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 		logger._log_to_label("Shape passed!")

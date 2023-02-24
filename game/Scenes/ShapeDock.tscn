@@ -5,17 +5,20 @@
 [ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=3]
 
 [node name="ShapeDock" type="Node2D"]
+position = Vector2( -32, -32 )
 script = ExtResource( 1 )
 
 [node name="DockSprite" type="Sprite" parent="."]
-scale = Vector2( 1.5, 1.5 )
+position = Vector2( 32, 32 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
 [node name="DockLabel" type="Label" parent="."]
-margin_left = -32.0
-margin_top = 24.0
-margin_right = 32.0
-margin_bottom = 40.0
+anchor_right = 0.5
+margin_top = 64.0
+margin_right = 64.0
+margin_bottom = 85.0
+grow_horizontal = 2
 theme = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1

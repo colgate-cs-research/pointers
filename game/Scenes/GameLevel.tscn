@@ -17,7 +17,6 @@ level_data = ExtResource( 3 )
 [node name="MainUI" parent="." instance=ExtResource( 5 )]
 
 [node name="FactoryBase" parent="." instance=ExtResource( 4 )]
-anchor_right = 0.6
 anchor_bottom = 0.9
 mouse_filter = 1
 

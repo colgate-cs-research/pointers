@@ -110,6 +110,9 @@ func _on_ConditionsButton_pressed():
 	conditionsText.clear()
 	conditionsText.append_bbcode(level_data.level_objective)
 
+func _on_CodeButton_pressed():
+	get_node("DialogLayer/ScriptDialog").popup_centered()
+
 func _on_MissionTracker_level_complete():
 	get_node("DialogLayer/CompletionDialog").popup_centered()
 	var completionText = get_node("DialogLayer/CompletionDialog/CompletionDialogText")

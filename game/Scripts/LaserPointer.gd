@@ -22,8 +22,8 @@ func _point_at(target_dock):
 	var adjust_position = target_dock.position - position
 	get_node_or_null("PointerBeam").clear_points()
 	get_node_or_null("DereferenceBeam").clear_points()
-	get_node_or_null("PointerBeam").add_point(Vector2(0,0))
-	get_node_or_null("PointerBeam").add_point(adjust_position)
+	get_node_or_null("PointerBeam").add_point(Vector2(32, 32))
+	get_node_or_null("PointerBeam").add_point(adjust_position + Vector2(32, 32))
 	var radians = atan2(adjust_position.y, adjust_position.x) + PI/2
 	get_node_or_null("PointerSprite").rotation = radians
 
@@ -32,8 +32,8 @@ func _dereference(target_dock):
 		return;
 	var adjust_position = target_dock.position - position
 	get_node_or_null("DereferenceBeam").clear_points()
-	get_node_or_null("DereferenceBeam").add_point(Vector2(0,0))
-	get_node_or_null("DereferenceBeam").add_point(adjust_position)
+	get_node_or_null("DereferenceBeam").add_point(Vector2(32,32))
+	get_node_or_null("DereferenceBeam").add_point(adjust_position + Vector2(32, 32))
 
 func _get_target():
 	return target

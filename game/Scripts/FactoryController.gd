@@ -7,41 +7,106 @@ var shape = preload("res://Scenes/Shape.tscn")
 var pointer = preload("res://Scenes/LaserPointer.tscn")
 var dock = preload("res://Scenes/ShapeDock.tscn")
 
+var main_memory_row_addr = 10
+var stack_memory_row_addr = 4
+var row_count = 9
+
+var allocated_main_memory = []
+var allocated_stack_memory = []
+
+var base_offset = 10
+var dock_size = 64
+var dock_offset = 5
+var shape_size = 128
+
 func _instance_shape_to_game(setup_string, dock):
 	var instance = shape.instance()
-	add_child(instance)
 	instance._setup_shape(setup_string, dock)
-	instance.position = dock.position
+	dock.add_child(instance)
+	instance.position = Vector2(32,32)
 	dock._set_shape(instance)
 
+func _setup_memory():
+	for i in main_memory_row_addr * row_count + 1:
+		allocated_main_memory.append(false)
+	for i in stack_memory_row_addr * row_count + 1:
+		allocated_stack_memory.append(false)
+
+func _next_available_addr_main(size : int):
+	var index = -1
+	var available_size = 0
+	for i in allocated_main_memory.size():
+		if !allocated_main_memory[i]:
+			if index < 0:
+				index = i
+			available_size += 1
+			if available_size > size:
+				return index
+		else:
+			index = -1
+			available_size = 0
+	return -1
+
+func _next_available_addr_stack(size : int):
+	var index = -1
+	var available_size = 0
+	for i in allocated_stack_memory.count():
+		if !allocated_stack_memory[i]:
+			if index < 0:
+				index = i
+			available_size += 1
+			if available_size > size:
+				return index
+		else:
+			index = -1
+			available_size = 0
+	return -1
+
 func _setup_factory(inputs, outputs, variables, pointers):
+	_setup_memory()
 	for i in inputs:
 		var instance = dock.instance()
 		add_child(instance)
-		instance.position.x = i * 72 + 72
-		instance.position.y = 72
 		instance.name = "input_" + str(i)
-		instance._setup_dock("input")
+		var index = _next_available_addr_main(1)
+		if index == -1:
+			print("ERR>>Insufficient space in main memory for new variable")
+			continue
+		instance.position = Vector2((index % main_memory_row_addr) * (dock_size + dock_offset) + base_offset, floor(float(index) / main_memory_row_addr) * (dock_size + dock_offset) + base_offset)
+		allocated_main_memory[index] = true
+		instance._setup_dock("input", 0)
 	for i in outputs:
 		var instance = dock.instance()
 		add_child(instance)
-		instance.position.x = rect_size.x - 72 - i * 72
-		instance.position.y = 72
 		instance.name = "output_" + str(i)
-		instance._setup_dock("output")
+		var index = _next_available_addr_main(1)
+		if index == -1:
+			print("ERR>>Insufficient space in main memory for new variable")
+			continue
+		instance.position = Vector2((index % main_memory_row_addr) * (dock_size + dock_offset) + base_offset, floor(float(index) / main_memory_row_addr) * (dock_size + dock_offset) + base_offset)
+		allocated_main_memory[index] = true
+		instance._setup_dock("output", 0)
 	for i in variables:
 		var instance = dock.instance()
 		add_child(instance)
-		instance.position.x = rect_size.x / 2 - float((variables - 1)/ float(2)) * 72 + 72 * i
-		instance.position.y = rect_size.y - 72
 		instance.name = "variable_" + str(i)
-		instance._setup_dock("storage")
+		var index = _next_available_addr_main(1)
+		if index == -1:
+			print("ERR>>Insufficient space in main memory for new variable")
+			continue
+		instance.position = Vector2((index % main_memory_row_addr) * (dock_size + dock_offset) + base_offset, floor(float(index) / main_memory_row_addr) * (dock_size + dock_offset) + base_offset)
+		allocated_main_memory[index] = true
+		instance._setup_dock("storage", 0)
 	for i in pointers:
 		var instance = pointer.instance()
 		add_child(instance)
-		instance.position.x = rect_size.x / 2 - float((pointers - 1)/ float(2)) * 80 + 80 * i
-		instance.position.y = rect_size.y / 2
 		instance.name = "pointer_" + str(i)
+		var index = _next_available_addr_main(1)
+		if index == -1:
+			print("ERR>>Insufficient space in main memory for new variable")
+			continue
+		instance.position = Vector2((index % main_memory_row_addr) * (dock_size + dock_offset) + base_offset, floor(float(index) / main_memory_row_addr) * (dock_size + dock_offset) + base_offset)
+		allocated_main_memory[index] = true
 		instance._setup_pointer()
 
 func _reset():
