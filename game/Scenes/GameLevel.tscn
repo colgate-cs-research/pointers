@@ -1,27 +1,34 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://dr2rdoviv8wo0"]
 
-[ext_resource path="res://Scripts/GameLevel.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/MissionTracker.gd" type="Script" id=2]
-[ext_resource path="res://Levels/level_1.tres" type="Resource" id=3]
-[ext_resource path="res://Scenes/FactoryBase.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/MainUI.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=6]
+[ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/MissionTracker.gd" id="2"]
+[ext_resource type="Resource" uid="uid://cpubki7qc51bq" path="res://Levels/level_1.tres" id="3"]
+[ext_resource type="PackedScene" uid="uid://qntpq64berug" path="res://Scenes/FactoryBase.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://u6mdqq12q5id" path="res://Scenes/MainUI.tscn" id="5"]
+[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="6"]
 
 [node name="GameLevel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 6 )
-script = ExtResource( 1 )
-level_data = ExtResource( 3 )
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6")
+script = ExtResource("1")
+level_data = ExtResource("3")
 
-[node name="MainUI" parent="." instance=ExtResource( 5 )]
+[node name="MainUI" parent="." instance=ExtResource("5")]
+layout_mode = 1
 
-[node name="FactoryBase" parent="." instance=ExtResource( 4 )]
+[node name="FactoryBase" parent="." instance=ExtResource("4")]
+layout_mode = 1
+anchors_preset = -1
 anchor_bottom = 0.9
 mouse_filter = 1
 
 [node name="MissionTracker" type="Node2D" parent="."]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="GameTimer" type="Timer" parent="MissionTracker"]
 
@@ -31,6 +38,7 @@ script = ExtResource( 2 )
 [connection signal="cut_from_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_pointer"]
 [connection signal="cut_from_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_shape"]
 [connection signal="cut_from_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_cut_from_variable"]
+[connection signal="export_code" from="MainUI" to="FactoryBase" method="_on_export_code"]
 [connection signal="has_at_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_pointer"]
 [connection signal="has_at_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_has_at_variable"]
 [connection signal="level_ended" from="MainUI" to="MissionTracker" method="_on_MainUI_level_ended"]
@@ -45,4 +53,5 @@ script = ExtResource( 2 )
 [connection signal="set_variable_to_pointer" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_pointer"]
 [connection signal="set_variable_to_shape" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_shape"]
 [connection signal="set_variable_to_variable" from="MainUI" to="FactoryBase" method="_on_MainUI_set_variable_to_variable"]
+[connection signal="log_to_logger" from="FactoryBase" to="MainUI" method="_on_external_logger"]
 [connection signal="level_complete" from="MissionTracker" to="MainUI" method="_on_MissionTracker_level_complete"]

@@ -1,9 +1,9 @@
-[gd_resource type="DynamicFont" load_steps=5 format=2]
+[gd_resource type="FontFile" load_steps=5 format=2]
 
-[ext_resource path="res://Fonts/Font Files/SourceSansPro-Bold.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Fonts/Font Files/SourceSansPro-BoldItalic.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Fonts/Font Files/SourceSansPro-Italic.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Fonts/Font Files/SourceSansPro-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Fonts/Font Files/SourceSansPro-Bold.ttf" type="FontFile" id=1]
+[ext_resource path="res://Fonts/Font Files/SourceSansPro-BoldItalic.ttf" type="FontFile" id=2]
+[ext_resource path="res://Fonts/Font Files/SourceSansPro-Italic.ttf" type="FontFile" id=3]
+[ext_resource path="res://Fonts/Font Files/SourceSansPro-Regular.ttf" type="FontFile" id=4]
 
 [resource]
 font_data = ExtResource( 2 )

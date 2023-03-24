@@ -1,30 +1,36 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://qntpq64berug"]
 
-[ext_resource path="res://Scripts/FactoryController.gd" type="Script" id=1]
-[ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=2]
+[ext_resource type="Script" path="res://Scripts/FactoryController.gd" id="1"]
+[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="2"]
 
 [node name="FactoryBase" type="Control"]
+custom_minimum_size = Vector2(614.4, 540)
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 614.4, 540 )
-theme = ExtResource( 2 )
-script = ExtResource( 1 )
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
 
 [node name="Z-Layer" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="MainBackground" type="ColorRect" parent="Z-Layer"]
+anchors_preset = -1
 anchor_right = 0.6
 anchor_bottom = 1.0
-margin_right = -14.4
-theme = ExtResource( 2 )
-color = Color( 0.898039, 0.898039, 0.898039, 1 )
+offset_right = -14.4
+theme = ExtResource("2")
+color = Color(0.898039, 0.898039, 0.898039, 1)
 
 [node name="StackBackground" type="ColorRect" parent="Z-Layer"]
+anchors_preset = -1
 anchor_left = 0.6
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -14.4
-margin_right = -4.0
-theme = ExtResource( 2 )
-color = Color( 0.713726, 0.713726, 0.713726, 1 )
+offset_left = -14.4
+offset_right = -4.0
+theme = ExtResource("2")
+color = Color(0.713726, 0.713726, 0.713726, 1)

@@ -2,18 +2,21 @@ extends Resource
 class_name LevelData
 
 #To be displayed to user
-export(int) var level_number
-export(String) var level_tag
-export(String) var level_title
-export(String, MULTILINE) var level_description
-export(String, MULTILINE) var level_objective
+@export var level_number: int
+@export var level_tag: String
+@export var level_title: String
+@export_multiline var level_description: String
+@export_multiline var level_objective: String
+@export_multiline var pre_code: String
+@export_multiline var post_code: String
+
 #To be used to construct the factory
-export(int) var inputs
-export(int) var outputs
-export(int) var variables
-export(int) var pointers
+@export var inputs: int
+@export var outputs: int
+@export var variables: int
+@export var pointers: int
 #To validate the level
-export(String) var validator_name
+@export var validator_name: String
 
 func _get_validator():
 	return "res://Levels/Validators/" + validator_name + ".xml"

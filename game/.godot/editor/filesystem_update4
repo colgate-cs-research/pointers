@@ -1,0 +1,10 @@
+res://Themes/default_env.tres
+res://Scenes/LevelSelect.tscn
+res://Scripts/FactoryController.gd
+res://Scenes/FactoryBase.tscn
+res://Scenes/GameLevel.tscn
+res://Scenes/LaserPointer.tscn
+res://Scenes/Shape.tscn
+res://Scenes/MainUI.tscn
+res://Scenes/ShapeDock.tscn
+res://Scripts/ShapeDock.gd

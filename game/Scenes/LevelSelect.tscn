@@ -1,48 +1,57 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://c2rvtjoc0p3jb"]
 
-[ext_resource path="res://Scripts/LevelList.gd" type="Script" id=1]
-[ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=7]
+[ext_resource type="Script" path="res://Scripts/LevelList.gd" id="1"]
+[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="7"]
 
 [node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 7 )
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7")
 
 [node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 7 )
+theme = ExtResource("7")
 
 [node name="LevelList" type="ItemList" parent="."]
+layout_mode = 0
 anchor_right = 0.5
 anchor_bottom = 0.9
-theme = ExtResource( 7 )
-script = ExtResource( 1 )
+theme = ExtResource("7")
+script = ExtResource("1")
 cleared_level_override = 5
 
 [node name="ActionBar" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_top = 0.9
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 7 )
+theme = ExtResource("7")
 
 [node name="StartButton" type="Button" parent="ActionBar"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -100.0
-margin_top = -20.0
-margin_right = 100.0
-margin_bottom = 20.0
-theme = ExtResource( 7 )
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+theme = ExtResource("7")
 text = "Start Level"
 
 [node name="LevelDescription" type="RichTextLabel" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.9
-margin_right = 512.0
-theme = ExtResource( 7 )
+offset_right = 512.0
+theme = ExtResource("7")
 
 [connection signal="pressed" from="ActionBar/StartButton" to="LevelList" method="_on_StartButton_pressed"]

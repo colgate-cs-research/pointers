@@ -1,14 +1,19 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://mef8qsp7q171"]
 
-[ext_resource path="res://Scripts/LevelData.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Scripts/LevelData.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 level_number = 2
 level_tag = ""
 level_title = "Cutting Clutter"
 level_description = "Well done. Now that you know about composition, it's time to introduce its inverse - cutting."
 level_objective = "Cut all squares from the input."
+pre_code = "shape input_0;
+shape variable_0;
+shape output_0;
+shape* pointer_0;"
+post_code = ""
 inputs = 1
 outputs = 1
 variables = 1

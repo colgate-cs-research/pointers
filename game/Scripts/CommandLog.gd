@@ -8,9 +8,9 @@ extends RichTextLabel
 
 func _log_to_label(message):
 	if (message as String).get_slice(">>", 0) == "ERR":
-		append_bbcode("[color=red]" + message + "[/color]\n")
+		append_text("[color=red]" + message + "[/color]\n")
 	else:
-		append_bbcode(message + "\n")
+		append_text(message + "\n")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

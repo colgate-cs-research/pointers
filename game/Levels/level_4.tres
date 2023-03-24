@@ -1,15 +1,23 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://bgfxu0amfo1u2"]
 
-[ext_resource path="res://Scripts/LevelData.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Scripts/LevelData.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 level_number = 3
 level_tag = ""
 level_title = "Putting Things Together"
 level_description = "Good. Now that you know the basics of this factory, let's try something more complex."
 level_objective = "Cut off the right half of the input and output the left half to output_0.
 Cut off the left half of the input and output the right half to output_1."
+pre_code = "shape input_0;
+shape variable_0;
+shape variable_1;
+shape output_0;
+shape output_1;
+shape* pointer_0;
+shape* pointer_1;"
+post_code = ""
 inputs = 1
 outputs = 2
 variables = 2

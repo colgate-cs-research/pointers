@@ -9,7 +9,7 @@ var level_list = "res://Files/level_list.xml"
 var level_dict : Dictionary
 var level_data_list : Array
 var cleared_level = -1;
-export var cleared_level_override = -2;
+@export var cleared_level_override = -2;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,7 +29,7 @@ func _process(delta):
 	get_node("../LevelDescription").clear()
 	get_node("../ActionBar/StartButton").disabled = !is_anything_selected()
 	if is_anything_selected():
-		get_node("../LevelDescription").append_bbcode(level_dict[get_selected_items()[0]].level_description)
+		get_node("../LevelDescription").append_text(level_dict[get_selected_items()[0]].level_description)
 	for id in level_dict.size():
 		set_item_disabled(id, id > cleared_level + 1)
 

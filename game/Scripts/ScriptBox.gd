@@ -26,6 +26,8 @@ signal run_test_script(origin)
 
 signal run_complete()
 
+signal export_code(code_text)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -34,17 +36,32 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func _setup_autocode(level_data : LevelData):
+	if level_data.pre_code != "":
+		text += "//Pre code\n"
+	text += level_data.pre_code
+	if level_data.pre_code != "":
+		text += "\n//End Pre code\n\n"
+	text += "void main() {\n\t//TODO: YOUR CODE HERE\n}"
+	if level_data.post_code != "":
+		text += "\n\n//Post code\n"
+	text += level_data.post_code
+	if level_data.post_code != "":
+		text += "\n//End post code"
+
 func _on_TestButton_pressed():
+	emit_signal("export_code", text)
 	emit_signal("run_test_script", self)
 
 func _on_RunButton_pressed():
+	emit_signal("export_code", text)
 	emit_signal("run_full_script", self)
 
 func _evaluate_all(timer):
 	for i in get_line_count():
 		var line = get_line(i)
 		_evaluate_line(line)
-		yield(timer, "timeout")
+		await timer.timeout
 	emit_signal("run_complete")
 
 func _evaluate_all_fast():

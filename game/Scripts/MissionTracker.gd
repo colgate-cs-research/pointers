@@ -1,7 +1,7 @@
 extends Node2D
 
-onready var logger = get_node_or_null("../MainUI/CommandLog")
-onready var factory = get_node_or_null("../FactoryBase")
+@onready var logger = get_node_or_null("../MainUI/CommandLog")
+@onready var factory = get_node_or_null("../FactoryBase")
 var shape = preload("res://Scenes/Shape.tscn")
 
 # Declare member variables here. Examples:
@@ -99,7 +99,7 @@ func _on_MainUI_run_full_script(origin):
 		shape_string = shape_string + str(floor(i%4/2)) + " "
 		shape_string = shape_string + str(floor(i%2)) + " "
 		origin.call_deferred("_evaluate_all_fast")
-		yield(origin, "run_complete")
+		await origin.run_complete
 		if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 			logger._log_to_label("Shape passed! Generating new shape...")
 			factory._reset()
@@ -115,8 +115,11 @@ func _on_MainUI_run_test_script(origin):
 	factory._reset()
 	logger.clear()
 	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+	#PARSER HERE
+	factory._run_external_parser()
+	#PARSER HERE
 	origin.call_deferred("_evaluate_all_fast")
-	yield(origin, "run_complete")
+	await origin.run_complete
 	if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 		logger._log_to_label("Shape passed!")
 	else:

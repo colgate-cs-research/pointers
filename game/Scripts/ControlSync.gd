@@ -30,6 +30,8 @@ signal return_to_menu()
 
 signal level_ended()
 
+signal export_code(code_text)
+
 var level_data
 
 # Called when the node enters the scene tree for the first time.
@@ -108,7 +110,7 @@ func _on_ConditionsButton_pressed():
 	get_node("DialogLayer/ConditionsDialog").popup_centered()
 	var conditionsText = get_node("DialogLayer/ConditionsDialog/ConditionsDialogText")
 	conditionsText.clear()
-	conditionsText.append_bbcode(level_data.level_objective)
+	conditionsText.append_text(level_data.level_objective)
 
 func _on_CodeButton_pressed():
 	get_node("DialogLayer/ScriptDialog").popup_centered()
@@ -117,7 +119,7 @@ func _on_MissionTracker_level_complete():
 	get_node("DialogLayer/CompletionDialog").popup_centered()
 	var completionText = get_node("DialogLayer/CompletionDialog/CompletionDialogText")
 	completionText.clear()
-	completionText.append_bbcode("Level Complete!")
+	completionText.append_text("Level Complete!")
 
 func _on_CompletionDialog_popup_hide():
 	emit_signal("level_ended")
@@ -137,29 +139,35 @@ func _add_documentation(helpText : RichTextLabel):
 			"header":
 				#Move to text node
 				parse_file.read()
-				helpText.append_bbcode("[b]" + parse_file.get_node_data() + "[/b]\n")
+				helpText.append_text("[b]" + parse_file.get_node_data() + "[/b]\n")
 				#Skip closing tags
 				parse_file.read()
 			"text":
 				#Move to text node
 				parse_file.read()
-				helpText.append_bbcode(parse_file.get_node_data() + "\n")
+				helpText.append_text(parse_file.get_node_data() + "\n")
 				#Skip closing tags
 				parse_file.read()
 			"code":
 				#Move to text node
 				parse_file.read()
-				helpText.append_bbcode("[code]" + parse_file.get_node_data() + "[/code]\n")
+				helpText.append_text("[code]" + parse_file.get_node_data() + "[/code]\n")
 				#Skip closing tags
 				parse_file.read()
 			"break":
-				helpText.append_bbcode("\n")
+				helpText.append_text("\n")
 			"section":
 				if level_data.level_number < int(parse_file.get_named_attribute_value("level")):
 					terminate = true
 			"documentation":
 				break
 			_:
-				helpText.append_bbcode("ERROR\n")
+				helpText.append_text("ERROR\n")
 				#Skip closing tags
 				parse_file.read()
+
+func _on_export_code(code_text):
+	emit_signal("export_code", code_text)
+
+func _on_external_logger(message):
+	get_node("CommandLog")._log_to_label(message)
