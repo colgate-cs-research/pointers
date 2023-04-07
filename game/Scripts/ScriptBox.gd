@@ -41,10 +41,10 @@ func _setup_autocode(level_data : LevelData):
 		text += "//Pre code\n"
 	text += level_data.pre_code
 	if level_data.pre_code != "":
-		text += "\n//End Pre code\n\n"
-	text += "void main() {\n\t//TODO: YOUR CODE HERE\n}"
+		text += "\n//End Pre code\n"
+	text += "\n//TODO: YOUR CODE HERE\n"
 	if level_data.post_code != "":
-		text += "\n\n//Post code\n"
+		text += "\n//Post code\n"
 	text += level_data.post_code
 	if level_data.post_code != "":
 		text += "\n//End post code"

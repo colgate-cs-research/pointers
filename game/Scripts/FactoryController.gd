@@ -114,7 +114,7 @@ func _run_external_parser():
 	var path = ProjectSettings.globalize_path("user://parse_file.c")
 	var outcome = OS.execute("python3", ["Parser/main.py", path], output, true)
 	if outcome == OK:
-		print(output)
+		print(output[0])
 		_parse_antlr_xml(output[0]);
 	else:
 		print(error_string(outcome))

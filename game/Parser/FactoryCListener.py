@@ -44,6 +44,24 @@ class FactoryCListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FactoryCParser#valueExpr.
+    def enterValueExpr(self, ctx:FactoryCParser.ValueExprContext):
+        pass
+
+    # Exit a parse tree produced by FactoryCParser#valueExpr.
+    def exitValueExpr(self, ctx:FactoryCParser.ValueExprContext):
+        pass
+
+
+    # Enter a parse tree produced by FactoryCParser#expr.
+    def enterExpr(self, ctx:FactoryCParser.ExprContext):
+        pass
+
+    # Exit a parse tree produced by FactoryCParser#expr.
+    def exitExpr(self, ctx:FactoryCParser.ExprContext):
+        pass
+
+
     # Enter a parse tree produced by FactoryCParser#assignmentStmt.
     def enterAssignmentStmt(self, ctx:FactoryCParser.AssignmentStmtContext):
         pass
@@ -53,12 +71,12 @@ class FactoryCListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by FactoryCParser#modifyStmt.
-    def enterModifyStmt(self, ctx:FactoryCParser.ModifyStmtContext):
+    # Enter a parse tree produced by FactoryCParser#declarationStmt.
+    def enterDeclarationStmt(self, ctx:FactoryCParser.DeclarationStmtContext):
         pass
 
-    # Exit a parse tree produced by FactoryCParser#modifyStmt.
-    def exitModifyStmt(self, ctx:FactoryCParser.ModifyStmtContext):
+    # Exit a parse tree produced by FactoryCParser#declarationStmt.
+    def exitDeclarationStmt(self, ctx:FactoryCParser.DeclarationStmtContext):
         pass
 
 

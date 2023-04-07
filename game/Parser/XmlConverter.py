@@ -26,15 +26,40 @@ class XmlConverter(FactoryCListener):
         node.set("name", str(ctx.VARNAME()))
         self.parent = node
 
-    def enterModifyStmt(self, ctx:FactoryCParser.ModifyStmtContext):
-        node = ElementTree.SubElement(self.statements, "modification")
-        node.set("op", ctx.op.text)
+    # Enter a parse tree produced by FactoryCParser#valueExpr.
+    def enterValueExpr(self, ctx: FactoryCParser.ValueExprContext):
+        node = ElementTree.SubElement(self.statements, "value")
+        self.parent = node
+        pass
+
+    # Enter a parse tree produced by FactoryCParser#expr.
+    def enterExpr(self, ctx: FactoryCParser.ExprContext):
+        node = ElementTree.SubElement(self.statements, "expression")
+        op = ""
+        if (ctx.op is not None):
+            op = ctx.op.text
+        node.set("op", op)
+        node.set("left", str(ctx.expr))
+        node.set("right", str(ctx.valueExpr))
+        self.parent = node
+        pass
+
+    # Enter a parse tree produced by FactoryCParser#declarationStmt.
+    def enterDeclarationStmt(self, ctx: FactoryCParser.DeclarationStmtContext):
+        node = ElementTree.SubElement(self.statements, "assignment")
+        modifier = ""
+        if (ctx.pointer is not None):
+            modifier = "*"
+        node.set("modifier", modifier)
         node.set("varname", str(ctx.VARNAME()))
+        init = ""
+        if (ctx.init is not None):
+            init = str(ctx.init)
+        node.set("init", init)
         self.parent = node
 
     def enterShapeLiteral(self, ctx:FactoryCParser.ShapeLiteralContext):
         node = ElementTree.SubElement(self.parent, 'shape')
-        for i in range(0, 8):
-            node.set("bit" + str(i), str(ctx.BIT()[i]))
+        node.set("value", ctx.getToken())
         self.parent = node
 
