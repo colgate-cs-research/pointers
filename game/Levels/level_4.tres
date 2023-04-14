@@ -22,4 +22,4 @@ inputs = 1
 outputs = 2
 variables = 2
 pointers = 2
-validator_name = "level4"
+xml_name = "level_4"

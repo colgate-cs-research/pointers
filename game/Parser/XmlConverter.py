@@ -20,46 +20,43 @@ class XmlConverter(FactoryCListener):
         modifier = ""
         if (ctx.modifier is not None):
             modifier = ctx.modifier.text
-#            if (modifier == '&'):
-#                modifier = '@'
         node.set("modifier", modifier)
         node.set("name", str(ctx.VARNAME()))
         self.parent = node
 
     # Enter a parse tree produced by FactoryCParser#valueExpr.
     def enterValueExpr(self, ctx: FactoryCParser.ValueExprContext):
-        node = ElementTree.SubElement(self.statements, "value")
+        node = ElementTree.SubElement(self.parent, "value")
         self.parent = node
         pass
 
     # Enter a parse tree produced by FactoryCParser#expr.
     def enterExpr(self, ctx: FactoryCParser.ExprContext):
-        node = ElementTree.SubElement(self.statements, "expression")
+        node = ElementTree.SubElement(self.parent, "expression")
         op = ""
         if (ctx.op is not None):
             op = ctx.op.text
-        node.set("op", op)
-        node.set("left", str(ctx.expr))
-        node.set("right", str(ctx.valueExpr))
+            node.set("op", op)
         self.parent = node
         pass
 
     # Enter a parse tree produced by FactoryCParser#declarationStmt.
     def enterDeclarationStmt(self, ctx: FactoryCParser.DeclarationStmtContext):
-        node = ElementTree.SubElement(self.statements, "assignment")
+        node = ElementTree.SubElement(self.statements, "declaration")
         modifier = ""
         if (ctx.pointer is not None):
             modifier = "*"
+        protected = False
+        if (ctx.protect is not None):
+            protected = True
         node.set("modifier", modifier)
+        node.set("protect", protected)
         node.set("varname", str(ctx.VARNAME()))
-        init = ""
-        if (ctx.init is not None):
-            init = str(ctx.init)
-        node.set("init", init)
         self.parent = node
 
     def enterShapeLiteral(self, ctx:FactoryCParser.ShapeLiteralContext):
         node = ElementTree.SubElement(self.parent, 'shape')
+        print(node)
         node.set("value", ctx.getToken())
         self.parent = node
 

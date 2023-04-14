@@ -136,53 +136,80 @@ func _parse_antlr_xml(result : String):
 	while parse_file.read() != ERR_FILE_EOF:
 		match parse_file.get_node_name():
 			"assignment":
-				match parse_file.get_named_attribute_value_safe("modifier"):
-					"":
-						#Skip to next element
-						var target_var = parse_file.get_named_attribute_value_safe("varname")
-						parse_file.read()
-						match parse_file.get_node_name():
-							"variable":
-								var source_var = parse_file.get_named_attribute_value_safe("name")
-								match parse_file.get_named_attribute_value_safe("modifier"):
-									"":
-										_set_variable_to_variable(target_var, source_var)
-										parse_file.read()
-									"*":
-										_set_variable_to_dereference(target_var, source_var)
-										parse_file.read()
-									"&":
-										_set_variable_to_address(target_var, source_var)
-										parse_file.read()
-									_:
-										emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
-										parse_file.read()
-					"*":
-						#Skip to next element
-						var target_var = parse_file.get_named_attribute_value_safe("varname")
-						parse_file.read()
-						match parse_file.get_node_name():
-							"variable":
-								var source_var = parse_file.get_named_attribute_value_safe("name")
-								match parse_file.get_named_attribute_value_safe("modifier"):
-									"":
-										_set_dereference_to_variable(target_var, source_var)
-										parse_file.read()
-									"*":
-										_set_dereference_to_dereference(target_var, source_var)
-										parse_file.read()
-									"&":
-										emit_signal("log_to_logger", "ERR>>Bad modifier. Cannot CURRENTLY set dereference to address (wait for double pointer implementation)")
-										parse_file.read()
-									_:
-										emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
-										parse_file.read()
-					"&":
-						emit_signal("log_to_logger", "ERR>>Bad modifier. Cannot manually set address of variable or pointer")
-						parse_file.read()
-					_:
-						emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
-						parse_file.read()
+				_eval_assignment_statement(parse_file)
+			"declaration":
+				_eval_declaration_statement(parse_file)
+
+func _eval_assignment_statement(parse_file : XMLParser):
+	match parse_file.get_named_attribute_value_safe("modifier"):
+		"":
+			#Skip to next element
+			var target_var = parse_file.get_named_attribute_value_safe("varname")
+			parse_file.read()
+			#Skip expression tag (always present, no data)
+			parse_file.read()
+			match parse_file.get_node_name():
+				"value":
+					match parse_file.get_node_name():
+						"variable":
+							var source_var = parse_file.get_named_attribute_value_safe("name")
+							match parse_file.get_named_attribute_value_safe("modifier"):
+								"":
+									_set_variable_to_variable(target_var, source_var)
+									parse_file.read()
+								"*":
+									_set_variable_to_dereference(target_var, source_var)
+									parse_file.read()
+								"&":
+									_set_variable_to_address(target_var, source_var)
+									parse_file.read()
+								_:
+									emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
+									parse_file.read()
+				"expression":
+					pass
+		"*":
+			#Skip to next element
+			var target_var = parse_file.get_named_attribute_value_safe("varname")
+			parse_file.read()
+			match parse_file.get_node_name():
+				"variable":
+					var source_var = parse_file.get_named_attribute_value_safe("name")
+					match parse_file.get_named_attribute_value_safe("modifier"):
+						"":
+							_set_dereference_to_variable(target_var, source_var)
+							parse_file.read()
+						"*":
+							_set_dereference_to_dereference(target_var, source_var)
+							parse_file.read()
+						"&":
+							emit_signal("log_to_logger", "ERR>>Bad modifier. Cannot CURRENTLY set dereference to address (wait for double pointer implementation)")
+							parse_file.read()
+						_:
+							emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
+							parse_file.read()
+		"&":
+			emit_signal("log_to_logger", "ERR>>Bad modifier. Cannot manually set address of variable or pointer")
+			parse_file.read()
+		_:
+			emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
+			parse_file.read()
+
+func _eval_declaration_statement(parse_file : XMLParser):
+	match parse_file.get_named_attribute_safe("modifier"):
+		"":
+			pass
+		"*":
+			pass
+
+func _eval_expression(parse_file):
+	pass
+
+func _eval_value_expression(parse_file : XMLParser):
+	pass
+
+func _eval_variable_expression(parse_file : XMLParser):
+	pass
 
 func _declare_new_variable(type, index):
 	var instance = dock.instantiate()
@@ -331,130 +358,3 @@ func _write_c_file(text):
 func _on_export_code(code_text):
 	_write_c_file(code_text)
 	_run_external_parser()
-
-func _on_MainUI_pointer_at_address(pointer, target):
-	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
-		return
-	if get_node_or_null(target) == null || !["input", "output", "variable"].has((target as String).split("_")[0]):
-		return
-	_point_pointer_to(get_node_or_null(pointer), get_node_or_null(target))
-
-func _on_MainUI_pointer_at_pointer(pointer, target):
-	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
-		return
-	if get_node_or_null(target) == null || (pointer as String).split("_")[0] != "pointer":
-		return
-	_point_pointer_to(get_node_or_null(pointer), get_node_or_null(target)._get_target())
-
-func _on_MainUI_composition_from_shape(variable, shape_data):
-	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(variable)._get_shape() == null:
-		return
-	var generated = shape.instantiate()
-	generated._setup_shape(shape_data, null)
-	get_node_or_null(variable)._get_shape()._compose_shape(generated)
-	
-func _on_MainUI_composition_from_pointer(variable, pointer):
-	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(variable)._get_shape() == null:
-		return
-	if get_node_or_null(pointer) == null || get_node_or_null(pointer)._get_target() == null || get_node_or_null(pointer)._get_target()._get_shape() == null:
-		return
-	get_node_or_null(variable)._get_shape()._compose_shape(get_node_or_null(pointer)._get_target()._get_shape())
-
-func _on_MainUI_composition_from_variable(variable, target):
-	if get_node_or_null(variable) == null || (target as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(variable)._get_shape() == null:
-		return
-	if get_node_or_null(target) == null || get_node_or_null(target)._get_shape() == null:
-		return
-	get_node_or_null(variable)._get_shape()._compose_shape(get_node_or_null(target)._get_shape())
-
-func _on_MainUI_cut_from_shape(variable, shape_data):
-	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(variable)._get_shape() == null:
-		return
-	var generated = shape.instantiate()
-	generated._setup_shape(shape_data, null)
-	get_node_or_null(variable)._get_shape()._cut_shape(generated)
-
-func _on_MainUI_cut_from_pointer(variable, pointer):
-	if get_node_or_null(variable) == null || (variable as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(variable)._get_shape() == null:
-		return
-	if get_node_or_null(pointer) == null || get_node_or_null(pointer)._get_target() == null || get_node_or_null(pointer)._get_target()._get_shape() == null:
-		return
-	get_node_or_null(variable)._get_shape()._cut_shape(get_node_or_null(pointer)._get_target()._get_shape())
-
-func _on_MainUI_cut_from_variable(variable, target):
-	if get_node_or_null(variable) == null || (target as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(variable)._get_shape() == null:
-		return
-	if get_node_or_null(target) == null || get_node_or_null(target)._get_shape() == null:
-		return
-	get_node_or_null(variable)._get_shape()._cut_shape(get_node_or_null(target)._get_shape())
-
-func _on_MainUI_has_at_pointer(pointer, index):
-	pass # Replace with function body.
-
-func _on_MainUI_has_at_variable(variable, index):
-	pass # Replace with function body.
-
-func _on_MainUI_set_pointer_to_pointer(destination, pointer):
-	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer" || get_node_or_null(pointer)._get_target() == null || get_node_or_null(pointer)._get_target()._get_shape() == null:
-		return
-	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
-		return
-	if get_node_or_null(destination)._get_target()._get_shape() != null:
-		get_node_or_null(destination)._get_target()._get_shape().queue_free()
-	_dereference_pointer(get_node_or_null(pointer), get_node_or_null(destination)._get_target())
-	_instance_shape_to_game(get_node_or_null(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node_or_null(destination)._get_target())
-	
-func _on_MainUI_set_pointer_to_shape(destination, shape_data):
-	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
-		return
-	if get_node_or_null(destination)._get_target()._get_shape() != null:
-		get_node_or_null(destination)._get_target()._get_shape().queue_free()
-	_dereference_pointer(get_node_or_null(pointer), get_node_or_null(destination)._get_target())
-	_instance_shape_to_game(shape_data, get_node_or_null(destination)._get_target())
-
-func _on_MainUI_set_pointer_to_variable(destination, variable):
-	if get_node_or_null(variable) == null || !["input", "output", "variable"].has((variable as String).split("_")[0]):
-		return
-	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "pointer":
-		return
-	if get_node_or_null(destination)._get_target()._get_shape() != null:
-		get_node_or_null(destination)._get_target()._get_shape().queue_free()
-	_instance_shape_to_game(get_node_or_null(variable)._get_shape()._get_shape_data_encoding(), get_node_or_null(destination)._get_target())
-
-func _on_MainUI_set_variable_to_pointer(destination, pointer):
-	if get_node_or_null(pointer) == null || (pointer as String).split("_")[0] != "pointer":
-		return
-	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(destination)._get_shape() != null:
-		get_node_or_null(destination)._get_shape().queue_free()
-	_dereference_pointer(get_node_or_null(pointer), get_node_or_null(destination))
-	_instance_shape_to_game(get_node_or_null(pointer)._get_target()._get_shape()._get_shape_data_encoding(), get_node_or_null(destination))
-
-func _on_MainUI_set_variable_to_shape(destination, shape_data):
-	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(destination)._get_shape() != null:
-		get_node_or_null(destination)._get_shape().queue_free()
-	_instance_shape_to_game(shape_data, get_node_or_null(destination))
-
-func _on_MainUI_set_variable_to_variable(destination, variable):
-	if get_node_or_null(variable) == null || !["input", "output", "variable"].has((variable as String).split("_")[0]):
-		return
-	if get_node_or_null(destination) == null || (destination as String).split("_")[0] != "variable":
-		return
-	if get_node_or_null(destination)._get_shape() != null:
-		get_node_or_null(destination)._get_shape().queue_free()
-	_instance_shape_to_game(get_node_or_null(variable)._get_shape()._get_shape_data_encoding(), get_node_or_null(destination))

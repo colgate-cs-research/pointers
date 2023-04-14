@@ -16,7 +16,10 @@ class_name LevelData
 @export var variables: int
 @export var pointers: int
 #To validate the level
-@export var validator_name: String
+@export var xml_name: String
 
 func _get_validator():
-	return "res://Levels/Validators/" + validator_name + ".xml"
+	return "res://Levels/Validators/" + xml_name + ".xml"
+
+func _get_generator():
+	return "res://Levels/Generators/" + xml_name + ".xml"

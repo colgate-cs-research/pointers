@@ -10,15 +10,15 @@ statement : (
 shapeLiteral : SQR | CIR | TLS | TRS | BLS | BRS | TLC | TRC | BLC | BRC;
 variableExpr : (modifier = ('*' | '&'))? VARNAME ;
 valueExpr:
-    variableExpr
-    | shapeLiteral ;
+	shapeLiteral
+    | variableExpr ;
 expr:
     valueExpr
     | expr op = ('+' | '-') valueExpr ;
 
 assignmentStmt : (deref = '*')? VARNAME '=' expr ;
 
-declarationStmt : 'shape'(pointer = '*')? VARNAME ('=' expr)? ;
+declarationStmt : (protect = 'nodirect')? 'shape' (pointer = '*')? VARNAME ('=' expr)? ;
 
 fragment ALPHA : [a-zA-Z] ;
 fragment DIGIT : [0-9] ;
@@ -34,4 +34,4 @@ TLC : 'TLC';
 TRC : 'TRC';
 BLC : 'BLC';
 BRC : 'BRC';
-COMMENT: '//' ~[ \r\n]* -> skip;
+COMMENT: '//' ~[\r\n]* -> skip;
