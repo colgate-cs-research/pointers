@@ -22,7 +22,10 @@ func _ready():
 func _add_level(level : LevelData):
 	var id = level_dict.size()
 	level_dict[id] = level
-	add_item("Level " + str(level.level_number) + level.level_tag + ": " + level.level_title)
+	var prefix = level.level_prefix
+	if prefix != null and prefix != "":
+		prefix += " "
+	add_item(prefix + "Level " + str(level.level_number) + level.level_tag + ": " + level.level_title)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

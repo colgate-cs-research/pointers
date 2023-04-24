@@ -20,9 +20,8 @@ func _ready():
 
 func _setup():
 	factory._setup()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
 
-func _generate_shape_string():
+func _generate_random_shape_string():
 	var string = ""
 	for i in 7:
 		string += str(randi() % 2) + " "
@@ -37,14 +36,31 @@ func _validate_shape_string(validator):
 		if parse_file.get_node_name() == "condition":
 			var output = parse_file.get_named_attribute_value("target")
 			var output_id = parse_file.get_named_attribute_value_safe("id")
-			var output_shape = get_node("../FactoryBase/" + output)._get_shape()
-			if output_shape == null:
+			var output_dock = get_node_or_null("../FactoryBase/" + output)
+			if output_dock == null:
 				return false
+			var output_shape = get_node("../FactoryBase/" + output)._get_shape()
 			parse_file.read()
+			if parse_file.get_node_name() == "null":
+				if output_shape == null:
+					#Read once to skip closing tag
+					parse_file.read()
+					continue
+				else:
+					return false
+			elif output_shape == null:
+				return false
 			if parse_file.get_node_name() == "shape":
 				var target = parse_file.get_named_attribute_value("target")
 				var target_shape = get_node("../FactoryBase/" + target)._get_shape()
 				if output_shape._compare_shape(target_shape):
+					#Read once to skip closing tag
+					parse_file.read()
+					continue
+				else:
+					return false
+			if parse_file.get_node_name() == "shapestring":
+				if output_shape._compare_shape_string(parse_file.get_named_attribute_value("value")):
 					#Read once to skip closing tag
 					parse_file.read()
 					continue
@@ -86,9 +102,8 @@ func _process(delta):
 	pass
 
 func _on_MainUI_run_full_script(origin):
-	factory._reset()
 	logger.clear()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
+	factory._instance_shape_to_game(_generate_random_shape_string(), factory.get_node("input_0"))
 	for i in 256:
 		var shape_string = str(floor(i/128)) + " "
 		shape_string = shape_string + str(floor(i%128/64)) + " "
@@ -112,14 +127,7 @@ func _on_MainUI_run_full_script(origin):
 	logger._log_to_label("All tests passed! Level complete!")
 
 func _on_MainUI_run_test_script(origin):
-	factory._reset()
 	logger.clear()
-	factory._instance_shape_to_game(_generate_shape_string(), factory.get_node("input_0"))
-	#PARSER HERE
-	factory._run_external_parser()
-	#PARSER HERE
-	origin.call_deferred("_evaluate_all_fast")
-	await origin.run_complete
 	if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
 		logger._log_to_label("Shape passed!")
 	else:

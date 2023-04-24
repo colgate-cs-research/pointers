@@ -3,13 +3,12 @@ extends Node2D
 # Declare member variables here.
 # Components order goes clockwise from top right, squares then circles
 var shape_components = [false, false, false, false, false, false, false, false]
-var dock
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-func _setup_shape(component_string, new_dock):
+func _setup_shape_string(component_string):
 	var split = (component_string as String).split(" ")
 	for i in 8:
 		if split[i] == "1":
@@ -17,10 +16,36 @@ func _setup_shape(component_string, new_dock):
 		else:
 			shape_components[i] = false
 	_update_shape_image()
-	dock = new_dock;
 
-func _get_dock():
-	return dock
+func _setup_shape_fragment(fragment_string):
+	match fragment_string:
+		"ALL":
+			shape_components = [true, true, true, true, true, true, true, true]
+		"NON":
+			shape_components = [false, false, false, false, false, false, false, false]
+		"CIR":
+			shape_components = [false, false, false, false, true, true, true, true]
+		"SQR":
+			shape_components = [true, true, true, true, false, false, false, false]
+		"TLS":
+			shape_components = [false, false, false, true, false, false, false, false]
+		"TRS":
+			shape_components = [true, false, false, false, false, false, false, false]
+		"BRS":
+			shape_components = [false, true, false, false, false, false, false, false]
+		"BLS":
+			shape_components = [false, false, true, false, false, false, false, false]
+		"TLC":
+			shape_components = [false, false, false, false, false, false, false, true]
+		"TRC":
+			shape_components = [false, false, false, false, true, false, false, false]
+		"BRC":
+			shape_components = [false, false, false, false, false, true, false, false]
+		"BLC":
+			shape_components = [false, false, false, false, false, false, true, false]
+		_:
+			shape_components = [false, false, false, false, false, false, false, false]
+	_update_shape_image()
 
 # Change this shape to include a component if either this or the composition has a component at any given position
 func _compose_shape(composition):
@@ -45,6 +70,19 @@ func _has_component(index):
 func _compare_shape(comparison):
 	for i in 8:
 		if shape_components[i] != comparison._has_component(i):
+			return false
+	return true
+
+func _compare_shape_string(comparison):
+	var split = (comparison as String).split(" ")
+	var compare_string = []
+	for i in 8:
+		if split[i] == "1":
+			compare_string.append(true)
+		else:
+			compare_string.append(false)
+	for i in 8:
+		if shape_components[i] != compare_string[i]:
 			return false
 	return true
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+<condition target="variable_0">
+<shapestring value="1 1 1 1 1 1 1 1" />
+</condition>
+<condition target="variable_1">
+<shapestring value="0 0 0 0 1 1 1 1" />
+</condition>
+<condition target="variable_2">
+<shapestring value="1 1 1 1 0 0 0 0" />
+</condition>
+</level>

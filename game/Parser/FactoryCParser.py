@@ -10,28 +10,30 @@ else:
 
 def serializedATN():
     return [
-        4,1,21,71,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
-        6,2,7,7,7,1,0,4,0,18,8,0,11,0,12,0,19,1,0,1,0,1,1,1,1,3,1,26,8,1,
-        1,1,1,1,1,2,1,2,1,3,3,3,33,8,3,1,3,1,3,1,4,1,4,3,4,39,8,4,1,5,1,
-        5,1,5,1,5,1,5,1,5,5,5,47,8,5,10,5,12,5,50,9,5,1,6,3,6,53,8,6,1,6,
-        1,6,1,6,1,6,1,7,3,7,60,8,7,1,7,1,7,3,7,64,8,7,1,7,1,7,1,7,3,7,69,
-        8,7,1,7,0,1,10,8,0,2,4,6,8,10,12,14,0,3,1,0,11,20,1,0,2,3,1,0,4,
-        5,71,0,17,1,0,0,0,2,25,1,0,0,0,4,29,1,0,0,0,6,32,1,0,0,0,8,38,1,
-        0,0,0,10,40,1,0,0,0,12,52,1,0,0,0,14,59,1,0,0,0,16,18,3,2,1,0,17,
-        16,1,0,0,0,18,19,1,0,0,0,19,17,1,0,0,0,19,20,1,0,0,0,20,21,1,0,0,
-        0,21,22,5,0,0,1,22,1,1,0,0,0,23,26,3,12,6,0,24,26,3,14,7,0,25,23,
-        1,0,0,0,25,24,1,0,0,0,26,27,1,0,0,0,27,28,5,1,0,0,28,3,1,0,0,0,29,
-        30,7,0,0,0,30,5,1,0,0,0,31,33,7,1,0,0,32,31,1,0,0,0,32,33,1,0,0,
-        0,33,34,1,0,0,0,34,35,5,9,0,0,35,7,1,0,0,0,36,39,3,4,2,0,37,39,3,
-        6,3,0,38,36,1,0,0,0,38,37,1,0,0,0,39,9,1,0,0,0,40,41,6,5,-1,0,41,
-        42,3,8,4,0,42,48,1,0,0,0,43,44,10,1,0,0,44,45,7,2,0,0,45,47,3,8,
-        4,0,46,43,1,0,0,0,47,50,1,0,0,0,48,46,1,0,0,0,48,49,1,0,0,0,49,11,
-        1,0,0,0,50,48,1,0,0,0,51,53,5,2,0,0,52,51,1,0,0,0,52,53,1,0,0,0,
-        53,54,1,0,0,0,54,55,5,9,0,0,55,56,5,6,0,0,56,57,3,10,5,0,57,13,1,
-        0,0,0,58,60,5,7,0,0,59,58,1,0,0,0,59,60,1,0,0,0,60,61,1,0,0,0,61,
-        63,5,8,0,0,62,64,5,2,0,0,63,62,1,0,0,0,63,64,1,0,0,0,64,65,1,0,0,
-        0,65,68,5,9,0,0,66,67,5,6,0,0,67,69,3,10,5,0,68,66,1,0,0,0,68,69,
-        1,0,0,0,69,15,1,0,0,0,9,19,25,32,38,48,52,59,63,68
+        4,1,24,76,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,1,0,4,0,20,8,0,11,0,12,0,21,1,0,1,0,1,1,1,1,3,
+        1,28,8,1,1,1,1,1,1,2,1,2,1,3,1,3,1,4,3,4,37,8,4,1,4,1,4,1,5,1,5,
+        1,5,3,5,44,8,5,1,6,1,6,1,6,1,6,1,6,1,6,5,6,52,8,6,10,6,12,6,55,9,
+        6,1,7,3,7,58,8,7,1,7,1,7,1,7,1,7,1,8,3,8,65,8,8,1,8,1,8,3,8,69,8,
+        8,1,8,1,8,1,8,3,8,74,8,8,1,8,0,1,12,9,0,2,4,6,8,10,12,14,16,0,3,
+        1,0,9,20,1,0,2,3,1,0,4,5,76,0,19,1,0,0,0,2,27,1,0,0,0,4,31,1,0,0,
+        0,6,33,1,0,0,0,8,36,1,0,0,0,10,43,1,0,0,0,12,45,1,0,0,0,14,57,1,
+        0,0,0,16,64,1,0,0,0,18,20,3,2,1,0,19,18,1,0,0,0,20,21,1,0,0,0,21,
+        19,1,0,0,0,21,22,1,0,0,0,22,23,1,0,0,0,23,24,5,0,0,1,24,1,1,0,0,
+        0,25,28,3,14,7,0,26,28,3,16,8,0,27,25,1,0,0,0,27,26,1,0,0,0,28,29,
+        1,0,0,0,29,30,5,1,0,0,30,3,1,0,0,0,31,32,7,0,0,0,32,5,1,0,0,0,33,
+        34,5,21,0,0,34,7,1,0,0,0,35,37,7,1,0,0,36,35,1,0,0,0,36,37,1,0,0,
+        0,37,38,1,0,0,0,38,39,5,22,0,0,39,9,1,0,0,0,40,44,3,4,2,0,41,44,
+        3,8,4,0,42,44,3,6,3,0,43,40,1,0,0,0,43,41,1,0,0,0,43,42,1,0,0,0,
+        44,11,1,0,0,0,45,46,6,6,-1,0,46,47,3,10,5,0,47,53,1,0,0,0,48,49,
+        10,1,0,0,49,50,7,2,0,0,50,52,3,10,5,0,51,48,1,0,0,0,52,55,1,0,0,
+        0,53,51,1,0,0,0,53,54,1,0,0,0,54,13,1,0,0,0,55,53,1,0,0,0,56,58,
+        5,2,0,0,57,56,1,0,0,0,57,58,1,0,0,0,58,59,1,0,0,0,59,60,5,22,0,0,
+        60,61,5,6,0,0,61,62,3,12,6,0,62,15,1,0,0,0,63,65,5,7,0,0,64,63,1,
+        0,0,0,64,65,1,0,0,0,65,66,1,0,0,0,66,68,5,8,0,0,67,69,5,2,0,0,68,
+        67,1,0,0,0,68,69,1,0,0,0,69,70,1,0,0,0,70,73,5,22,0,0,71,72,5,6,
+        0,0,72,74,3,12,6,0,73,71,1,0,0,0,73,74,1,0,0,0,74,17,1,0,0,0,9,21,
+        27,36,43,53,57,64,68,73
     ]
 
 class FactoryCParser ( Parser ):
@@ -45,27 +47,29 @@ class FactoryCParser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "';'", "'*'", "'&'", "'+'", "'-'", "'='", 
-                     "'nodirect'", "'shape'", "<INVALID>", "<INVALID>", 
-                     "'SQR'", "'CIR'", "'TLS'", "'TRS'", "'BLS'", "'BRS'", 
-                     "'TLC'", "'TRC'", "'BLC'", "'BRC'" ]
+                     "'nodirect'", "'shape'", "'ALL'", "'NON'", "'SQR'", 
+                     "'CIR'", "'TLS'", "'TRS'", "'BLS'", "'BRS'", "'TLC'", 
+                     "'TRC'", "'BLC'", "'BRC'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "VARNAME", "WHITESPACE", "SQR", "CIR", 
-                      "TLS", "TRS", "BLS", "BRS", "TLC", "TRC", "BLC", "BRC", 
-                      "COMMENT" ]
+                      "<INVALID>", "ALL", "NON", "SQR", "CIR", "TLS", "TRS", 
+                      "BLS", "BRS", "TLC", "TRC", "BLC", "BRC", "FUNCNAME", 
+                      "VARNAME", "WHITESPACE", "COMMENT" ]
 
     RULE_statements = 0
     RULE_statement = 1
     RULE_shapeLiteral = 2
-    RULE_variableExpr = 3
-    RULE_valueExpr = 4
-    RULE_expr = 5
-    RULE_assignmentStmt = 6
-    RULE_declarationStmt = 7
+    RULE_functionExpr = 3
+    RULE_variableExpr = 4
+    RULE_valueExpr = 5
+    RULE_expr = 6
+    RULE_assignmentStmt = 7
+    RULE_declarationStmt = 8
 
-    ruleNames =  [ "statements", "statement", "shapeLiteral", "variableExpr", 
-                   "valueExpr", "expr", "assignmentStmt", "declarationStmt" ]
+    ruleNames =  [ "statements", "statement", "shapeLiteral", "functionExpr", 
+                   "variableExpr", "valueExpr", "expr", "assignmentStmt", 
+                   "declarationStmt" ]
 
     EOF = Token.EOF
     T__0=1
@@ -76,8 +80,8 @@ class FactoryCParser ( Parser ):
     T__5=6
     T__6=7
     T__7=8
-    VARNAME=9
-    WHITESPACE=10
+    ALL=9
+    NON=10
     SQR=11
     CIR=12
     TLS=13
@@ -88,7 +92,10 @@ class FactoryCParser ( Parser ):
     TRC=18
     BLC=19
     BRC=20
-    COMMENT=21
+    FUNCNAME=21
+    VARNAME=22
+    WHITESPACE=23
+    COMMENT=24
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -137,19 +144,19 @@ class FactoryCParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 17 
+            self.state = 19 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 16
+                self.state = 18
                 self.statement()
-                self.state = 19 
+                self.state = 21 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 900) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 4194692) != 0)):
                     break
 
-            self.state = 21
+            self.state = 23
             self.match(FactoryCParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -195,21 +202,21 @@ class FactoryCParser ( Parser ):
         self.enterRule(localctx, 2, self.RULE_statement)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 25
+            self.state = 27
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [2, 9]:
-                self.state = 23
+            if token in [2, 22]:
+                self.state = 25
                 self.assignmentStmt()
                 pass
             elif token in [7, 8]:
-                self.state = 24
+                self.state = 26
                 self.declarationStmt()
                 pass
             else:
                 raise NoViableAltException(self)
 
-            self.state = 27
+            self.state = 29
             self.match(FactoryCParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
@@ -226,6 +233,12 @@ class FactoryCParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+
+        def ALL(self):
+            return self.getToken(FactoryCParser.ALL, 0)
+
+        def NON(self):
+            return self.getToken(FactoryCParser.NON, 0)
 
         def SQR(self):
             return self.getToken(FactoryCParser.SQR, 0)
@@ -278,13 +291,54 @@ class FactoryCParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 29
+            self.state = 31
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 2095104) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 2096640) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class FunctionExprContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def FUNCNAME(self):
+            return self.getToken(FactoryCParser.FUNCNAME, 0)
+
+        def getRuleIndex(self):
+            return FactoryCParser.RULE_functionExpr
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFunctionExpr" ):
+                listener.enterFunctionExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFunctionExpr" ):
+                listener.exitFunctionExpr(self)
+
+
+
+
+    def functionExpr(self):
+
+        localctx = FactoryCParser.FunctionExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 6, self.RULE_functionExpr)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 33
+            self.match(FactoryCParser.FUNCNAME)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -322,15 +376,15 @@ class FactoryCParser ( Parser ):
     def variableExpr(self):
 
         localctx = FactoryCParser.VariableExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_variableExpr)
+        self.enterRule(localctx, 8, self.RULE_variableExpr)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 32
+            self.state = 36
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==2 or _la==3:
-                self.state = 31
+                self.state = 35
                 localctx.modifier = self._input.LT(1)
                 _la = self._input.LA(1)
                 if not(_la==2 or _la==3):
@@ -340,7 +394,7 @@ class FactoryCParser ( Parser ):
                     self.consume()
 
 
-            self.state = 34
+            self.state = 38
             self.match(FactoryCParser.VARNAME)
         except RecognitionException as re:
             localctx.exception = re
@@ -366,6 +420,10 @@ class FactoryCParser ( Parser ):
             return self.getTypedRuleContext(FactoryCParser.VariableExprContext,0)
 
 
+        def functionExpr(self):
+            return self.getTypedRuleContext(FactoryCParser.FunctionExprContext,0)
+
+
         def getRuleIndex(self):
             return FactoryCParser.RULE_valueExpr
 
@@ -383,20 +441,25 @@ class FactoryCParser ( Parser ):
     def valueExpr(self):
 
         localctx = FactoryCParser.ValueExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_valueExpr)
+        self.enterRule(localctx, 10, self.RULE_valueExpr)
         try:
-            self.state = 38
+            self.state = 43
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]:
+            if token in [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 36
+                self.state = 40
                 self.shapeLiteral()
                 pass
-            elif token in [2, 3, 9]:
+            elif token in [2, 3, 22]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 37
+                self.state = 41
                 self.variableExpr()
+                pass
+            elif token in [21]:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 42
+                self.functionExpr()
                 pass
             else:
                 raise NoViableAltException(self)
@@ -444,15 +507,15 @@ class FactoryCParser ( Parser ):
         _parentState = self.state
         localctx = FactoryCParser.ExprContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 10
-        self.enterRecursionRule(localctx, 10, self.RULE_expr, _p)
+        _startState = 12
+        self.enterRecursionRule(localctx, 12, self.RULE_expr, _p)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 41
+            self.state = 46
             self.valueExpr()
             self._ctx.stop = self._input.LT(-1)
-            self.state = 48
+            self.state = 53
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,4,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -462,11 +525,11 @@ class FactoryCParser ( Parser ):
                     _prevctx = localctx
                     localctx = FactoryCParser.ExprContext(self, _parentctx, _parentState)
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                    self.state = 43
+                    self.state = 48
                     if not self.precpred(self._ctx, 1):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                    self.state = 44
+                    self.state = 49
                     localctx.op = self._input.LT(1)
                     _la = self._input.LA(1)
                     if not(_la==4 or _la==5):
@@ -474,9 +537,9 @@ class FactoryCParser ( Parser ):
                     else:
                         self._errHandler.reportMatch(self)
                         self.consume()
-                    self.state = 45
+                    self.state = 50
                     self.valueExpr() 
-                self.state = 50
+                self.state = 55
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,4,self._ctx)
 
@@ -521,23 +584,23 @@ class FactoryCParser ( Parser ):
     def assignmentStmt(self):
 
         localctx = FactoryCParser.AssignmentStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_assignmentStmt)
+        self.enterRule(localctx, 14, self.RULE_assignmentStmt)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 52
+            self.state = 57
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==2:
-                self.state = 51
+                self.state = 56
                 localctx.deref = self.match(FactoryCParser.T__1)
 
 
-            self.state = 54
+            self.state = 59
             self.match(FactoryCParser.VARNAME)
-            self.state = 55
+            self.state = 60
             self.match(FactoryCParser.T__5)
-            self.state = 56
+            self.state = 61
             self.expr(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -581,37 +644,37 @@ class FactoryCParser ( Parser ):
     def declarationStmt(self):
 
         localctx = FactoryCParser.DeclarationStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_declarationStmt)
+        self.enterRule(localctx, 16, self.RULE_declarationStmt)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 59
+            self.state = 64
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==7:
-                self.state = 58
+                self.state = 63
                 localctx.protect = self.match(FactoryCParser.T__6)
 
 
-            self.state = 61
+            self.state = 66
             self.match(FactoryCParser.T__7)
-            self.state = 63
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==2:
-                self.state = 62
-                localctx.pointer = self.match(FactoryCParser.T__1)
-
-
-            self.state = 65
-            self.match(FactoryCParser.VARNAME)
             self.state = 68
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==6:
-                self.state = 66
-                self.match(FactoryCParser.T__5)
+            if _la==2:
                 self.state = 67
+                localctx.pointer = self.match(FactoryCParser.T__1)
+
+
+            self.state = 70
+            self.match(FactoryCParser.VARNAME)
+            self.state = 73
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==6:
+                self.state = 71
+                self.match(FactoryCParser.T__5)
+                self.state = 72
                 self.expr(0)
 
 
@@ -628,7 +691,7 @@ class FactoryCParser ( Parser ):
     def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates == None:
             self._predicates = dict()
-        self._predicates[5] = self.expr_sempred
+        self._predicates[6] = self.expr_sempred
         pred = self._predicates.get(ruleIndex, None)
         if pred is None:
             raise Exception("No predicate with index:" + str(ruleIndex))

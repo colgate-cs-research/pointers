@@ -18,12 +18,19 @@ var allocated_stack_memory = []
 
 var base_offset = 10
 var dock_size = 64
-var dock_offset = 5
+var dock_offset = 20
 var shape_size = 128
 
-func _instance_shape_to_game(setup_string, dock):
+func _instance_shape_from_string(setup_string, dock):
 	var instance = shape.instantiate()
-	instance._setup_shape(setup_string, dock)
+	instance._setup_shape_string(setup_string)
+	dock.add_child(instance)
+	instance.position = Vector2(32,32)
+	dock._set_shape(instance)
+
+func _instance_shape_from_fragment(setup_fragment, dock):
+	var instance = shape.instantiate()
+	instance._setup_shape_fragment(setup_fragment)
 	dock.add_child(instance)
 	instance.position = Vector2(32,32)
 	dock._set_shape(instance)
@@ -64,29 +71,18 @@ func _next_available_addr_stack(size : int):
 			available_size = 0
 	return -1
 
-func _setup_factory(inputs, outputs, variables, pointers):
+func _setup_factory():
 	_setup_memory()
-	for i in inputs:
-		_declare_new_variable("input", i)
-	for i in outputs:
-		_declare_new_variable("output", i)
-	for i in variables:
-		_declare_new_variable("variable", i)
-	for i in pointers:
-		_declare_new_pointer(i)
 
 func _reset():
-	var index = 0;
-	for i in get_child_count():
-		if get_node_or_null("pointer_" + str(index)) != null:
-			get_node_or_null("pointer_" + str(index))._reset()
-		if get_node_or_null("variable_" + str(index)) != null:
-			get_node_or_null("variable_" + str(index))._reset()
-		if get_node_or_null("input_" + str(index)) != null:
-			get_node_or_null("input_" + str(index))._reset()
-		if get_node_or_null("output_" + str(index)) != null:
-			get_node_or_null("output_" + str(index))._reset()
-		index += 1
+	for i in get_children():
+		if i is Node2D:
+			remove_child(i)
+			i.queue_free()
+	for i in main_memory_row_addr * row_count + 1:
+		allocated_main_memory[i] = false
+	for i in stack_memory_row_addr * row_count + 1:
+		allocated_stack_memory[i] = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -94,7 +90,7 @@ func _ready():
 
 func _setup():
 	var level_data : LevelData = get_node("/root/GameLevel").level_data
-	_setup_factory(level_data.inputs, level_data.outputs, level_data.variables, level_data.pointers)
+	_setup_factory()
 	var file = FileAccess.open("Parser/examples/level1.c", FileAccess.READ)
 	var file_text = file.get_as_text()
 	_write_c_file(file_text)
@@ -115,10 +111,11 @@ func _run_external_parser():
 	var outcome = OS.execute("python3", ["Parser/main.py", path], output, true)
 	if outcome == OK:
 		print(output[0])
-		_parse_antlr_xml(output[0]);
+		return output[0];
 	else:
 		print(error_string(outcome))
-		print(output)
+		for value in output:
+			print(value)
 
 func _parse_antlr_xml(result : String):
 	var split = []
@@ -133,7 +130,13 @@ func _parse_antlr_xml(result : String):
 	var xmlPackedByteArray = split[0].to_utf8_buffer()
 	var parse_file = XMLParser.new()
 	parse_file.open_buffer(xmlPackedByteArray)
+	_eval_antlr_code(parse_file)
+
+func _eval_antlr_code(parse_file : XMLParser):
 	while parse_file.read() != ERR_FILE_EOF:
+		while parse_file.get_node_type() == XMLParser.NODE_ELEMENT_END && !parse_file.is_empty():
+			if parse_file.read() == ERR_FILE_EOF:
+				break
 		match parse_file.get_node_name():
 			"assignment":
 				_eval_assignment_statement(parse_file)
@@ -141,54 +144,75 @@ func _parse_antlr_xml(result : String):
 				_eval_declaration_statement(parse_file)
 
 func _eval_assignment_statement(parse_file : XMLParser):
+	var target_var = parse_file.get_named_attribute_value_safe("varname")
+	if get_node_or_null(target_var) == null:
+		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target_var)
+		return
+	var target_node = get_node(target_var)
 	match parse_file.get_named_attribute_value_safe("modifier"):
 		"":
-			#Skip to next element
-			var target_var = parse_file.get_named_attribute_value_safe("varname")
-			parse_file.read()
-			#Skip expression tag (always present, no data)
-			parse_file.read()
-			match parse_file.get_node_name():
-				"value":
-					match parse_file.get_node_name():
-						"variable":
-							var source_var = parse_file.get_named_attribute_value_safe("name")
-							match parse_file.get_named_attribute_value_safe("modifier"):
-								"":
-									_set_variable_to_variable(target_var, source_var)
-									parse_file.read()
-								"*":
-									_set_variable_to_dereference(target_var, source_var)
-									parse_file.read()
-								"&":
-									_set_variable_to_address(target_var, source_var)
-									parse_file.read()
-								_:
-									emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
-									parse_file.read()
-				"expression":
-					pass
-		"*":
-			#Skip to next element
-			var target_var = parse_file.get_named_attribute_value_safe("varname")
-			parse_file.read()
-			match parse_file.get_node_name():
+			var result_val = _eval_expression(parse_file)
+			match target_node._variable_type():
 				"variable":
-					var source_var = parse_file.get_named_attribute_value_safe("name")
-					match parse_file.get_named_attribute_value_safe("modifier"):
-						"":
-							_set_dereference_to_variable(target_var, source_var)
-							parse_file.read()
-						"*":
-							_set_dereference_to_dereference(target_var, source_var)
-							parse_file.read()
-						"&":
-							emit_signal("log_to_logger", "ERR>>Bad modifier. Cannot CURRENTLY set dereference to address (wait for double pointer implementation)")
-							parse_file.read()
+					if target_node._is_protected():
+						emit_signal("log_to_logger", "ERR>>Variable is protected: " + target_node + "\nTry using a pointer to set this variable")
+						return
+					match result_val[1]:
+						"value":
+							if target_node._get_shape() == null:
+								_instance_shape_from_string(result_val[0], target_node)
+							else:
+								target_node._get_shape()._setup_shape_string(result_val[0])
+						"fragment":
+							if target_node._get_shape() == null:
+								_instance_shape_from_fragment(result_val[0], target_node)
+							else:
+								target_node._get_shape()._setup_shape_fragment(result_val[0])
+						"address":
+							emit_signal("log_to_logger", "ERR>>Cannot set variable to address")
+						"errout":
+							pass
 						_:
-							emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
-							parse_file.read()
-		"&":
+							emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + result_val)
+				"pointer":
+					print(result_val)
+					match result_val[1]:
+						"value":
+							emit_signal("log_to_logger", "ERR>>Cannot set pointer address to shape")
+						"fragment":
+							emit_signal("log_to_logger", "ERR>>Cannot set pointer address to shape fragment")
+						"address":
+							_point_pointer_to(target_node, get_node(result_val[0]))
+						"errout":
+							pass
+						_:
+							emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + result_val[0])
+		"*":
+			var result_val = _eval_expression(parse_file)
+			match target_node._variable_type():
+				"variable":
+					emit_signal("log_to_logger", "ERR>>Cannot dereference a variable: " + result_val[0])
+				"pointer":
+					if target_node._get_target() == null:
+						emit_signal("log_to_logger", "ERR>>Null Pointer Exception: " + target_node + " value is null")
+					match result_val[1]:
+						"value":
+							if target_node._get_target()._get_shape() == null:
+								_instance_shape_from_string(result_val[0], target_node)
+							else:
+								target_node._get_target()._get_shape()._setup_shape_string(result_val[0])
+						"fragment":
+							if target_node._get_target()._get_shape() == null:
+								_instance_shape_from_fragment(result_val[0], target_node)
+							else:
+								target_node._get_target()._get_shape()._setup_shape_fragment(result_val[0])
+						"address":
+							emit_signal("log_to_logger", "ERR>>Cannot set variable to address")
+						"errout":
+							pass
+						_:
+							emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + result_val)
+		"&", "&amp;":
 			emit_signal("log_to_logger", "ERR>>Bad modifier. Cannot manually set address of variable or pointer")
 			parse_file.read()
 		_:
@@ -196,159 +220,156 @@ func _eval_assignment_statement(parse_file : XMLParser):
 			parse_file.read()
 
 func _eval_declaration_statement(parse_file : XMLParser):
-	match parse_file.get_named_attribute_safe("modifier"):
+	match parse_file.get_named_attribute_value_safe("modifier"):
 		"":
-			pass
+			var protected = false
+			if parse_file.get_named_attribute_value_safe("protect") == "True":
+				protected = true
+			var new_var = _declare_new_variable(parse_file.get_named_attribute_value_safe("varname"), protected)
+			if not parse_file.is_empty():
+				var initial_val = _eval_expression(parse_file)
+				match initial_val[1]:
+					"value":
+						_instance_shape_from_string(initial_val[0], new_var)
+					"fragment":
+						_instance_shape_from_fragment(initial_val[0], new_var)
+					"address":
+						emit_signal("log_to_logger", "ERR>>Cannot set variable to address")
+					"errout":
+						pass
+					_:
+						emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + initial_val)
 		"*":
-			pass
+			var new_ptr = _declare_new_pointer(parse_file.get_named_attribute_value_safe("varname"))
+			if not parse_file.is_empty():
+				var initial_val = _eval_expression(parse_file)
+				match initial_val[1]:
+					"value":
+						emit_signal("log_to_logger", "ERR>>Cannot set pointer address to shape")
+					"fragment":
+						emit_signal("log_to_logger", "ERR>>Cannot set pointer address to shape fragment")
+					"address":
+						_point_pointer_to(new_ptr, get_node(initial_val[0]))
+					"errout":
+						pass
+					_:
+						emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + initial_val)
+		_:
+			emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
 
-func _eval_expression(parse_file):
-	pass
+func _eval_expression(parse_file : XMLParser):
+	#Skip to next element
+	parse_file.read()
+	match parse_file.get_node_name():
+		"expression":
+			#TODO: Handle chaining
+			return _eval_expression(parse_file)
+		"value":
+			return _eval_value_expression(parse_file)
 
 func _eval_value_expression(parse_file : XMLParser):
-	pass
+	#Skip to next element
+	parse_file.read()
+	match parse_file.get_node_name():
+		"shape":
+			return _eval_shape_expression(parse_file)
+		"variable":
+			return _eval_variable_expression(parse_file)
+		"function":
+			return _eval_function_expression(parse_file)
 
 func _eval_variable_expression(parse_file : XMLParser):
-	pass
+	var target = parse_file.get_named_attribute_value_safe("varname")
+	match parse_file.get_named_attribute_value_safe("modifier"):
+		"":
+			if get_node_or_null(target) == null:
+				emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
+				return [null, "errout"]
+			var target_node = get_node(target)
+			if target_node._variable_type() == "variable" and target_node._is_protected():
+				emit_signal("log_to_logger", "ERR>>Variable is protected: " + target + "\nTry using a pointer to set this variable")
+				return [null, "errout"]
+			match target_node._variable_type():
+				"variable":
+					if target_node._get_shape() == null:
+						emit_signal("log_to_logger", "WRN>>Variable " + target + " value is null")
+						return [null, "value"]
+					return [target_node._get_shape()._get_shape_data_encoding(), "value"]
+				"pointer":
+					if target_node._get_target() == null:
+						emit_signal("log_to_logger", "WRN>>Pointer " + target + " value is null")
+						return [null, "address"]
+					return [String(target_node._get_target().name), "address"]
+		"*":
+			if get_node_or_null(target) == null:
+				emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
+				return [null, "errout"]
+			var target_node = get_node(target)
+			match target_node._variable_type():
+				"variable":
+					emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot dereference a variable")
+					return [null, "errout"]
+				"pointer":
+					if target_node._get_target() == null:
+						emit_signal("log_to_logger", "ERR>>Null Pointer Exception: " + target + " value is null")
+						return [null, "errout"]
+					if target_node._get_target()._get_shape() == null:
+						emit_signal("log_to_logger", "WRN>>Dereference of " + target + " value is null")
+						return [null, "value"]
+					return [target_node._get_target()._get_shape()._get_shape_data_encoding(), "value"]
+		"&", "&amp;":
+			if get_node_or_null(target) == null:
+				emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
+				return [null, "errout"]
+			var target_node = get_node(target)
+			return [String(target_node.name), "address"]
 
-func _declare_new_variable(type, index):
-	var instance = dock.instantiate()
-	add_child(instance)
-	instance.name = type + "_" + str(index)
+func _eval_shape_expression(parse_file : XMLParser):
+	return [parse_file.get_named_attribute_value_safe("value"), "fragment"]
+
+func _eval_function_expression(parse_file : XMLParser):
+	var name = parse_file.get_named_attribute_value_safe("funcname")
+	name = name.left(-2)
+	match name:
+		"generateShape":
+			return [null, "errout"]
+		_:
+			return [null, "errout"]
+
+func _declare_new_variable(varname, protected):
 	var addr = _next_available_addr_main(1)
 	if addr == -1:
 		emit_signal("log_to_logger", "ERR>>Insufficient space in main memory for new variable")
-		return
+		return null
+	if get_node_or_null(varname) != null:
+		emit_signal("log_to_logger", "ERR>>Variable already exists")
+		return null
+	var instance = dock.instantiate()
+	instance.name = varname
 	instance.position = Vector2((addr % main_memory_row_addr) * (dock_size + dock_offset) + base_offset, floor(float(addr) / main_memory_row_addr) * (dock_size + dock_offset) + base_offset)
 	allocated_main_memory[addr] = true
-	var protected = false
-	match type:
+	var type = varname.split("_")
+	match type[0]:
 		"input", "output":
-			protected = true
-		"variable":
-			protected = false
+			type = type[0]
+		_:
+			type = "variable"
 	instance._setup_dock(type, addr, protected)
-
-func _declare_new_pointer(index):
-	var instance = pointer.instantiate()
 	add_child(instance)
-	instance.name = "pointer_" + str(index)
+	return instance
+
+func _declare_new_pointer(varname):
 	var addr = _next_available_addr_main(1)
 	if addr == -1:
 		emit_signal("log_to_logger", "ERR>>Insufficient space in main memory for new variable")
-		return
+		return null
+	var instance = pointer.instantiate()
+	instance.name = varname
 	instance.position = Vector2((addr % main_memory_row_addr) * (dock_size + dock_offset) + base_offset, floor(float(addr) / main_memory_row_addr) * (dock_size + dock_offset) + base_offset)
 	allocated_main_memory[addr] = true
 	instance._setup_pointer()
-
-func _set_variable_to_variable(target, source):
-	if get_node_or_null(target) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
-		return
-	if get_node_or_null(source) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + source)
-		return
-	var source_node = get_node(source)
-	var target_node = get_node(target)
-	if target_node._variable_type() == "variable" and target_node._is_protected():
-		emit_signal("log_to_logger", "ERR>>Variable is protected: " + target + "\nTry using a pointer to set this variable")
-		return
-	if target_node._variable_type() != source_node._variable_type():
-		emit_signal("log_to_logger", "ERR>>Incongrouous types. Attempting to assign pointer value to variable or variable to pointer value")
-		return
-	
-	if target_node._variable_type() == "pointer":
-		target_node._point_at(source_node._get_target())
-	elif target_node._variable_type() == "variable":
-		if target_node._get_shape() != null:
-			target_node._get_shape().queue_free()
-		_instance_shape_to_game(source_node._get_shape()._get_shape_data_encoding(), target_node)
-
-func _set_variable_to_dereference(target, source):
-	if get_node_or_null(target) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
-		return
-	if get_node_or_null(source) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + source)
-		return
-	var source_node = get_node(source)
-	var target_node = get_node(target)
-	if target_node._variable_type() == "variable" and target_node._is_protected():
-		emit_signal("log_to_logger", "ERR>>Variable is protected: " + target + "\nTry using a pointer to set this variable")
-		return
-	if target_node._variable_type() != "variable":
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot set pointer address to shape")
-		return
-	if source_node._variable_type() != "pointer":
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot dereference a variable")
-		return
-	
-	source_node._dereference(target_node)
-	if source_node._get_target()._get_shape() == null:
-		target_node._set_shape(null)
-	else:
-		_instance_shape_to_game(source_node._get_target()._get_shape()._get_shape_data_encoding(), target_node)
-
-func _set_variable_to_address(target, source):
-	if get_node_or_null(target) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
-		return
-	if get_node_or_null(source) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + source)
-		return
-	var source_node = get_node(source)
-	var target_node = get_node(target)
-	if target_node._variable_type() != "pointer":
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot set variable to address")
-		return
-	if source_node._variable_type() != "variable":
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot CURRENTLY get address of a pointer (wait for double pointer implementation)")
-		return
-	
-	target_node._point_at(source_node)
-
-func _set_dereference_to_variable(target, source):
-	if get_node_or_null(target) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
-		return
-	if get_node_or_null(source) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + source)
-		return
-	var source_node = get_node(source)
-	var target_node = get_node(target)
-	
-	if target_node._variable_type() != "pointer":
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot dereference a variable")
-		return
-	if source_node._variable_type() != "variable":
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot set dereference of pointer to address")
-		return
-	
-	target_node._dereference(source_node)
-	if source_node._get_shape() == null:
-		target_node._get_target()._set_shape(null)
-	else:
-		_instance_shape_to_game(source_node._get_shape()._get_shape_data_encoding(), target_node._get_target())
-
-func _set_dereference_to_dereference(target, source):
-	if get_node_or_null(target) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + target)
-		return
-	if get_node_or_null(source) == null:
-		emit_signal("log_to_logger", "ERR>>Variable does not exist: " + source)
-		return
-	var source_node = get_node(source)
-	var target_node = get_node(target)
-	
-	if target_node._variable_type() != "pointer" or target_node._variable_type() != "pointer" :
-		emit_signal("log_to_logger", "ERR>>Impossible operation. Cannot dereference a non-pointer")
-		return
-	source_node._dereference(target_node._get_target())
-	if source_node._get_target()._get_shape() == null:
-		target_node._set_shape(null)
-	else:
-		_instance_shape_to_game(source_node._get_target()._get_shape()._get_shape_data_encoding(), target_node._get_target())
-
+	add_child(instance)
+	return instance
 
 func _write_c_file(text):
 	var c_file = FileAccess.open("user://parse_file.c", FileAccess.WRITE)
@@ -357,4 +378,6 @@ func _write_c_file(text):
 
 func _on_export_code(code_text):
 	_write_c_file(code_text)
-	_run_external_parser()
+	_reset()
+	var xml_string = _run_external_parser()
+	_parse_antlr_xml(xml_string)

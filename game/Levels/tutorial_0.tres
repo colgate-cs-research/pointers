@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://duhj00awaor1e"]
+
+[ext_resource type="Script" path="res://Scripts/LevelData.gd" id="1_x0328"]
+
+[resource]
+script = ExtResource("1_x0328")
+level_number = 0
+level_tag = ""
+level_prefix = "Tutorial"
+level_title = "Basic Shapes"
+level_description = "Welcome to the factory! Let's get you started by introducing our product: shapes!"
+level_objective = "Generate a full shape and put it in variable_0. Generate a square and put it in variable_1. Generate a circle and put it in variable_2."
+pre_code = "shape variable_0;
+shape variable_1;
+shape variable_2;"
+post_code = ""
+xml_name = "tutorial_0"

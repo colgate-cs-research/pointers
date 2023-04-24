@@ -47,11 +47,15 @@ theme = ExtResource("7")
 text = "Start Level"
 
 [node name="LevelDescription" type="RichTextLabel" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.9
-offset_right = 512.0
+offset_right = 960.0
+offset_bottom = 2.57492e-05
 theme = ExtResource("7")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
 
 [connection signal="pressed" from="ActionBar/StartButton" to="LevelList" method="_on_StartButton_pressed"]

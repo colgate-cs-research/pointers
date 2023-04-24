@@ -35,6 +35,15 @@ class FactoryCListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by FactoryCParser#functionExpr.
+    def enterFunctionExpr(self, ctx:FactoryCParser.FunctionExprContext):
+        pass
+
+    # Exit a parse tree produced by FactoryCParser#functionExpr.
+    def exitFunctionExpr(self, ctx:FactoryCParser.FunctionExprContext):
+        pass
+
+
     # Enter a parse tree produced by FactoryCParser#variableExpr.
     def enterVariableExpr(self, ctx:FactoryCParser.VariableExprContext):
         pass

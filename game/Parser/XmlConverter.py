@@ -21,7 +21,7 @@ class XmlConverter(FactoryCListener):
         if (ctx.modifier is not None):
             modifier = ctx.modifier.text
         node.set("modifier", modifier)
-        node.set("name", str(ctx.VARNAME()))
+        node.set("varname", str(ctx.VARNAME()))
         self.parent = node
 
     # Enter a parse tree produced by FactoryCParser#valueExpr.
@@ -46,9 +46,9 @@ class XmlConverter(FactoryCListener):
         modifier = ""
         if (ctx.pointer is not None):
             modifier = "*"
-        protected = False
+        protected = "False"
         if (ctx.protect is not None):
-            protected = True
+            protected = "True"
         node.set("modifier", modifier)
         node.set("protect", protected)
         node.set("varname", str(ctx.VARNAME()))
@@ -56,7 +56,10 @@ class XmlConverter(FactoryCListener):
 
     def enterShapeLiteral(self, ctx:FactoryCParser.ShapeLiteralContext):
         node = ElementTree.SubElement(self.parent, 'shape')
-        print(node)
-        node.set("value", ctx.getToken())
+        node.set("value", ctx.getText())
         self.parent = node
 
+    def enterFunctionExpr(self, ctx: FactoryCParser.FunctionExprContext):
+        node = ElementTree.SubElement(self.parent, 'function')
+        node.set("funcname", str(ctx.FUNCNAME()))
+        self.parent = node
