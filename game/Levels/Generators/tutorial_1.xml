@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generator type="fragment">
+<permit value="CIR" />
+<permit value="SQR" />
+<permit value="ALL" />
+</generator>

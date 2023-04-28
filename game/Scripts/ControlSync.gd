@@ -105,3 +105,6 @@ func _on_export_code(code_text):
 
 func _on_external_logger(message):
 	get_node("CommandLog")._log_to_label(message)
+
+func _on_clear_logger():
+	get_node("CommandLog").clear()

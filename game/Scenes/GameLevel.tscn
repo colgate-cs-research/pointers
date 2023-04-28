@@ -37,5 +37,6 @@ script = ExtResource("2")
 [connection signal="return_to_menu" from="MainUI" to="MissionTracker" method="_on_MainUI_return_to_menu"]
 [connection signal="run_full_script" from="MainUI" to="MissionTracker" method="_on_MainUI_run_full_script"]
 [connection signal="run_test_script" from="MainUI" to="MissionTracker" method="_on_MainUI_run_test_script"]
+[connection signal="clear_logger" from="FactoryBase" to="MainUI" method="_on_clear_logger"]
 [connection signal="log_to_logger" from="FactoryBase" to="MainUI" method="_on_external_logger"]
 [connection signal="level_complete" from="MissionTracker" to="MainUI" method="_on_MissionTracker_level_complete"]

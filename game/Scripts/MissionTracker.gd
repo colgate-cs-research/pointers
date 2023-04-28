@@ -133,6 +133,37 @@ func _on_MainUI_run_test_script(origin):
 	else:
 		logger._log_to_label("ERR>>Shape failed to pass!")	
 
+func _validate_factory_state():
+	logger.clear()
+	if _validate_shape_string(get_node("/root/GameLevel").level_data._get_validator()):
+		return true
+	else:
+		return false
+
+func _generate_input_value_params():
+	var restrictions = [-1, -1, -1, -1, -1, -1, -1, -1]
+	var fragment_list = []
+	var mode = "string"
+	var parse_file = XMLParser.new()
+	parse_file.open(get_node("/root/GameLevel").level_data._get_generator())
+	while parse_file.read() != ERR_FILE_EOF:
+		while parse_file.get_node_type() == XMLParser.NODE_ELEMENT_END && !parse_file.is_empty():
+			if parse_file.read() == ERR_FILE_EOF:
+				return
+		if parse_file.get_node_name() == "generator":
+			match parse_file.get_named_attribute_value_safe("type"):
+				"string":
+					while parse_file.get_node_name() == "restrict":
+						restrictions[int(parse_file.get_named_attribute_value_safe("slot"))] = int(parse_file.get_named_attribute_value_safe("state"))
+				"fragment":
+					while parse_file.get_node_name() == "permit":
+						fragment_list.append(parse_file.get_named_attribute_value_safe("value"))
+	match mode:
+		"string":
+			return [restrictions, "string"]
+		"fragment":
+			return [fragment_list, "fragment"]
+
 func _on_MainUI_return_to_menu():
 	SceneHandler._load_scene("res://Scenes/LevelSelect.tscn",["menu", false])
 

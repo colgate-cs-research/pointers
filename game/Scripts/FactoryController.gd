@@ -1,6 +1,7 @@
 extends Control
 
 signal log_to_logger(message)
+signal clear_logger()
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -20,6 +21,8 @@ var base_offset = 10
 var dock_size = 64
 var dock_offset = 20
 var shape_size = 128
+
+var valid_shapes = []
 
 func _instance_shape_from_string(setup_string, dock):
 	var instance = shape.instantiate()
@@ -136,7 +139,7 @@ func _eval_antlr_code(parse_file : XMLParser):
 	while parse_file.read() != ERR_FILE_EOF:
 		while parse_file.get_node_type() == XMLParser.NODE_ELEMENT_END && !parse_file.is_empty():
 			if parse_file.read() == ERR_FILE_EOF:
-				break
+				return
 		match parse_file.get_node_name():
 			"assignment":
 				_eval_assignment_statement(parse_file)
@@ -332,7 +335,7 @@ func _eval_function_expression(parse_file : XMLParser):
 	name = name.left(-2)
 	match name:
 		"generateShape":
-			return [null, "errout"]
+			return [valid_shapes.pick_random(), "fragment"]
 		_:
 			return [null, "errout"]
 
@@ -378,6 +381,27 @@ func _write_c_file(text):
 
 func _on_export_code(code_text):
 	_write_c_file(code_text)
+	_validate_test()
+
+func _validate_test():
+	#var params = get_node("../MissionTracker")._generate_input_value_params()
+	#_generate_shapes_from_params(params[0], params[1])
 	_reset()
+	emit_signal("clear_logger")
 	var xml_string = _run_external_parser()
 	_parse_antlr_xml(xml_string)
+	var valid_state = get_node("../MissionTracker")._validate_factory_state()
+	if valid_state:
+		emit_signal("log_to_logger", "Shape passed!")
+	else:
+		emit_signal("log_to_logger", "ERR>>Shape failed to pass!")
+
+func _validate_all():
+	pass
+
+func _generate_shapes_from_params(params, format):
+	match format:
+		"string":
+			pass
+		"fragment":
+			valid_shapes = params
