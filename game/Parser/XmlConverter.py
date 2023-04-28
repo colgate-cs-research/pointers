@@ -3,6 +3,9 @@ from FactoryCParser import FactoryCParser
 from xml.etree import ElementTree
 
 class XmlConverter(FactoryCListener):
+    def __init__(self):
+        self.nodes = []
+
     def enterStatements(self, ctx:FactoryCParser.StatementsContext):
         self.statements = ElementTree.Element('statements')
 
@@ -13,32 +16,30 @@ class XmlConverter(FactoryCListener):
             modifier = "*"
         node.set("modifier", modifier)
         node.set("varname", str(ctx.VARNAME()))
-        self.parent = node
+        self.nodes.append(node)
+    
+    def exitAssignmentStmt(self, ctx:FactoryCParser.AssignmentStmtContext):
+        self.nodes.pop()
 
     def enterVariableExpr(self, ctx:FactoryCParser.VariableExprContext):
-        node = ElementTree.SubElement(self.parent, 'variable')
+        node = ElementTree.SubElement(self.nodes[-1], 'variable')
         modifier = ""
         if (ctx.modifier is not None):
             modifier = ctx.modifier.text
         node.set("modifier", modifier)
         node.set("varname", str(ctx.VARNAME()))
-        self.parent = node
-
-    # Enter a parse tree produced by FactoryCParser#valueExpr.
-    def enterValueExpr(self, ctx: FactoryCParser.ValueExprContext):
-        node = ElementTree.SubElement(self.parent, "value")
-        self.parent = node
-        pass
 
     # Enter a parse tree produced by FactoryCParser#expr.
     def enterExpr(self, ctx: FactoryCParser.ExprContext):
-        node = ElementTree.SubElement(self.parent, "expression")
+        node = ElementTree.SubElement(self.nodes[-1], "expression")
         op = ""
         if (ctx.op is not None):
             op = ctx.op.text
             node.set("op", op)
-        self.parent = node
-        pass
+        self.nodes.append(node)
+
+    def exitExpr(self, ctx: FactoryCParser.ExprContext):
+        self.nodes.pop()
 
     # Enter a parse tree produced by FactoryCParser#declarationStmt.
     def enterDeclarationStmt(self, ctx: FactoryCParser.DeclarationStmtContext):
@@ -52,14 +53,15 @@ class XmlConverter(FactoryCListener):
         node.set("modifier", modifier)
         node.set("protect", protected)
         node.set("varname", str(ctx.VARNAME()))
-        self.parent = node
+        self.nodes.append(node)
+    
+    def exitDeclarationStmt(self, ctx: FactoryCParser.DeclarationStmtContext):
+        self.nodes.pop()
 
     def enterShapeLiteral(self, ctx:FactoryCParser.ShapeLiteralContext):
-        node = ElementTree.SubElement(self.parent, 'shape')
+        node = ElementTree.SubElement(self.nodes[-1], 'shape')
         node.set("value", ctx.getText())
-        self.parent = node
 
     def enterFunctionExpr(self, ctx: FactoryCParser.FunctionExprContext):
-        node = ElementTree.SubElement(self.parent, 'function')
+        node = ElementTree.SubElement(self.nodes[-1], 'function')
         node.set("funcname", str(ctx.FUNCNAME()))
-        self.parent = node
