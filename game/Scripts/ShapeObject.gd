@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name ShapeObject
+
 # Declare member variables here.
 # Components order goes clockwise from top right, squares then circles
 var shape_components = [false, false, false, false, false, false, false, false]
@@ -115,3 +117,66 @@ func _update_shape_image():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+static func _compose(shape_0, shape_1):
+	var result = [null, null, null, null, null, null, null, null]
+	var input_0 = _encode(shape_0)
+	var input_1 = _encode(shape_1)
+	for i in 8:
+		result[i] = input_0[i] || input_1[i]
+	return result
+
+static func _cut(shape_0, shape_1):
+	var result = [null, null, null, null, null, null, null, null]
+	var input_0 = _encode(shape_0)
+	var input_1 = _encode(shape_1)
+	for i in 8:
+		result[i] = input_0[i] && (input_0[i] && !input_1[i])
+	return result
+
+static func _decode(encode_array):
+	var ret_val = ""
+	for val in encode_array:
+		if val:
+			ret_val = ret_val + "1 "
+		else:
+			ret_val = ret_val + "0 "
+	ret_val.rstrip(" ")
+	return ret_val
+
+static func _encode(shape_string):
+	match shape_string:
+		"ALL":
+			return [true, true, true, true, true, true, true, true]
+		"NON":
+			return [false, false, false, false, false, false, false, false]
+		"CIR":
+			return [false, false, false, false, true, true, true, true]
+		"SQR":
+			return [true, true, true, true, false, false, false, false]
+		"TLS":
+			return [false, false, false, true, false, false, false, false]
+		"TRS":
+			return [true, false, false, false, false, false, false, false]
+		"BRS":
+			return [false, true, false, false, false, false, false, false]
+		"BLS":
+			return [false, false, true, false, false, false, false, false]
+		"TLC":
+			return [false, false, false, false, false, false, false, true]
+		"TRC":
+			return [false, false, false, false, true, false, false, false]
+		"BRC":
+			return [false, false, false, false, false, true, false, false]
+		"BLC":
+			return [false, false, false, false, false, false, true, false]
+		_:
+			var ret_val = [null, null, null, null, null, null, null, null]
+			var split = (shape_string as String).split(" ")
+			for i in 8:
+				if split[i] == "1":
+					ret_val[i] = true
+				else:
+					ret_val[i] = false
+			return ret_val
+

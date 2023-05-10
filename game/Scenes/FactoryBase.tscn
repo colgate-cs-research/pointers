@@ -34,3 +34,6 @@ offset_left = -14.4
 offset_right = -4.0
 theme = ExtResource("2")
 color = Color(0.713726, 0.713726, 0.713726, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5

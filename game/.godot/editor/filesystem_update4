@@ -1,13 +1,9 @@
 res://Themes/default_env.tres
-res://Scenes/FactoryBase.tscn
+res://Scenes/LaserPointer.tscn
 res://Scripts/FactoryController.gd
 res://Scenes/LevelSelect.tscn
 res://Scenes/GameLevel.tscn
+res://Scenes/FactoryBase.tscn
 res://Scenes/Shape.tscn
 res://Scenes/MainUI.tscn
 res://Scenes/ShapeDock.tscn
-res://Scenes/LaserPointer.tscn
-res://Scripts/MissionTracker.gd
-res://Scripts/ShapeObject.gd
-res://Scripts/ControlSync.gd
-res://Scripts/CommandLog.gd

@@ -36,4 +36,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+textures/vram_compression/import_s3tc_bptc=true
 environment/defaults/default_environment="res://Themes/default_env.tres"

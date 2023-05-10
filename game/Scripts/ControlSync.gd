@@ -104,7 +104,7 @@ func _on_export_code(code_text):
 	emit_signal("export_code", code_text)
 
 func _on_external_logger(message):
-	get_node("CommandLog")._log_to_label(message)
+	get_node("DialogLayer/LogDialog/CommandLog")._log_to_label(message)
 
 func _on_clear_logger():
-	get_node("CommandLog").clear()
+	get_node("DialogLayer/LogDialog/CommandLog").clear()

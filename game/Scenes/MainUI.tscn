@@ -37,6 +37,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 32
 text = "Menu"
 
 [node name="HelpButton" type="Button" parent="BaseBar"]
@@ -49,6 +50,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 32
 text = "Help Codex"
 
 [node name="ConditionsButton" type="Button" parent="BaseBar"]
@@ -61,6 +63,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 32
 text = "Mission Conditions"
 
 [node name="CodeButton" type="Button" parent="BaseBar"]
@@ -73,6 +76,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 32
 text = "Open Code Editor"
 
 [node name="TestButton" type="Button" parent="BaseBar"]
@@ -85,6 +89,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 32
 text = "Test Script"
 
 [node name="RunButton" type="Button" parent="BaseBar"]
@@ -97,27 +102,27 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 32
+disabled = true
 text = "Run Script"
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 0
-anchor_left = 0.6
-anchor_top = 0.7
-anchor_right = 1.0
-anchor_bottom = 0.9
-theme = ExtResource("1")
-color = Color(0, 0, 0, 1)
-
-[node name="CommandLog" type="RichTextLabel" parent="."]
-layout_mode = 0
-anchor_left = 0.6
-anchor_top = 0.7
-anchor_right = 1.0
-anchor_bottom = 0.9
-theme = ExtResource("1")
-script = ExtResource("2")
-
 [node name="DialogLayer" type="CanvasLayer" parent="."]
+
+[node name="LogDialog" type="Window" parent="DialogLayer"]
+title = "Command Log"
+position = Vector2i(300, 200)
+size = Vector2i(500, 200)
+visible = false
+
+[node name="CommandLog" type="RichTextLabel" parent="DialogLayer/LogDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1")
+theme_override_font_sizes/normal_font_size = 24
+script = ExtResource("2")
 
 [node name="CompletionDialog" type="Window" parent="DialogLayer"]
 title = "Level Complete"
@@ -132,6 +137,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 6.10352e-05
 theme = ExtResource("1")
+theme_override_font_sizes/normal_font_size = 24
 
 [node name="ConditionsDialog" type="Window" parent="DialogLayer"]
 title = "Conditions"
@@ -146,6 +152,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 6.10352e-05
 theme = ExtResource("1")
+theme_override_font_sizes/normal_font_size = 24
 
 [node name="HelpDialog" type="Window" parent="DialogLayer"]
 title = "Documentation"
@@ -160,6 +167,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 6.10352e-05
 theme = ExtResource("1")
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "bold
 italics"
@@ -175,6 +183,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource("1")
+theme_override_font_sizes/font_size = 24
 script = ExtResource("3")
 
 [connection signal="pressed" from="BaseBar/MenuButton" to="." method="_on_MenuButton_pressed"]
@@ -183,6 +192,7 @@ script = ExtResource("3")
 [connection signal="pressed" from="BaseBar/CodeButton" to="." method="_on_CodeButton_pressed"]
 [connection signal="pressed" from="BaseBar/TestButton" to="DialogLayer/ScriptDialog/ScriptBox" method="_on_TestButton_pressed"]
 [connection signal="pressed" from="BaseBar/RunButton" to="DialogLayer/ScriptDialog/ScriptBox" method="_on_RunButton_pressed"]
+[connection signal="close_requested" from="DialogLayer/LogDialog" to="DialogLayer/LogDialog/CommandLog" method="_on_log_dialog_close_requested"]
 [connection signal="close_requested" from="DialogLayer/CompletionDialog" to="DialogLayer/CompletionDialog" method="_on_close_requested"]
 [connection signal="close_requested" from="DialogLayer/ConditionsDialog" to="DialogLayer/ConditionsDialog" method="_on_close_requested"]
 [connection signal="close_requested" from="DialogLayer/HelpDialog" to="DialogLayer/HelpDialog" method="_on_close_requested"]

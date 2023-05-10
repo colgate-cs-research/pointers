@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <generator type="fragment">
-<permit value="ALL" />
-<permit value="CIR" />
-<permit value="SQR" />
-<permit value="TLC" />
-<permit value="TRC" />
-<permit value="BRC" />
-<permit value="BLC" />
-<permit value="TLS" />
-<permit value="TRS" />
-<permit value="BRS" />
-<permit value="BLS" />
+  <field name="?" type="fragment" value="ALL SQR CIR TLS TRS BLS BRS TLC TRC BLC BRC" />
 </generator>

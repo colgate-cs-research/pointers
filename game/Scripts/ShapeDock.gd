@@ -35,6 +35,7 @@ func _setup_dock(type, address, protected):
 		get_node("ProtectedSprite").set_texture(protected_sprite)
 	else:
 		get_node("ProtectedSprite").set_texture(null)
+	get_node("DockLabel").position.x = (64 - get_node("DockLabel").size.x)/2
 
 func _set_shape(new_shape):
 	shape = new_shape

@@ -3,6 +3,8 @@ extends Control
 signal log_to_logger(message)
 signal clear_logger()
 
+signal execution_complete()
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -21,8 +23,6 @@ var base_offset = 10
 var dock_size = 64
 var dock_offset = 20
 var shape_size = 128
-
-var valid_shapes = []
 
 func _instance_shape_from_string(setup_string, dock):
 	var instance = shape.instantiate()
@@ -111,7 +111,9 @@ func _process(delta):
 func _run_external_parser():
 	var output = []
 	var path = ProjectSettings.globalize_path("user://parse_file.c")
-	var outcome = OS.execute("python3", ["Parser/main.py", path], output, true)
+	var parser = ProjectSettings.globalize_path("res://Parser/main.py")
+	print(parser)
+	var outcome = OS.execute("python3", [parser, path], output, true)
 	if outcome == OK:
 		print(output[0])
 		return output[0];
@@ -120,7 +122,7 @@ func _run_external_parser():
 		for value in output:
 			print(value)
 
-func _parse_antlr_xml(result : String):
+func _parse_antlr_xml(result : String, wait_mode : bool):
 	var split = []
 	split = result.split("\n")
 	#Log all errors first
@@ -130,21 +132,29 @@ func _parse_antlr_xml(result : String):
 		if split[0] == "<statements />":
 			emit_signal("log_to_logger", "ERR>>No valid code.")
 			return
+	if split[0] == "<statements />":
+		emit_signal("log_to_logger", "ERR>>No valid code.")
+		return
 	var xmlPackedByteArray = split[0].to_utf8_buffer()
 	var parse_file = XMLParser.new()
 	parse_file.open_buffer(xmlPackedByteArray)
-	_eval_antlr_code(parse_file)
+	_eval_antlr_code(parse_file, wait_mode)
 
-func _eval_antlr_code(parse_file : XMLParser):
+func _eval_antlr_code(parse_file : XMLParser, wait_mode : bool):
 	while parse_file.read() != ERR_FILE_EOF:
 		while parse_file.get_node_type() == XMLParser.NODE_ELEMENT_END && !parse_file.is_empty():
 			if parse_file.read() == ERR_FILE_EOF:
+				emit_signal("execution_complete")
 				return
+		if wait_mode:
+			get_node("Timer").start(0.5)
+			await get_node("Timer").timeout
 		match parse_file.get_node_name():
 			"assignment":
 				_eval_assignment_statement(parse_file)
 			"declaration":
 				_eval_declaration_statement(parse_file)
+	emit_signal("execution_complete")
 
 func _eval_assignment_statement(parse_file : XMLParser):
 	var target_var = parse_file.get_named_attribute_value_safe("varname")
@@ -154,7 +164,7 @@ func _eval_assignment_statement(parse_file : XMLParser):
 	var target_node = get_node(target_var)
 	match parse_file.get_named_attribute_value_safe("modifier"):
 		"":
-			var result_val = _eval_expression(parse_file)
+			var result_val = _eval_expression(parse_file, true)
 			match target_node._variable_type():
 				"variable":
 					if target_node._is_protected():
@@ -191,22 +201,22 @@ func _eval_assignment_statement(parse_file : XMLParser):
 						_:
 							emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + result_val[0])
 		"*":
-			var result_val = _eval_expression(parse_file)
+			var result_val = _eval_expression(parse_file, true)
 			match target_node._variable_type():
 				"variable":
 					emit_signal("log_to_logger", "ERR>>Cannot dereference a variable: " + result_val[0])
 				"pointer":
 					if target_node._get_target() == null:
-						emit_signal("log_to_logger", "ERR>>Null Pointer Exception: " + target_node + " value is null")
+						emit_signal("log_to_logger", "ERR>>Null Pointer Exception: " + str(target_node.name) + " value is null")
 					match result_val[1]:
 						"value":
 							if target_node._get_target()._get_shape() == null:
-								_instance_shape_from_string(result_val[0], target_node)
+								_instance_shape_from_string(result_val[0], target_node._get_target())
 							else:
 								target_node._get_target()._get_shape()._setup_shape_string(result_val[0])
 						"fragment":
 							if target_node._get_target()._get_shape() == null:
-								_instance_shape_from_fragment(result_val[0], target_node)
+								_instance_shape_from_fragment(result_val[0], target_node._get_target())
 							else:
 								target_node._get_target()._get_shape()._setup_shape_fragment(result_val[0])
 						"address":
@@ -230,7 +240,7 @@ func _eval_declaration_statement(parse_file : XMLParser):
 				protected = true
 			var new_var = _declare_new_variable(parse_file.get_named_attribute_value_safe("varname"), protected)
 			if not parse_file.is_empty():
-				var initial_val = _eval_expression(parse_file)
+				var initial_val = _eval_expression(parse_file, true)
 				match initial_val[1]:
 					"value":
 						_instance_shape_from_string(initial_val[0], new_var)
@@ -241,11 +251,11 @@ func _eval_declaration_statement(parse_file : XMLParser):
 					"errout":
 						pass
 					_:
-						emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + initial_val)
+						emit_signal("log_to_logger", "ERR>>Unexpected result from script evaluation: " + str(initial_val))
 		"*":
 			var new_ptr = _declare_new_pointer(parse_file.get_named_attribute_value_safe("varname"))
 			if not parse_file.is_empty():
-				var initial_val = _eval_expression(parse_file)
+				var initial_val = _eval_expression(parse_file, true)
 				match initial_val[1]:
 					"value":
 						emit_signal("log_to_logger", "ERR>>Cannot set pointer address to shape")
@@ -260,20 +270,37 @@ func _eval_declaration_statement(parse_file : XMLParser):
 		_:
 			emit_signal("log_to_logger", "ERR>>Unexpected modifier: " + parse_file.get_named_attribute_value_safe("modifier"))
 
-func _eval_expression(parse_file : XMLParser):
-	#Skip to next element
+func _eval_expression(parse_file : XMLParser, skip_step : bool):
+	if skip_step:
+		#Skip to next element
+		parse_file.read()
+	var operation = parse_file.get_named_attribute_value_safe("op")
 	parse_file.read()
 	match parse_file.get_node_name():
 		"expression":
-			#TODO: Handle chaining
-			return _eval_expression(parse_file)
-		"value":
-			return _eval_value_expression(parse_file)
-
-func _eval_value_expression(parse_file : XMLParser):
-	#Skip to next element
-	parse_file.read()
-	match parse_file.get_node_name():
+			var expr_left = _eval_expression(parse_file, false)[0]
+			parse_file.read()
+			var expr_right
+			while parse_file.get_node_type() == XMLParser.NODE_ELEMENT_END && !parse_file.is_empty():
+				if parse_file.read() == ERR_FILE_EOF:
+					emit_signal("execution_complete")
+					return [null, "errout"]
+			match parse_file.get_node_name():
+				"shape":
+					expr_right = _eval_shape_expression(parse_file)[0]
+				"variable":
+					expr_right = _eval_variable_expression(parse_file)[0]
+				"function":
+					expr_right = _eval_function_expression(parse_file)[0]
+			match operation:
+				"+":
+					return [ShapeObject._decode(ShapeObject._compose(expr_left, expr_right)), "value"]
+				"-":
+					return [ShapeObject._decode(ShapeObject._cut(expr_left, expr_right)), "value"]
+				"":
+					return expr_left
+				_:
+					emit_signal("log_to_logger", "ERR>>Invalid operation: " + operation)
 		"shape":
 			return _eval_shape_expression(parse_file)
 		"variable":
@@ -335,7 +362,7 @@ func _eval_function_expression(parse_file : XMLParser):
 	name = name.left(-2)
 	match name:
 		"generateShape":
-			return [valid_shapes.pick_random(), "fragment"]
+			return [_generate_random_shape(), "value"]
 		_:
 			return [null, "errout"]
 
@@ -384,12 +411,12 @@ func _on_export_code(code_text):
 	_validate_test()
 
 func _validate_test():
-	#var params = get_node("../MissionTracker")._generate_input_value_params()
-	#_generate_shapes_from_params(params[0], params[1])
-	_reset()
 	emit_signal("clear_logger")
+	_reset()
 	var xml_string = _run_external_parser()
-	_parse_antlr_xml(xml_string)
+	_parse_antlr_xml(xml_string, true)
+	await self.execution_complete
+	await get_node("Timer").timeout
 	var valid_state = get_node("../MissionTracker")._validate_factory_state()
 	if valid_state:
 		emit_signal("log_to_logger", "Shape passed!")
@@ -397,11 +424,15 @@ func _validate_test():
 		emit_signal("log_to_logger", "ERR>>Shape failed to pass!")
 
 func _validate_all():
-	pass
+	for i in 256:
+		var shape_string = str(floor(i/128)) + " "
+		shape_string = shape_string + str(floor(i%128/64)) + " "
+		shape_string = shape_string + str(floor(i%64/32)) + " "
+		shape_string = shape_string + str(floor(i%32/16)) + " "
+		shape_string = shape_string + str(floor(i%16/8)) + " "
+		shape_string = shape_string + str(floor(i%8/4)) + " "
+		shape_string = shape_string + str(floor(i%4/2)) + " "
+		shape_string = shape_string + str(floor(i%2)) + " "
 
-func _generate_shapes_from_params(params, format):
-	match format:
-		"string":
-			pass
-		"fragment":
-			valid_shapes = params
+func _generate_random_shape():
+	return str(randi_range(0,1)) + " " + str(randi_range(0,1)) + " " + str(randi_range(0,1)) + " " + str(randi_range(0,1)) + " " + str(randi_range(0,1)) + " " + str(randi_range(0,1)) + " " + str(randi_range(0,1)) + " " + str(randi_range(0,1))

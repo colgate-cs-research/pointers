@@ -51,11 +51,11 @@ func _setup_autocode(level_data : LevelData):
 
 func _on_TestButton_pressed():
 	emit_signal("export_code", text)
-	emit_signal("run_test_script", self)
+	#emit_signal("run_test_script", self)
 
 func _on_RunButton_pressed():
 	emit_signal("export_code", text)
-	emit_signal("run_full_script", self)
+	#emit_signal("run_full_script", self)
 
 func _evaluate_all(timer):
 	for i in get_line_count():

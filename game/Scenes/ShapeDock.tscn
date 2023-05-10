@@ -15,14 +15,17 @@ scale = Vector2(2, 2)
 texture = ExtResource("2")
 
 [node name="DockLabel" type="Label" parent="."]
-anchors_preset = -1
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_top = 64.0
 offset_right = 64.0
-offset_bottom = 85.0
+offset_bottom = 86.0
 grow_horizontal = 2
+grow_vertical = 0
 theme = ExtResource("3")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
 
 [node name="ProtectedSprite" type="Sprite2D" parent="."]
 z_index = 1

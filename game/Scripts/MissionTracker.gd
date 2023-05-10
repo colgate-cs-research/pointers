@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var logger = get_node_or_null("../MainUI/CommandLog")
+@onready var logger = get_node_or_null("../MainUI/DialogLayer/LogDialog/CommandLog")
 @onready var factory = get_node_or_null("../FactoryBase")
 var shape = preload("res://Scenes/Shape.tscn")
 

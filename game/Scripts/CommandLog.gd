@@ -8,11 +8,13 @@ extends RichTextLabel
 
 func _log_to_label(message):
 	if (message as String).get_slice(">>", 0) == "ERR":
-		append_text("[color=red]" + message + "[/color]\n")
+		text = text + "[color=red]" + message + "[/color]\n"
 	elif (message as String).get_slice(">>", 0) == "WRN":
-		append_text("[color=yellow]" + message + "[/color]\n")
+		text = text + "[color=yellow]" + message + "[/color]\n"
 	else:
-		append_text(message + "\n")
+		text = text + message + "\n"
+	bbcode_enabled = true
+	get_node("..").show()
 
 func _clear():
 	clear()
@@ -25,3 +27,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_log_dialog_close_requested():
+	text = ""
+	get_node("..").hide()

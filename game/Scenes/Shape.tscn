@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/ShapeObject.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://8fw8fa2pskr1" path="res://Sprites/ShapeSprites/shape_quadrant_0.png" id="3"]
 
-[node name="Shape3D" type="Node2D"]
+[node name="Shape" type="Node2D"]
 scale = Vector2(0.35, 0.35)
 script = ExtResource("2")
 
