@@ -9,7 +9,8 @@ var level_list = "res://Files/level_list.xml"
 var level_dict : Dictionary
 var level_data_list : Array
 var cleared_level = -1;
-@export var cleared_level_override = -2;
+#Default value is -2
+@export var cleared_level_override = 3;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

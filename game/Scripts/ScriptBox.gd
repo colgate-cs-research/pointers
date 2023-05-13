@@ -4,29 +4,12 @@ extends TextEdit
 # var a = 2
 # var b = "text"
 
-signal pointer_at_address(pointer, target)
-signal pointer_at_pointer(pointer, target)
-signal composition_from_variable(pointer, target)
-signal composition_from_pointer(pointer, target)
-signal composition_from_shape(pointer, shape)
-signal cut_from_variable(pointer, target)
-signal cut_from_pointer(pointer, target)
-signal cut_from_shape(pointer, shape)
-signal has_at_pointer(pointer, index)
-signal has_at_variable(variable, index)
-signal set_variable_to_shape(destination, shape)
-signal set_variable_to_variable(destination, variable)
-signal set_variable_to_pointer(destination, pointer)
-signal set_pointer_to_shape(destination, shape)
-signal set_pointer_to_variable(destination, variable)
-signal set_pointer_to_pointer(destination, pointer)
-
 signal run_full_script(origin)
 signal run_test_script(origin)
 
 signal run_complete()
 
-signal export_code(code_text)
+signal export_code(code_text, test_mode)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,11 +33,11 @@ func _setup_autocode(level_data : LevelData):
 		text += "\n//End post code"
 
 func _on_TestButton_pressed():
-	emit_signal("export_code", text)
+	emit_signal("export_code", text, true)
 	#emit_signal("run_test_script", self)
 
 func _on_RunButton_pressed():
-	emit_signal("export_code", text)
+	emit_signal("export_code", text, false)
 	#emit_signal("run_full_script", self)
 
 func _evaluate_all(timer):

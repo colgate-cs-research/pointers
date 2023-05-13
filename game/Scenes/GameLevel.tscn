@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/GameLevel.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/MissionTracker.gd" id="2"]
-[ext_resource type="Resource" uid="uid://cpubki7qc51bq" path="res://Levels/level_1.tres" id="3"]
+[ext_resource type="Resource" uid="uid://d0jttfv4j5lm6" path="res://Levels/sandbox.tres" id="3_yah1j"]
 [ext_resource type="PackedScene" uid="uid://qntpq64berug" path="res://Scenes/FactoryBase.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://u6mdqq12q5id" path="res://Scenes/MainUI.tscn" id="5"]
 [ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="6"]
@@ -16,7 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("6")
 script = ExtResource("1")
-level_data = ExtResource("3")
+level_data = ExtResource("3_yah1j")
 
 [node name="MainUI" parent="." instance=ExtResource("5")]
 layout_mode = 1

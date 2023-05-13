@@ -103,7 +103,6 @@ offset_right = -10.0
 offset_bottom = -10.0
 theme = ExtResource("1")
 theme_override_font_sizes/font_size = 32
-disabled = true
 text = "Run Script"
 
 [node name="DialogLayer" type="CanvasLayer" parent="."]
@@ -197,22 +196,6 @@ script = ExtResource("3")
 [connection signal="close_requested" from="DialogLayer/ConditionsDialog" to="DialogLayer/ConditionsDialog" method="_on_close_requested"]
 [connection signal="close_requested" from="DialogLayer/HelpDialog" to="DialogLayer/HelpDialog" method="_on_close_requested"]
 [connection signal="close_requested" from="DialogLayer/ScriptDialog" to="DialogLayer/ScriptDialog" method="_on_close_requested"]
-[connection signal="composition_from_pointer" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_composition_from_pointer"]
-[connection signal="composition_from_shape" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_composition_from_shape"]
-[connection signal="composition_from_variable" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_composition_from_variable"]
-[connection signal="cut_from_pointer" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_cut_from_pointer"]
-[connection signal="cut_from_shape" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_cut_from_shape"]
-[connection signal="cut_from_variable" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_cut_from_variable"]
 [connection signal="export_code" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_export_code"]
-[connection signal="has_at_pointer" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_has_at_pointer"]
-[connection signal="has_at_variable" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_has_at_variable"]
-[connection signal="pointer_at_address" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_pointer_at_address"]
-[connection signal="pointer_at_pointer" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_pointer_at_pointer"]
 [connection signal="run_full_script" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_run_full_script"]
 [connection signal="run_test_script" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_run_test_script"]
-[connection signal="set_pointer_to_pointer" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_pointer"]
-[connection signal="set_pointer_to_shape" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_shape"]
-[connection signal="set_pointer_to_variable" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_set_pointer_to_variable"]
-[connection signal="set_variable_to_pointer" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_set_variable_to_pointer"]
-[connection signal="set_variable_to_shape" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_set_variable_to_shape"]
-[connection signal="set_variable_to_variable" from="DialogLayer/ScriptDialog/ScriptBox" to="." method="_on_ScriptBox_set_variable_to_variable"]

@@ -13,7 +13,7 @@ signal return_to_menu()
 
 signal level_ended()
 
-signal export_code(code_text)
+signal export_code(code_text, test_mode)
 
 var level_data
 
@@ -55,7 +55,7 @@ func _on_MissionTracker_level_complete():
 	completionText.clear()
 	completionText.append_text("Level Complete!")
 
-func _on_CompletionDialog_popup_hide():
+func _on_level_end():
 	emit_signal("level_ended")
 
 func _add_documentation(helpText : RichTextLabel):
@@ -100,8 +100,8 @@ func _add_documentation(helpText : RichTextLabel):
 				#Skip closing tags
 				parse_file.read()
 
-func _on_export_code(code_text):
-	emit_signal("export_code", code_text)
+func _on_export_code(code_text, test_mode):
+	emit_signal("export_code", code_text, test_mode)
 
 func _on_external_logger(message):
 	get_node("DialogLayer/LogDialog/CommandLog")._log_to_label(message)

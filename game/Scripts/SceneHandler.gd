@@ -34,7 +34,7 @@ func _load_scene_deferred(path, params):
 		current_scene.get_node("MainUI/DialogLayer/ScriptDialog").hide()
 		current_level_id = params[2]
 	elif params[0] == "menu":
-		if params[1] || !params[1]:
+		if params[1]:
 			current_scene.get_node("LevelList").cleared_level = max(current_level_id, current_scene.get_node("LevelList").cleared_level)
 	else:
 		pass

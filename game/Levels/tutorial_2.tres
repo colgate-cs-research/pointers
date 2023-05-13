@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://ctgjibaw31w1s"]
+
+[ext_resource type="Script" path="res://Scripts/LevelData.gd" id="1_a5r0m"]
+
+[resource]
+script = ExtResource("1_a5r0m")
+level_number = 2
+level_tag = ""
+level_prefix = "Tutorial"
+level_title = "Shape Cutting"
+level_description = "Now that you know how to compose, lets talk about cutting."
+level_objective = "Cut a circle out of variable_0.
+Cut a square out of variable_1.
+Cut variable_3 out of variable_2."
+pre_code = "shape variable_0 = ALL;
+shape variable_1 = ALL;
+shape variable_2 = ALL;
+shape variable_3 = TLS + TLC + BLS + BLC;"
+post_code = ""
+xml_name = "tutorial_2"

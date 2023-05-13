@@ -93,6 +93,17 @@ func _validate_shape_string(validator):
 				parse_file.read()
 				parse_file.read()
 				continue
+		elif parse_file.get_node_name() == "condition":
+			parse_file.read()
+		elif parse_file.get_node_name() == "context":
+			var target = parse_file.get_named_attribute_value_safe("target")
+			var target_node = get_node("../FactoryBase/" + target)
+			var protection = parse_file.get_named_attribute_value_safe("protected")
+			if protection == "true":
+				if not target_node._is_protected():
+					logger._log_to_label("ERR>>Shape " + target + " should be protected but is not!")	
+					return false
+			parse_file.read()
 		else:
 			continue
 	return true
@@ -132,6 +143,9 @@ func _on_MainUI_run_test_script(origin):
 		logger._log_to_label("Shape passed!")
 	else:
 		logger._log_to_label("ERR>>Shape failed to pass!")	
+
+func _level_completed():
+	emit_signal("level_complete")
 
 func _validate_factory_state():
 	logger.clear()

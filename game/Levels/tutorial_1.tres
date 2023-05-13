@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://bpx7rfjwbpbys"]
+
+[ext_resource type="Script" path="res://Scripts/LevelData.gd" id="1_16qpq"]
+
+[resource]
+script = ExtResource("1_16qpq")
+level_number = 1
+level_tag = ""
+level_prefix = "Tutorial"
+level_title = "Shape Composition"
+level_description = "Now that you understand the basics of shapes, let's get you started on shape composition and working with shape fragments."
+level_objective = "Compose a circle on variable_1.
+Compose a square on variable_2.
+Compose shapes on variable_3 until you have a square missing the top left corner."
+pre_code = "shape variable_0 = TLS;
+shape variable_1 = TRS;
+shape variable_2 = BLS;
+shape variable_3 = BRS;"
+post_code = ""
+xml_name = "tutorial_1"

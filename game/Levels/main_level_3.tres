@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://cuvnimvb6yqdy"]
+
+[ext_resource type="Script" path="res://Scripts/LevelData.gd" id="1_k8nk0"]
+
+[resource]
+script = ExtResource("1_k8nk0")
+level_number = 2
+level_tag = ""
+level_prefix = "Main"
+level_title = "Quick Adjustment"
+level_description = "Good job so far. We've also just got our first real order! We need to quickly adjust some incoming shapes and send them out as quickly as possible."
+level_objective = "Compose the left half of a circle and the right half of a square onto input_0."
+pre_code = "nodirect shape input_0 = generateShape();"
+post_code = ""
+xml_name = "level_3"

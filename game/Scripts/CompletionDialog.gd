@@ -13,3 +13,4 @@ func _process(delta):
 
 func _on_close_requested():
 	hide()
+	get_node("../..")._on_level_end()

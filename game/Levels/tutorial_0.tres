@@ -9,7 +9,9 @@ level_tag = ""
 level_prefix = "Tutorial"
 level_title = "Basic Shapes"
 level_description = "Welcome to the factory! Let's get you started by introducing our product: shapes!"
-level_objective = "Generate a full shape and put it in variable_0. Generate a square and put it in variable_1. Generate a circle and put it in variable_2."
+level_objective = "Generate a full shape and put it in variable_0.
+Generate a square and put it in variable_1.
+Generate a circle and put it in variable_2."
 pre_code = "shape variable_0 = CIR;
 shape variable_1 = ALL;
 shape variable_2 = SQR;"
