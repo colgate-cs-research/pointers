@@ -1,7 +1,7 @@
 
 ## Install dependencies
 ```
-pip3 install antrl4-tools antlr4-python3-runtime
+pip3 install antlr4-tools antlr4-python3-runtime
 ```
 
 ## Test
