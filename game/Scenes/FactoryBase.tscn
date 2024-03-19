@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://qntpq64berug"]
 
 [ext_resource type="Script" path="res://Scripts/FactoryController.gd" id="1"]
-[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="2"]
+[ext_resource type="Theme" uid="uid://dr3bn5kka6k53" path="res://Themes/StandardTheme.tres" id="2"]
 
 [node name="FactoryBase" type="Control"]
 custom_minimum_size = Vector2(614.4, 540)
@@ -23,7 +23,7 @@ anchor_right = 0.6
 anchor_bottom = 1.0
 offset_right = -14.4
 theme = ExtResource("2")
-color = Color(0.898039, 0.898039, 0.898039, 1)
+color = Color(0.886275, 0.329412, 0.513726, 1)
 
 [node name="StackBackground" type="ColorRect" parent="Z-Layer"]
 anchors_preset = -1
@@ -33,7 +33,7 @@ anchor_bottom = 1.0
 offset_left = -14.4
 offset_right = -4.0
 theme = ExtResource("2")
-color = Color(0.713726, 0.713726, 0.713726, 1)
+color = Color(0, 0.713726, 0.713726, 1)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5

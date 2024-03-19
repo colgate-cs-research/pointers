@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://d0jttfv4j5lm6" path="res://Levels/sandbox.tres" id="3_yah1j"]
 [ext_resource type="PackedScene" uid="uid://qntpq64berug" path="res://Scenes/FactoryBase.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://u6mdqq12q5id" path="res://Scenes/MainUI.tscn" id="5"]
-[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="6"]
+[ext_resource type="Theme" uid="uid://dr3bn5kka6k53" path="res://Themes/StandardTheme.tres" id="6"]
 
 [node name="GameLevel" type="Control"]
 layout_mode = 3
@@ -24,7 +24,11 @@ layout_mode = 1
 [node name="FactoryBase" parent="." instance=ExtResource("4")]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = -0.714
+anchor_top = -0.714
 anchor_bottom = 0.9
+offset_left = 1228.08
+offset_top = 628.32
 mouse_filter = 1
 
 [node name="MissionTracker" type="Node2D" parent="."]

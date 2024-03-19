@@ -8,7 +8,7 @@ extends ItemList
 var level_list = "res://Files/level_list.xml"
 var level_dict : Dictionary
 var level_data_list : Array
-var cleared_level = -1;
+var cleared_level = 3;
 #Default value is -2
 @export var cleared_level_override = 3;
 
@@ -34,8 +34,8 @@ func _process(delta):
 	get_node("../ActionBar/StartButton").disabled = !is_anything_selected()
 	if is_anything_selected():
 		get_node("../LevelDescription").append_text(level_dict[get_selected_items()[0]].level_description)
-	for id in level_dict.size():
-		set_item_disabled(id, id > cleared_level + 1)
+	#for id in level_dict.size():
+		#set_item_disabled(id, id > cleared_level + 1)
 
 func _on_StartButton_pressed():
 	SceneHandler._load_scene("res://Scenes/GameLevel.tscn", ["level", level_dict[get_selected_items()[0]], get_selected_items()[0]])

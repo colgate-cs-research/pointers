@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://u6mdqq12q5id"]
 
-[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="1"]
+[ext_resource type="Theme" uid="uid://dr3bn5kka6k53" path="res://Themes/StandardTheme.tres" id="1"]
 [ext_resource type="Script" path="res://Scripts/CommandLog.gd" id="2"]
 [ext_resource type="Script" path="res://Scripts/ScriptBox.gd" id="3"]
 [ext_resource type="Script" path="res://Scripts/ControlSync.gd" id="4"]
@@ -26,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = 4.0
 theme = ExtResource("1")
-color = Color(0.556863, 0.556863, 0.556863, 1)
+color = Color(0.827451, 0.556863, 0.0901961, 1)
 
 [node name="MenuButton" type="Button" parent="BaseBar"]
 layout_mode = 0
@@ -110,7 +110,7 @@ text = "Run Script"
 [node name="LogDialog" type="Window" parent="DialogLayer"]
 title = "Command Log"
 position = Vector2i(300, 200)
-size = Vector2i(500, 200)
+size = Vector2i(700, 300)
 visible = false
 
 [node name="CommandLog" type="RichTextLabel" parent="DialogLayer/LogDialog"]
@@ -126,7 +126,7 @@ script = ExtResource("2")
 [node name="CompletionDialog" type="Window" parent="DialogLayer"]
 title = "Level Complete"
 position = Vector2i(100, 100)
-size = Vector2i(1280, 800)
+size = Vector2i(700, 300)
 theme = ExtResource("1")
 script = ExtResource("4_h71bq")
 
@@ -141,7 +141,7 @@ theme_override_font_sizes/normal_font_size = 24
 [node name="ConditionsDialog" type="Window" parent="DialogLayer"]
 title = "Conditions"
 position = Vector2i(100, 100)
-size = Vector2i(1280, 800)
+size = Vector2i(700, 300)
 theme = ExtResource("1")
 script = ExtResource("5_1yxg0")
 
@@ -155,8 +155,9 @@ theme_override_font_sizes/normal_font_size = 24
 
 [node name="HelpDialog" type="Window" parent="DialogLayer"]
 title = "Documentation"
-position = Vector2i(100, 100)
-size = Vector2i(1280, 800)
+position = Vector2i(-50, 0)
+size = Vector2i(700, 300)
+visible = false
 theme = ExtResource("1")
 script = ExtResource("6_icdwn")
 
@@ -174,7 +175,7 @@ italics"
 [node name="ScriptDialog" type="Window" parent="DialogLayer"]
 title = "Scripting Area"
 position = Vector2i(100, 100)
-size = Vector2i(1280, 800)
+size = Vector2i(700, 300)
 script = ExtResource("7_5wnw8")
 
 [node name="ScriptBox" type="TextEdit" parent="DialogLayer/ScriptDialog"]

@@ -8,8 +8,13 @@ level_number = 0
 level_tag = ""
 level_prefix = "Sandbox"
 level_title = "Sandbox Mode"
-level_description = "This is a demo mode to trial the core of the game."
-level_objective = "Normally, an objective like \"Copy the shape from input_0 to output_0\" or \"Copy the left half of the shape from input_0 to output_0 and the square part from input_0 to output_1\" would go here, but there is no designated objective for the sandbox demo."
+level_description = "Hello Welcome to the Pointers Game!
+This is a demo mode to trial the core of the game. 
+To solve a problem click the 'Mission Statement' to read the problem and code is written in the 'Test Script'. To get More information about solving a problem refer to the 'Help Codex'"
+level_objective = "Normally, an objective like \"Copy the shape from input_0 to output_0\" or \"Copy the left half of the shape from input_0 to output_0 and the square part from input_0 to output_1\" would go here. 
+
+
+However there is no designated objective for the sandbox demo. Click 'Test Script' button to view the pre code for this level and run the code using 'Run Script' button."
 pre_code = "shape input_0 = generateShape();
 nodirect shape input_1;"
 post_code = ""

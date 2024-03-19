@@ -1,14 +1,17 @@
-[gd_resource type="Theme" load_steps=6 format=2]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://dr3bn5kka6k53"]
 
-[ext_resource path="res://Fonts/StandardFont.tres" type="FontFile" id=1]
-[ext_resource path="res://Fonts/StandardFontBold.tres" type="FontFile" id=2]
-[ext_resource path="res://Fonts/StandardFontItalic.tres" type="FontFile" id=3]
-[ext_resource path="res://Fonts/CodeFont.tres" type="FontFile" id=4]
-[ext_resource path="res://Fonts/StandardFontBoldItalic.tres" type="FontFile" id=5]
+[ext_resource type="FontFile" uid="uid://cxa4sec1uyk5n" path="res://Fonts/StandardFont.tres" id="1"]
+[ext_resource type="FontFile" path="res://Fonts/StandardFontBold.tres" id="2"]
+[ext_resource type="FontFile" path="res://Fonts/StandardFontItalic.tres" id="3"]
+[ext_resource type="FontFile" path="res://Fonts/CodeFont.tres" id="4"]
+[ext_resource type="FontFile" path="res://Fonts/StandardFontBoldItalic.tres" id="5"]
 
 [resource]
-default_font = ExtResource( 1 )
-RichTextLabel/fonts/bold_font = ExtResource( 2 )
-RichTextLabel/fonts/bold_italics_font = ExtResource( 5 )
-RichTextLabel/fonts/italics_font = ExtResource( 3 )
-RichTextLabel/fonts/mono_font = ExtResource( 4 )
+default_font = ExtResource("1")
+default_font_size = 1
+RichTextLabel/colors/font_selected_color = Color(1.48958e-05, 8.20329e-05, 0.000610899, 0)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+RichTextLabel/fonts/bold_font = ExtResource("2")
+RichTextLabel/fonts/bold_italics_font = ExtResource("5")
+RichTextLabel/fonts/italics_font = ExtResource("3")
+RichTextLabel/fonts/mono_font = ExtResource("4")

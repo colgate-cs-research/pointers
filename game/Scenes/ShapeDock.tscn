@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/ShapeDock.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cbr1gamcw52ic" path="res://Sprites/FactorySprites/shape_dock_storage.png" id="2"]
-[ext_resource type="Theme" path="res://Themes/StandardTheme.tres" id="3"]
+[ext_resource type="Theme" uid="uid://dr3bn5kka6k53" path="res://Themes/StandardTheme.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://dbsnw2emcpwkn" path="res://Sprites/FactorySprites/protected_sprite.png" id="4_q7dpw"]
 
 [node name="ShapeDock" type="Node2D"]
