@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bckpspxi4cbvd"]
+
+[ext_resource type="FontFile" uid="uid://fx6woacn1bsy" path="res://Fonts/Font Files/SourceSansPro-ExtraLightItalic.ttf" id="1_5uqay"]
+
+[resource]
+base_font = ExtResource("1_5uqay")
