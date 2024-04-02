@@ -1,13 +1,13 @@
 2a60927148abd1d33b818b535e306557
-::res://::1710858573
+::res://::1712066751
 export_presets.cfg::TextFile::-1::1707842232::0::1::::<><>::
 icon.png::CompressedTexture2D::1162441659168238608::1707842232::1707842232::1::::<><>::
 ::res://assets/::1710628755
 pointersImage.jpg::CompressedTexture2D::2991443964246365683::1710628754::1710628755::1::::<><>::
 ::res://Files/::1707842232
-::res://Fonts/::1710858493
+::res://Fonts/::1712065524
 CodeFont.tres::FontFile::-1::1707842232::0::1::::<><>::res://Fonts/Font Files/SourceCodePro-VariableFont_wght.ttf<>res://Fonts/Font Files/SourceSansPro-Regular.ttf
-StandardFont.tres::FontFile::6388977922533475569::1710858493::0::1::::<><>::uid://clgsnyscfkfmq
+StandardFont.tres::FontFile::6388977922533475569::1712065524::0::1::::<><>::uid://clgsnyscfkfmq
 StandardFontBold.tres::FontFile::-1::1707842232::0::1::::<><>::res://Fonts/Font Files/SourceSansPro-Bold.ttf<>res://Fonts/Font Files/SourceSansPro-Regular.ttf
 StandardFontBoldItalic.tres::FontFile::-1::1707842232::0::1::::<><>::res://Fonts/Font Files/SourceSansPro-Bold.ttf<>res://Fonts/Font Files/SourceSansPro-BoldItalic.ttf<>res://Fonts/Font Files/SourceSansPro-Italic.ttf<>res://Fonts/Font Files/SourceSansPro-Regular.ttf
 StandardFontItalic.tres::FontFile::-1::1707842232::0::1::::<><>::res://Fonts/Font Files/SourceSansPro-Italic.ttf<>res://Fonts/Font Files/SourceSansPro-Regular.ttf
@@ -29,33 +29,33 @@ SourceSansPro-SemiBoldItalic.ttf::FontFile::1558351288652620610::1707842232::170
 Swordgamesfont.tres::FontVariation::2548385871474620017::1710558182::0::1::::<><>::uid://fx6woacn1bsy
 Swore Games.otf::FontFile::1364416451875420977::1710556770::1710556771::1::::<><>::
 vampv2.ttf::FontFile::366680182262264133::1710556505::1710556505::1::::<><>::
-::res://Levels/::1710858493
+::res://Levels/::1712065524
 main_level_1.tres::Resource/Resource::9161409198722886148::1710628222::0::1::::<><>::res://Scripts/LevelData.gd
 main_level_2.tres::Resource/Resource::877494691799860149::1709836954::0::1::::<><>::res://Scripts/LevelData.gd
 main_level_3.tres::Resource/Resource::6220774443048226510::1707842232::0::1::::<><>::res://Scripts/LevelData.gd
 main_level_4.tres::Resource/Resource::1196223732598619655::1707842232::0::1::::<><>::res://Scripts/LevelData.gd
-sandbox.tres::Resource/LevelData::8933750391151896643::1710858493::0::1::::<><>::res://Scripts/LevelData.gd
+sandbox.tres::Resource/LevelData::8933750391151896643::1712065524::0::1::::<><>::res://Scripts/LevelData.gd
 tutorial_0.tres::Resource/Resource::8578081979984793580::1707842232::0::1::::<><>::res://Scripts/LevelData.gd
 tutorial_1.tres::Resource/Resource::3488707606393369422::1707842232::0::1::::<><>::res://Scripts/LevelData.gd
 tutorial_2.tres::Resource/Resource::6119376455880708526::1709836081::0::1::::<><>::res://Scripts/LevelData.gd
 ::res://Levels/Generators/::1707842232
 ::res://Levels/Validators/::1707842232
-::res://mainmenu/::1710858494
-main_menu.gd::GDScript::-1::1710858493::0::1::::Main_Menu<>Control<>::
-main_menu.tscn::PackedScene::3021589483785971538::1710858494::0::1::::<><>::res://mainmenu/main_menu.gd<>uid://bivcv6wqo0efr
-::res://Parser/::1707842232
-README.md::TextFile::-1::1707842232::0::1::::<><>::
+::res://mainmenu/::1712066755
+main_menu.gd::GDScript::-1::1712066755::0::1::::Main_Menu<>Control<>::
+::res://Parser/::1710859494
+README.md::TextFile::-1::1710859494::0::1::::<><>::
 ::res://Parser/examples/::1707842232
 ::res://Parser/__pycache__/::1707844508
-::res://Scenes/::1710858495
-FactoryBase.tscn::PackedScene::1151039708364111874::1710858493::0::1::::<><>::res://Scripts/FactoryController.gd<>uid://dr3bn5kka6k53
-GameLevel.tscn::PackedScene::8409248906704876389::1710858493::0::1::::<><>::res://Scripts/GameLevel.gd<>res://Scripts/MissionTracker.gd<>uid://d0jttfv4j5lm6<>uid://qntpq64berug<>uid://u6mdqq12q5id<>uid://dr3bn5kka6k53
-LaserPointer.tscn::PackedScene::3510107060310582859::1710858494::0::1::::<><>::res://Scripts/LaserPointer.gd<>uid://dbd00ciu3wtks<>uid://dr3bn5kka6k53
-LevelSelect.tscn::PackedScene::6704344048826696043::1710858493::0::1::::<><>::res://Scripts/LevelList.gd<>uid://to60e88a7liv<>uid://dr3bn5kka6k53
-MainUI.tscn::PackedScene::1468507410739951867::1710858495::0::1::::<><>::uid://dr3bn5kka6k53<>res://Scripts/CommandLog.gd<>res://Scripts/ScriptBox.gd<>res://Scripts/ControlSync.gd<>res://Scripts/CompletionDialog.gd<>res://Scripts/ConditionsDialog.gd<>res://Scripts/HelpDialog.gd<>res://Scripts/ScriptDialog.gd
-Shape.tscn::PackedScene::1018834133738784497::1710858494::0::1::::<><>::uid://ukg5gm4xiy6a<>res://Scripts/ShapeObject.gd<>uid://8fw8fa2pskr1
-ShapeDock.tscn::PackedScene::2611237936293294982::1710858494::0::1::::<><>::res://Scripts/ShapeDock.gd<>uid://cbr1gamcw52ic<>uid://dr3bn5kka6k53<>uid://dbsnw2emcpwkn
-::res://Scripts/::1710858493
+::res://Scenes/::1712066917
+FactoryBase.tscn::PackedScene::1151039708364111874::1712066914::0::1::::<><>::res://Scripts/FactoryController.gd<>uid://dr3bn5kka6k53
+GameLevel.tscn::PackedScene::8409248906704876389::1712066914::0::1::::<><>::res://Scripts/GameLevel.gd<>res://Scripts/MissionTracker.gd<>uid://d0jttfv4j5lm6<>uid://qntpq64berug<>uid://u6mdqq12q5id<>uid://dr3bn5kka6k53
+LaserPointer.tscn::PackedScene::3510107060310582859::1712066915::0::1::::<><>::res://Scripts/LaserPointer.gd<>uid://dbd00ciu3wtks<>uid://dr3bn5kka6k53
+LevelSelect.tscn::PackedScene::6704344048826696043::1712066914::0::1::::<><>::res://Scripts/LevelList.gd<>uid://to60e88a7liv<>uid://dr3bn5kka6k53
+MainUI.tscn::PackedScene::1468507410739951867::1712066917::0::1::::<><>::uid://dr3bn5kka6k53<>res://Scripts/CommandLog.gd<>res://Scripts/ScriptBox.gd<>res://Scripts/ControlSync.gd<>res://Scripts/CompletionDialog.gd<>res://Scripts/ConditionsDialog.gd<>res://Scripts/HelpDialog.gd<>res://Scripts/ScriptDialog.gd
+main_menu.tscn::PackedScene::3021589483785971538::1712066916::0::1::::<><>::res://mainmenu/main_menu.gd<>uid://bivcv6wqo0efr
+Shape.tscn::PackedScene::1018834133738784497::1712066915::0::1::::<><>::uid://ukg5gm4xiy6a<>res://Scripts/ShapeObject.gd<>uid://8fw8fa2pskr1
+ShapeDock.tscn::PackedScene::2611237936293294982::1712066915::0::1::::<><>::res://Scripts/ShapeDock.gd<>uid://cbr1gamcw52ic<>uid://dr3bn5kka6k53<>uid://dbsnw2emcpwkn
+::res://Scripts/::1712066626
 CommandLog.gd::GDScript::-1::1707842232::0::1::::<>RichTextLabel<>::
 CompletionDialog.gd::GDScript::-1::1707842232::0::1::::<>Window<>::
 ConditionsDialog.gd::GDScript::-1::1707842232::0::1::::<>Window<>::
@@ -65,9 +65,9 @@ GameLevel.gd::GDScript::-1::1707842232::0::1::::<>Control<>::
 HelpDialog.gd::GDScript::-1::1707842232::0::1::::<>Window<>::
 LaserPointer.gd::GDScript::-1::1707842232::0::1::::<>Node2D<>::
 LevelData.gd::GDScript::-1::1709843389::0::1::::LevelData<>Resource<>::
-LevelList.gd::GDScript::-1::1710858493::0::1::::<>ItemList<>::
+LevelList.gd::GDScript::-1::1712065524::0::1::::<>ItemList<>::
 MissionTracker.gd::GDScript::-1::1707842232::0::1::::<>Node2D<>::
-SceneHandler.gd::GDScript::-1::1707842232::0::1::::<>Node<>::
+SceneHandler.gd::GDScript::-1::1712066626::0::1::::<>Node<>::
 ScriptBox.gd::GDScript::-1::1707842232::0::1::::<>TextEdit<>::
 ScriptDialog.gd::GDScript::-1::1707842232::0::1::::<>Window<>::
 ShapeDock.gd::GDScript::-1::1707842232::0::1::::<>Node2D<>::
@@ -82,6 +82,6 @@ shape_dock_storage.png::CompressedTexture2D::4879714008077741966::1707842232::17
 ::res://Sprites/ShapeSprites/::1707842232
 shape_quadrant_0.png::CompressedTexture2D::2327948697729363172::1707842232::1707842232::1::::<><>::
 shape_quadrant_1.png::CompressedTexture2D::1424838861101451214::1707842232::1707842232::1::::<><>::
-::res://Themes/::1710858495
-default_env.tres::Environment::3688012816522949708::1710858495::0::1::::<><>::
-StandardTheme.tres::Theme::8410360493957191288::1710858493::0::1::::<><>::uid://cxa4sec1uyk5n<>res://Fonts/StandardFontBold.tres<>res://Fonts/StandardFontItalic.tres<>res://Fonts/CodeFont.tres<>res://Fonts/StandardFontBoldItalic.tres
+::res://Themes/::1712066917
+default_env.tres::Environment::3688012816522949708::1712066917::0::1::::<><>::
+StandardTheme.tres::Theme::8410360493957191288::1712065524::0::1::::<><>::uid://cxa4sec1uyk5n<>res://Fonts/StandardFontBold.tres<>res://Fonts/StandardFontItalic.tres<>res://Fonts/CodeFont.tres<>res://Fonts/StandardFontBoldItalic.tres

@@ -12,3 +12,6 @@ res://Scenes/LaserPointer.tscn
 res://Scenes/ShapeDock.tscn
 res://mainmenu/main_menu.tscn
 res://Scenes/MainUI.tscn
+res://Scripts/SceneHandler.gd
+res://Scenes/main_menu.tscn
+res://main_menu.tscn

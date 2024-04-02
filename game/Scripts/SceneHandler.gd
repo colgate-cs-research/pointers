@@ -15,7 +15,8 @@ func _load_scene(path, params):
 	call_deferred("_load_scene_deferred", path, params)
 
 func _load_scene_deferred(path, params):
-	current_scene.free()
+	if current_scene != null: #added from open source
+		current_scene.free()
 	
 	var new_scene = ResourceLoader.load(path)
 	current_scene = new_scene.instantiate()
@@ -40,5 +41,5 @@ func _load_scene_deferred(path, params):
 		pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	pass
