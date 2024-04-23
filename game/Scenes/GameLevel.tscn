@@ -29,6 +29,7 @@ anchor_top = -0.714
 anchor_bottom = 0.9
 offset_left = 1228.08
 offset_top = 628.32
+offset_bottom = -6.10352e-05
 mouse_filter = 1
 
 [node name="MissionTracker" type="Node2D" parent="."]

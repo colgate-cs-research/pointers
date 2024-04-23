@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_16qpq")
 level_number = 1
+level_id = 3
 level_tag = ""
 level_prefix = "Tutorial"
 level_title = "Shape Composition"

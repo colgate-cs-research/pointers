@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_g6n4i")
 level_number = 0
+level_id = 6
 level_tag = ""
 level_prefix = "Main"
 level_title = "Protected Conveyance"

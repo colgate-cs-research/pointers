@@ -60,6 +60,9 @@ func _on_level_end():
 
 func _add_documentation(helpText : RichTextLabel):
 	helpText.clear()
+	var currentLevel = 0  #keeps track of the level number
+	var currentId = false
+	var counter= 0; #number of times while loop has been traversed
 	var terminate = false
 	var parse_file = XMLParser.new()
 	parse_file.open(documentation)
@@ -67,35 +70,50 @@ func _add_documentation(helpText : RichTextLabel):
 	parse_file.read()
 	parse_file.read()
 	while parse_file.read() != ERR_FILE_EOF && !terminate:
+		counter+=1
 		if parse_file.get_node_type() == parse_file.NODE_ELEMENT_END:
 			continue
 		match parse_file.get_node_name():
+			"section":
+				currentLevel = int(parse_file.get_named_attribute_value("level"))+1
+				if level_data.level_id == currentLevel:
+					currentId = true
+				elif currentLevel < counter:
+					currentId = false
 			"header":
 				#Move to text node
 				parse_file.read()
-				helpText.append_text("[b]" + parse_file.get_node_data() + "[/b]\n")
+				if currentId == true:
+					helpText.append_text( parse_file.get_node_data() + "\n")
+				else:
+					helpText.append_text( "")	
 				#Skip closing tags
 				parse_file.read()
 			"text":
 				#Move to text node
 				parse_file.read()
-				helpText.append_text(parse_file.get_node_data() + "\n")
+				if currentId == true:
+					helpText.append_text( parse_file.get_node_data() + "\n")
+				else:
+					helpText.append_text( "")	
 				#Skip closing tags
 				parse_file.read()
 			"code":
 				#Move to text node
 				parse_file.read()
-				helpText.append_text("[code]" + parse_file.get_node_data() + "[/code]\n")
+				if currentId == true:
+					helpText.append_text( parse_file.get_node_data() + "\n")
+				else:
+					helpText.append_text( "")	
 				#Skip closing tags
 				parse_file.read()
 			"break":
-				helpText.append_text("\n")
-			"section":
-				if level_data.level_number < int(parse_file.get_named_attribute_value("level")):
-					terminate = true
+				if currentId == true:
+					helpText.append_text("\n")
+			#"section":
+				#if currentId < int(parse_file.get_named_attribute_value("level")):
+					#terminate = true
 			"documentation":
-				break
-			_:
 				helpText.append_text("ERROR\n")
 				#Skip closing tags
 				parse_file.read()

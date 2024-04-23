@@ -41,5 +41,5 @@ func _load_scene_deferred(path, params):
 		pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+#func _process(delta):
+	#pass

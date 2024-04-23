@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <documentation>
-<section level="0">
-<header>Basic Syntax</header>
-<text>Most of the instructions for the factory are written in standard C code.</text>
-<code>var_0 = var_1;</code>
-<code>ptr_0 = &amp;var_0</code>
-<text>However, pointers require an == in order to dereference.</text>
-<code>var_2 == *ptr_0;</code>
-</section>
 <section level="1">
-<header>New Syntax</header>
-<text>You can write code to generate custom shapes.</text>
-<code>! ~ ~ ~ ~ ~ ~ ~ ~</code>
-<text>Each tilde in the previous code snippet should be replaced by a 1 or a 0 depending on whether that shape segment should be enabled.</text>
-<text>You can press the "Create Shape" button on the bottom bar to generate a template for a shape.</text>
-<break />
-<header>Composition</header>
-<text>The composition operation overlays the shape on the right over the shape on the left.</text>
-<code>! 0 1 0 1 0 0 0 0 &lt; ! 1 0 1 0 0 0 0 0</code>
-<code>! 1 1 1 1 0 0 0 0 </code>
-<text>Important note: This modifies the left shape in place.</text>
+<header>Sandbox Model</header>
+<text>Most of the instructions for the factory are written in standard C code. Thus, every code line ends with a semicolon, and to declare a variable the type is needed.</text>
+<text>However, in this exercise the variables are already declared for you, namely variable_0, variable_1, and variable_2 of type "Shape".</text>
+<text>Shapes that can be generated in this exercise are as follows:</text>
+<text>CIR represents circle.</text> <text>SQR represents square.</text> <text>ALL represents a square and circle in the same box.</text>
+</section>
+<section level="2">
+<header> Basic Shapes </header>
+<text>In this game parts of the shape are broken into smaller parts .</text>
+<code>! ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ </code>
+<text> Here are acronyms associated with a SQUARE shape:</text> 
+<text> TLS: Top Left Square       and       TLC: Top Left Circle </text> 
+<text> TRS: Top Right Square      and       TRC: Top Right Circle</text> 
+<text> BRS: Bottom Right Square   and       BRC: Bottom Left Circle</text> 
+<text> BLS: Bottom Left Square    and       BLC: Bottom Left Circle</text>
+<text> Note: Composition is regarded as an addition therefore to compose a shape on an existing shape for example</text>
+<text> For example to compose a circle on variable_0 one would do as follows:</text>
+<code> variable_0 = variable_0 + CIR;</code>
+</section>
+<section level="3">
+<header> Shape Cutting </header>
+<text> To cut out a circle on variable_0 one would do as follows:</text>
+<code> variable_0 = variable_0 - CIR;</code>
+</section>
+<section level="4">
+<header> Shape Composition </header>
+<text> Most of the instructions for the factory are written in standard C code.</text>
+<text> Regular copying of shape </text>
+</section>
+<section level="5">
+<header> Conveyance </header>
+<text> Most of the instructions for the factory are written in standard C code.</text>
+<text> In this level it is important to apply the knowledge of pointers including derefencing pointers </text>
+<text> For example: </text>
+<code> var_0 = var_1;</code>
+<code> ptr_0 = &amp;var_0</code>
+</section>
+<section level="6">
+<header> Protected Conveyance </header>
+<text> Most of the instructions for the factory are written in standard C code.</text>
+<text> Deference in pointers knowledge  is applicable on this level: </text>
+<text> </text>
+</section>
+<section level="7">
+<header> Quick Adjustment </header>
+<text>Most of the instructions for the factory are written in standard C code.</text>
+<section level="8">
+<header> Geometric Inverter </header>
+<text>Most of the instructions for the factory are written in standard C code.</text>
 </section>
 </documentation>
+

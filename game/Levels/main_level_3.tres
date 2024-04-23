@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_k8nk0")
 level_number = 2
+level_id = 7
 level_tag = ""
 level_prefix = "Main"
 level_title = "Quick Adjustment"

@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_ltbsx")
 level_number = 3
+level_id = 8
 level_tag = ""
 level_prefix = "Main"
 level_title = "Geometric Inverter"

@@ -3,6 +3,7 @@ class_name LevelData
 
 #To be displayed to user
 @export var level_number: int
+@export var level_id:int
 @export var level_tag: String
 @export var level_prefix: String
 @export var level_title: String
